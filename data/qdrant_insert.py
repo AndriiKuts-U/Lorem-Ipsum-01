@@ -1,15 +1,15 @@
 import json
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 BASE_DIR = Path(__file__).parent
 DATASETS_DIR = BASE_DIR / "grocery_datasets"
 
 
 def _compute_discount_percentage(
-    price: Optional[float], old_price: Optional[float], explicit: Optional[float]
-) -> Optional[float]:
+    price: float | None, old_price: float | None, explicit: float | None
+) -> float | None:
     if explicit is not None:
         return explicit
     if price is not None and old_price is not None:
@@ -24,16 +24,16 @@ def _compute_discount_percentage(
 _DESC_UNIT_REGEX = re.compile(r"(\b\d+[\d,.]*\s?(?:ml|l|g|kg|ks|pcs|pack|L|G|KG)\b)", re.IGNORECASE)
 
 
-def _extract_units_from_text(text: str) -> Optional[str]:
+def _extract_units_from_text(text: str) -> list[str] | None:
     if not text:
         return None
     match = _DESC_UNIT_REGEX.search(text.replace("&nbsp;", " "))
     if match:
-        return match.group(1).strip()
+        return [match.group(1).strip()]
     return None
 
 
-def _parse_lidl_product(p: Dict[str, Any]) -> Dict[str, Any]:
+def _parse_lidl_product(p: dict[str, Any]) -> dict[str, Any]:
     title = p.get("title")
     price_block = p.get("price", {}) or {}
     lidl_plus = p.get("lidlPlus", {}) or {}
@@ -41,12 +41,12 @@ def _parse_lidl_product(p: Dict[str, Any]) -> Dict[str, Any]:
     lp_discount_block = lp_price_block.get("discount", {}) or {}
 
     # Current price resolution order
-    price: Optional[float] = price_block.get("current")
+    price: float | None = price_block.get("current")
     if price is None:
         price = lp_price_block.get("price")
 
     # Old price resolution order
-    old_price: Optional[float] = price_block.get("originalPrice")
+    old_price: float | None = price_block.get("originalPrice")
     if old_price is None:
         old_price = lp_price_block.get("oldPrice")
     if old_price is None:
@@ -82,13 +82,13 @@ def _parse_lidl_product(p: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def _parse_tesco_product(p: Dict[str, Any]) -> Dict[str, Any]:
+def _parse_tesco_product(p: dict[str, Any]) -> dict[str, Any]:
     title = p.get("title")
     price_block = p.get("price", {}) or {}
-    price: Optional[float] = price_block.get("actual")
+    price: float | None = price_block.get("actual")
     # Tesco sample doesn't show old price or discount; keep None
-    old_price: Optional[float] = price_block.get("previous") or None
-    discount_percentage: Optional[float] = None
+    old_price: float | None = price_block.get("previous") or None
+    discount_percentage: float | None = None
 
     # Units: direct field or parse title
     units = price_block.get("unitOfMeasure")
@@ -114,8 +114,8 @@ def _parse_tesco_product(p: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def load_products(datasets_dir: Path = DATASETS_DIR) -> List[Dict[str, Any]]:
-    products: List[Dict[str, Any]] = []
+def load_products(datasets_dir: Path = DATASETS_DIR) -> list[dict[str, Any]]:
+    products: list[dict[str, Any]] = []
     if not datasets_dir.exists():
         return products
     for source_dir in datasets_dir.iterdir():
