@@ -155,73 +155,45 @@ const App = () => {
         );
     };
 
-    const handleSelectScenario = (prompt) => {
-        // Create user message
-        const userMessageId = `user-${Date.now()}`;
-        const botMessageId = `bot-${Date.now()}`;
+  const handleSelectScenario = (prompt) => {
+    // Create user message
+    const userMessageId = `user-${Date.now()}`;
+    const botMessageId = `bot-${Date.now()}`;
 
-        const userMessage = {
-            id: userMessageId,
-            role: "user",
-            content: prompt,
-        };
-
-        const botMessage = {
-            id: botMessageId,
-            role: "bot",
-            content: "...",
-            loading: true,
-        };
-
-        // Update conversation with messages
-        const updatedConversation = {
-            ...currentConversation,
-            title: prompt.slice(0, 30) + (prompt.length > 30 ? "..." : ""),
-            messages: [...currentConversation.messages, userMessage, botMessage],
-        };
-
-        setConversations((prev) =>
-            prev.map((conv) => (conv.id === activeConversation ? updatedConversation : conv))
-        );
-
-        setIsLoading(true);
-        generateResponse(updatedConversation, botMessageId);
+    const userMessage = {
+      id: userMessageId,
+      role: "user",
+      content: prompt,
     };
+
+    const botMessage = {
+      id: botMessageId,
+      role: "bot",
+      content: "...",
+      loading: true,
+    };
+
+    // Update conversation with messages
+    const updatedConversation = {
+      ...currentConversation,
+      title: prompt.slice(0, 30) + (prompt.length > 30 ? "..." : ""),
+      messages: [...currentConversation.messages, userMessage, botMessage],
+    };
+
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === activeConversation ? updatedConversation : conv
+      )
+    );
+
+    setIsLoading(true);
+    generateResponse(updatedConversation, botMessageId);
+  };
 
     return (
         <div className={`app-container ${theme === "light" ? "light-theme" : "dark-theme"}`}>
             <div className={`overlay ${isSidebarOpen ? "show" : "hide"}`} onClick={() => setIsSidebarOpen(false)}></div>
             <Sidebar conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} setActiveConversation={setActiveConversation} theme={theme} setTheme={setTheme} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} navigate={navigate} currentPath={location.pathname} />
-            {/*<main className="main-container">*/}
-
-            {/*    <header className="main-header">*/}
-            {/*        <button onClick={() => setIsSidebarOpen(true)} className="sidebar-toggle">*/}
-            {/*            <Menu size={18} />*/}
-            {/*        </button>*/}
-            {/*    </header>*/}
-            {/*    {currentConversation.messages.length === 0 ? (*/}
-            {/*        // Welcome container*/}
-            {/*            <div className="welcome-container">*/}
-            {/*                <img className="welcome-logo" src="/download.png" alt="Meal" />*/}
-            {/*                <h1 className="welcome-heading">Create a meal</h1>*/}
-            {/*                <p className="welcome-text">Choose a scenario to get started</p>*/}
-            {/*                <ScenarioCards onSelectScenario={handleSelectScenario} />*/}
-            {/*            </div>*/}
-            {/*    ) : (*/}
-            {/*        // Messages container*/}
-            {/*        <div className="messages-container" ref={messagesContainerRef}>*/}
-            {/*            {currentConversation.messages.map((message) => (*/}
-            {/*                <Message key={message.id} message={message} />*/}
-            {/*            ))}*/}
-            {/*        </div>*/}
-            {/*    )}*/}
-            {/*    /!* Prompt input *!/*/}
-            {/*    <div className="prompt-container">*/}
-            {/*        <div className="prompt-wrapper">*/}
-            {/*            <PromptForm conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} generateResponse={generateResponse} isLoading={isLoading} setIsLoading={setIsLoading} />*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</main>*/}
             <Routes>
                 <Route path="/" element={
                     <main className="main-container">

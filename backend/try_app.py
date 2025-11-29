@@ -1,4 +1,5 @@
 import json
+from importlib.metadata import metadata
 
 import requests
 
@@ -18,56 +19,30 @@ def health_check():
     return response.json()
 
 
-# def add_documents():
-#     """Add sample documents to the vector database."""
-#     print("\n" + "="*60)
-#     print("2. ADD DOCUMENTS")
-#     print("="*60)
-#
-#     documents = {
-#         "documents": [
-#             {
-#                 "text": "Python is a high-level, interpreted programming language known for its simplicity and readability.",
-#                 "metadata": {
-#                     "source": "python_intro",
-#                     "category": "programming"
-#                 }
-#             },
-#             {
-#                 "text": "Machine learning is a subset of artificial intelligence that enables systems to learn and improve from experience.",
-#                 "metadata": {
-#                     "source": "ml_basics",
-#                     "category": "ai"
-#                 }
-#             },
-#             {
-#                 "text": "RAG (Retrieval Augmented Generation) combines information retrieval with language generation to provide accurate answers.",
-#                 "metadata": {
-#                     "source": "rag_explanation",
-#                     "category": "ai"
-#                 }
-#             },
-#             {
-#                 "text": "FastAPI is a modern, fast web framework for building APIs with Python based on standard Python type hints.",
-#                 "metadata": {
-#                     "source": "fastapi_intro",
-#                     "category": "programming"
-#                 }
-#             },
-#             {
-#                 "text": "Vector databases store data as high-dimensional vectors, enabling efficient similarity search and retrieval.",
-#                 "metadata": {
-#                     "source": "vector_db",
-#                     "category": "database"
-#                 }
-#             }
-#         ]
-#     }
-#
-#     response = requests.post(f"{BASE_URL}/documents", json=documents)
-#     print(f"Status Code: {response.status_code}")
-#     print(f"Response: {json.dumps(response.json(), indent=2)}")
-#     return response.json()
+def add_documents():
+    """Add sample documents to the vector database."""
+    print("\n" + "="*60)
+    print("2. ADD DOCUMENTS")
+    print("="*60)
+
+    documents = json.load(open("data/lidl_products_parsed.json", encoding="utf-8"))
+    insert_documents = []
+    for i in documents:
+        insert_documents.append({"text": i["name"],
+                                 "metadata": {"source":"lidl",
+                                              "price": i["price"],
+                                              "price_original": i["price_original"],
+                                              # "discount_percentage": i["discount_percentage"],
+                                              "amount": i["amount"],
+                                              "description": i["description"],
+                                              "category": i["category"]
+                                              }})
+
+
+    response = requests.post(f"{BASE_URL}/documents", json={"documents": insert_documents}, timeout=1000000)
+    print(f"Status Code: {response.status_code}")
+    print(f"Response: {json.dumps(response.json(), indent=2)}")
+    return response.json()
 
 
 def search_documents(query: str, top_k: int = 3):
@@ -183,7 +158,7 @@ def run_full_demo():
         health_check()
 
         # # 2. Add documents to the vector database
-        # add_documents()
+        add_documents()
 
         # 3. Search for documents
         search_documents("What is Python?", top_k=2)
@@ -290,13 +265,13 @@ def interactive_chat():
 
 
 if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) > 1 and sys.argv[1] == "interactive":
-        interactive_chat()
-    else:
-        run_full_demo()
-
+    # import sys
+    #
+    # if len(sys.argv) > 1 and sys.argv[1] == "interactive":
+    #     interactive_chat()
+    # else:
+    #     run_full_demo()
+    add_documents()
         # Uncomment to run interactive mode after demo
         # print("\n\nStarting interactive mode...")
         # interactive_chat()

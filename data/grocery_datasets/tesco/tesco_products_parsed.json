@@ -1,0 +1,1242 @@
+[
+  {
+    "product_id": "214763313",
+    "name": "Tesco Mlieko UHT polotučné 1,5 % 1 l",
+    "price": 0.75,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216176319",
+    "name": "Tesco Mlieko UHT plnotučné 3,5% 1 l",
+    "price": 0.95,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "121105995",
+    "name": "Tesco Maslo 82% tuku 250 g",
+    "price": 6.36,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216553455",
+    "name": "Rajo Tradičné maslo z lahodnej smotany 250 g",
+    "price": 15.56,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206939313",
+    "name": "Rajo Smotana na šľahanie 33% 250 ml",
+    "price": 7.16,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220177812",
+    "name": "Tesco Eidam 30% 250 g",
+    "price": 7.4,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220319575",
+    "name": "Hellmann's Majolenka originál 405 ml",
+    "price": 9.51,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "405 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206556909",
+    "name": "Bambino Originál 100 g",
+    "price": 17.9,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "100 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206938187",
+    "name": "Rajo Tvaroh jemný hrudkovitý 250 g",
+    "price": 5.8,
+    "price_original": null,
+    "price_lidl_plus": 0.89,
+    "amount": "250 g",
+    "description": "0,89 € s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206563044",
+    "name": "Hera Classic 250 g",
+    "price": 7.56,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "207050406",
+    "name": "Rajo Smotana pochúťková kyslá 14% 250 g",
+    "price": 5.56,
+    "price_original": null,
+    "price_lidl_plus": 0.69,
+    "amount": "250 g",
+    "description": "0,69 € Polovičná cena s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "209940217",
+    "name": "Rajo Smotana na šľahanie 30 % 250 ml",
+    "price": 5.0,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "213510031",
+    "name": "Babičkine vajcia L 10 ks",
+    "price": 0.42,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "10 ks",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "105013494",
+    "name": "Hellmann's Tatárska omáčka 405 ml",
+    "price": 9.51,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "405 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "207118953",
+    "name": "Fala Droždie 42 g",
+    "price": 8.57,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "42 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "105014303",
+    "name": "Liptov Bryndza 110 g",
+    "price": 19.0,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "110 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206593874",
+    "name": "Rajo Mlieko plnotučné 3,5% 1 l",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206563006",
+    "name": "Rajo Cottage cheese Biely 180 g",
+    "price": 4.94,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "180 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220177448",
+    "name": "Tesco Grana Padano strúhaný syr 100 g",
+    "price": 21.9,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "100 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206317234",
+    "name": "Tatra Salko 397 g",
+    "price": 4.51,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "397 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "217146083",
+    "name": "Milsy Bánovecká nátierka tradičná natur 200 g",
+    "price": 9.95,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "200 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216908781",
+    "name": "Galbani Mozzarella 125 g",
+    "price": 15.92,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "125 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216765964",
+    "name": "Tami Tatranské maslo 250 g",
+    "price": 14.76,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "215872595",
+    "name": "Pribináček s vanilkovou príchuťou 125 g",
+    "price": 10.8,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "125 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "120414503",
+    "name": "Tesco Čerstvé vajcia M 10 ks",
+    "price": 0.33,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "10 ks",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206552154",
+    "name": "Král Sýrů Originál 120 g",
+    "price": 14.08,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "120 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220024689",
+    "name": "Tesco Mozzarella 125 g",
+    "price": 6.0,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "125 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220319576",
+    "name": "Hellmann's Majolenka starej mamy 405 ml",
+    "price": 9.51,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "405 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216703195",
+    "name": "Tesco Plnotučné mlieko 3,5 % 1 l",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220343491",
+    "name": "Tesco Gouda 48% 250 g",
+    "price": 9.96,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "121050476",
+    "name": "Milko Řecký jogurt 0% biely 140 g",
+    "price": 5.64,
+    "price_original": null,
+    "price_lidl_plus": 0.49,
+    "amount": "140 g",
+    "description": "0,49 € s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "215801236",
+    "name": "Tesco Tvaroh odtučnený 250 g",
+    "price": 2.76,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220181393",
+    "name": "Tesco Plnotučné mlieko 3,5 % 1 l",
+    "price": 1.15,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220021247",
+    "name": "Tesco Biely jogurt 150 g",
+    "price": 1.4,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "150 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "210753929",
+    "name": "Mlékárna Kunín Termix tvarohový dezert kakaový 90 g",
+    "price": 7.22,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "90 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206520276",
+    "name": "Palma Palmarin na cesto 250 g",
+    "price": 5.16,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "217060617",
+    "name": "Rama Maslová príchuť 400 g",
+    "price": 4.38,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "400 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "212046302",
+    "name": "Rajo Smotana na varenie 10 % 500 ml",
+    "price": 4.98,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "213689737",
+    "name": "Zvolenský Smotanový jogurt jahoda 145 g",
+    "price": 4.76,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "145 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216335365",
+    "name": "Tesco Smotana na šľahanie 33% 250 ml",
+    "price": 5.96,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 ml",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220296379",
+    "name": "Tesco Smotanová nátierka 200 g",
+    "price": 4.95,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "200 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "215872601",
+    "name": "Pribináček Kakao 125 g",
+    "price": 10.8,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "125 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "120031184",
+    "name": "Karička Klasik 8 ks 125 g",
+    "price": 13.52,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "125 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "212306048",
+    "name": "Rajo Smotana pochúťková kyslá 14 % 375 g",
+    "price": 4.13,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "375 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220263457",
+    "name": "Tesco Čerstvé vajcia z podstielkového chovu L 10 ks",
+    "price": 0.32,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "10 ks",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "216195204",
+    "name": "Zvolenský Smotanový jogurt stracciatella 145 g",
+    "price": 4.76,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "145 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220166530",
+    "name": "Mozzarella strúhaná 200 g",
+    "price": 11.25,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "200 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "217236296",
+    "name": "Rajo Mlieko plnotučné 3,5% 1 l",
+    "price": 1.45,
+    "price_original": null,
+    "price_lidl_plus": 1.09,
+    "amount": "1 l",
+    "description": "1,09 € s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206593843",
+    "name": "Rajo Mlieko polotučné 1,5% 1 l",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "220343492",
+    "name": "Tesco Gouda 48% plátky 100 g",
+    "price": 12.9,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "100 g",
+    "description": "",
+    "category": "mliecne-vyrobky-a-vajcia"
+  },
+  {
+    "product_id": "206555926",
+    "name": "Banány voľné",
+    "price": 1.09,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558095",
+    "name": "Mandarínky voľné",
+    "price": 2.29,
+    "price_original": null,
+    "price_lidl_plus": 1.19,
+    "amount": null,
+    "description": "1,19 € za kg s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "213968665",
+    "name": "Uhorka šalátová ks",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558552",
+    "name": "Pomaranče voľné",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206556329",
+    "name": "Citróny voľné",
+    "price": 2.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206556237",
+    "name": "Cibuľa voľná",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "207857883",
+    "name": "Paprika biela voľná",
+    "price": 2.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "120297387",
+    "name": "Petržlen voľný",
+    "price": 2.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "120737144",
+    "name": "Evelina Jablká ukladané",
+    "price": 2.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558422",
+    "name": "Paprika červená voľná",
+    "price": 3.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206760856",
+    "name": "Tesco Mrkva balená 1 kg",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 kg",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206556190",
+    "name": "Cesnak voľný",
+    "price": 3.4,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206711681",
+    "name": "Zemiaky voľné skoré",
+    "price": 0.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "120500234",
+    "name": "Paradajky",
+    "price": 2.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558378",
+    "name": "Mrkva voľná",
+    "price": 0.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206557203",
+    "name": "Kaleráb ks",
+    "price": 0.44,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "211838847",
+    "name": "Jablká červené voľné",
+    "price": 1.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558163",
+    "name": "Tesco Mandarínky 1 kg",
+    "price": 2.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 kg",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "207785742",
+    "name": "Cuketa voľná",
+    "price": 2.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "216366901",
+    "name": "Tesco Finest Avokádo zrelé ks",
+    "price": 1.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "120512975",
+    "name": "Zeleninárska Kráľovské zemiaky 2,5 kg",
+    "price": 1.24,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "5 kg",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "105000695",
+    "name": "Tesco Baby paradajky podlhovasté 500 g",
+    "price": 9.78,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "213914600",
+    "name": "Tesco Zemiaky konzumné neskoré prané varný typ B 2 kg",
+    "price": 1.2,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "2 kg",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206948957",
+    "name": "Tesco Citróny 500 g",
+    "price": 3.38,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558934",
+    "name": "Hurmi-kaki ks",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": 0.39,
+    "amount": null,
+    "description": "0,39 € Nižšia ako polovičná cena s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "207947423",
+    "name": "Tesco Čerstvá voľba Baby paradajky podlhovasté 250 g",
+    "price": 5.56,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206556244",
+    "name": "Cibuľa červená voľná",
+    "price": 1.55,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "120725607",
+    "name": "Tesco Brokolica 500 g",
+    "price": 3.98,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206592433",
+    "name": "Reďkovka červená zväzok",
+    "price": 0.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "121036563",
+    "name": "Hrušky Conference ukladané",
+    "price": 1.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206556268",
+    "name": "Cibuľka lahôdková zväzok",
+    "price": 0.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "213914594",
+    "name": "Tesco Zemiaky A konzumné neskoré prané A 2 kg",
+    "price": 1.2,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "2 kg",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206841661",
+    "name": "Jablká Golden delicious ukladané",
+    "price": 1.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206559153",
+    "name": "Zeler voľný",
+    "price": 1.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558996",
+    "name": "Tesco Šalát ľadový ks",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206634041",
+    "name": "Jablká Gala ukladané",
+    "price": 0.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "207860609",
+    "name": "The Grower's Harvest Cibuľa žltá 1 kg",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": 0.59,
+    "amount": "1 kg",
+    "description": "0,59 € Polovičná cena s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "121259909",
+    "name": "Tesco Finest Paradajky cherry extra sladké 250 g",
+    "price": 11.16,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "250 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "105010142",
+    "name": "Kápia paprika",
+    "price": 3.99,
+    "price_original": null,
+    "price_lidl_plus": 2.19,
+    "amount": null,
+    "description": "2,19 € za kg s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "120670544",
+    "name": "Pór ks",
+    "price": 1.25,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206558439",
+    "name": "Paprika žltá voľná",
+    "price": 4.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "213905677",
+    "name": "Giana Uhorky 6-9 cm 670 g",
+    "price": 5.53,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "670 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206559122",
+    "name": "Zázvor voľný",
+    "price": 6.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "207937134",
+    "name": "Tesco Polievková zmes 600 g",
+    "price": 3.15,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "600 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "220194681",
+    "name": "Zemiaky červené konzumné voľné",
+    "price": 1.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206557005",
+    "name": "Hrušky zelené ukladané",
+    "price": 1.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "206556886",
+    "name": "Grapefruit červený voľný",
+    "price": 2.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "213381365",
+    "name": "Tesco Kvasená biela kapusta 700 g",
+    "price": 1.56,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "700 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "213680161",
+    "name": "The Grower's Harvest Hrozno bezkôstkové biele 500 g",
+    "price": 4.38,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "208374518",
+    "name": "Zemiaky sladké voľné",
+    "price": 2.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "ovocie-zelenina"
+  },
+  {
+    "product_id": "212558386",
+    "name": "Rožok štandard 50 g",
+    "price": 2.6,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "50 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "214090044",
+    "name": "Kajzerka cereálna 60 g",
+    "price": 2.67,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "60 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "216042591",
+    "name": "Kajzerka Natural 60 g",
+    "price": 2.17,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "60 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "121554888",
+    "name": "Makovka 80 g",
+    "price": 4.88,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "80 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "121313310",
+    "name": "Rožok 50 g",
+    "price": 2.8,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "50 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "208382308",
+    "name": "Chlieb pšenično-ražný konzumný 1000 g",
+    "price": 1.55,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1000 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "121485330",
+    "name": "Pagáč oškvarkový 71 g",
+    "price": 7.18,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "71 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "220280393",
+    "name": "Tesco Toastový chlieb maslový 500 g",
+    "price": 2.78,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "211949956",
+    "name": "Bageta malá svetlá 50 g",
+    "price": 3.2,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "50 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "220280395",
+    "name": "Tesco Toastový chlieb celozrnný 500 g",
+    "price": 2.78,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "220000218",
+    "name": "Kváskový Delikates prémium bez E 405 g",
+    "price": 4.17,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "405 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "121554911",
+    "name": "Vianočka svetlá 310 g",
+    "price": 5.45,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "310 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "220320535",
+    "name": "Croissant maslový 52 g",
+    "price": 6.73,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "52 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "211950280",
+    "name": "Bageta francúzska 110 g",
+    "price": 3.36,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "110 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "120718023",
+    "name": "Pagáč syrový 70 g",
+    "price": 7.14,
+    "price_original": null,
+    "price_lidl_plus": 0.5,
+    "amount": "70 g",
+    "description": "Kúpte 4, ušetrite 0,50 € s Clubcard | Cena je platná do 2. 12. 2025",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "216361623",
+    "name": "Donut s kakaovou polevou 55 g",
+    "price": 8.18,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "55 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "216274718",
+    "name": "Tesco Závin s makovou náplňou 400 g",
+    "price": 4.48,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "400 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "100429154",
+    "name": "Tesco Tortilla 4 x 62,5 g (250 g)",
+    "price": 3.96,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "120521635",
+    "name": "Chlieb zemiakový 500 g",
+    "price": 1.98,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "500 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "212426661",
+    "name": "Slatinská Pekáreň Slatinský chlieb zemiakový 480 g",
+    "price": 3.31,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "480 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "216440977",
+    "name": "Rožok Pivec 59 g",
+    "price": 9.66,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "59 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "216159640",
+    "name": "Slatinská Pekáreň Slatinský chlieb celozrnný krájaný 400 g",
+    "price": 4.48,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "400 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "220334064",
+    "name": "Baker Street Chlieb kváskový pšeničný 450 g",
+    "price": 5.76,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "450 g",
+    "description": "",
+    "category": "pekaren"
+  },
+  {
+    "product_id": "216361647",
+    "name": "Donut s ružovou polevou a jahodovou príchuťou 56 g",
+    "price": 8.04,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "56 g",
+    "description": "",
+    "category": "pekaren"
+  }
+]
