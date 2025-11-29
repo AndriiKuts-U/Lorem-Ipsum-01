@@ -44,7 +44,7 @@ const PromptForm = ({ conversations, setConversations, activeConversation, gener
     };
     return (
         <form className="prompt-form" onSubmit={handleSubmit}>
-            <input placeholder="Message Gemini..." className="prompt-input" value={promptText} onChange={(e) => setPromptText(e.target.value)} required />
+            <input placeholder="Describe your goal..." className="prompt-input" value={promptText} onChange={(e) => setPromptText(e.target.value)} required />
             <button type="submit" className="send-prompt-btn">
                 <ArrowUp size={20} />
             </button>

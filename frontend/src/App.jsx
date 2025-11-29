@@ -403,9 +403,9 @@ const App = () => {
                 {currentConversation.messages.length === 0 ? (
                     // Welcome container
                     <div className="welcome-container">
-                        <img className="welcome-logo" src="gemini.svg" alt="Gemini Logo" />
-                        <h1 className="welcome-heading">Message Gemini</h1>
-                        <p className="welcome-text">Ask me anything about any topic. I'm here to help!</p>
+                        <img className="welcome-logo" src="/components/icons/download.png" alt="Gemini Logo" />
+                        <h1 className="welcome-heading">Create a meal</h1>
+                        {/*<p className="welcome-text">Let's </p>*/}
                     </div>
                 ) : (
                     // Messages container
@@ -420,7 +420,7 @@ const App = () => {
                     <div className="prompt-wrapper">
                         <PromptForm conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} generateResponse={generateResponse} isLoading={isLoading} setIsLoading={setIsLoading} />
                     </div>
-                    <p className="disclaimer-text">Gemini can make mistakes, so double-check it.</p>
+                    <p className="disclaimer-text">Describe your goal or choose from templates</p>
                 </div>
             </main>
         </div>
