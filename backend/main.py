@@ -1,9 +1,10 @@
 from contextlib import asynccontextmanager
 
-from backend.rag_system import RAGSystem
+from backend.rag import RAGSystem
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from backend.maps.address import find_nearby_places
 
 
 # Pydantic models for request/response
@@ -55,6 +56,26 @@ class ThreadlistResponse(BaseModel):
 class DeleteThreadResponse(BaseModel):
     message: str
     thread_id: str
+
+
+class NearbyPlacesRequest(BaseModel):
+    lat: float
+    lng: float
+    radius_m: int = Field(5000, ge=1, description="Search radius in meters")
+    types: list[str] | None = Field(None, description="Google place types to include")
+    max_per_brand: int = Field(1, ge=0, description="Cap results per brand; 0 disables")
+
+
+class NearbyPlace(BaseModel):
+    name: str
+    lat: float
+    lng: float
+    distance_m: int
+    place_id: str | None = None
+
+
+class NearbyPlacesResponse(BaseModel):
+    places: list[NearbyPlace]
 
 
 @asynccontextmanager
@@ -146,6 +167,24 @@ async def search_documents_endpoint(request: SearchRequest):
         results = app.state.rag_system.retrieve_context(query=request.query, top_k=request.top_k)
         return SearchResponse(results=[RetrievedDocument(**doc) for doc in results])
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/places/nearby", response_model=NearbyPlacesResponse, tags=["Places"])
+async def nearby_places_endpoint(request: NearbyPlacesRequest):
+    """Return nearby places by Google Places v1 around given coordinates."""
+    try:
+        places = find_nearby_places(
+            request.lat,
+            request.lng,
+            radius_m=request.radius_m,
+            place_types=request.types or ("supermarket", "grocery_store"),
+            min_unique=20,
+            max_pages=5,
+            max_per_brand=request.max_per_brand,
+        )
+        return NearbyPlacesResponse(places=[NearbyPlace(**p) for p in places])
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

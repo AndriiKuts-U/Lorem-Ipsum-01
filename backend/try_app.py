@@ -85,6 +85,37 @@ def search_documents(query: str, top_k: int = 3):
     return response.json()
 
 
+def nearby_places(
+    lat: float,
+    lng: float,
+    radius_m: int = 5000,
+    types: list[str] | None = None,
+    max_per_brand: int = 1,
+):
+    """Call the nearby places endpoint and print results."""
+    print("\n" + "=" * 60)
+    print("2. NEARBY PLACES")
+    print("=" * 60)
+
+    payload = {
+        "lat": lat,
+        "lng": lng,
+        "radius_m": radius_m,
+        "types": types or ["supermarket", "grocery_store"],
+        "max_per_brand": max_per_brand,
+    }
+
+    print(f"Center: ({lat}, {lng}), radius: {radius_m}m, types: {payload['types']}")
+    response = requests.post(f"{BASE_URL}/places/nearby", json=payload)
+    print(f"Status Code: {response.status_code}")
+    data = response.json()
+    places = data.get("places", [])
+    print(f"Found {len(places)} places:")
+    for i, p in enumerate(places, start=1):
+        print(f"  {i}. {p.get('distance_m')} m - {p.get('name')} ({p.get('lat')}, {p.get('lng')})")
+    return data
+
+
 def chat_without_retrieval(query: str, thread_id: str | None = None):
     """Chat without document retrieval."""
     print("\n" + "=" * 60)
@@ -182,8 +213,8 @@ def run_full_demo():
         # 1. Health check
         health_check()
 
-        # # 2. Add documents to the vector database
-        # add_documents()
+        # 2. Nearby places (example: Košice coords)
+        nearby_places(48.7318664, 21.2431019, radius_m=2000)
 
         # 3. Search for documents
         search_documents("What is Python?", top_k=2)
