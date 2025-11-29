@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Message from "./components/Message";
 import PromptForm from "./components/PromptForm";
 import Sidebar from "./components/Sidebar";
 import ScenarioCards from "./components/ScenarioCards";
 import { Menu } from "lucide-react";
+import Dashboard from "@/pages/Dashboard.jsx";
 
 const App = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     // Main app state
     const [isLoading, setIsLoading] = useState(false);
     const typingInterval = useRef(null);
@@ -186,37 +191,85 @@ const App = () => {
     return (
         <div className={`app-container ${theme === "light" ? "light-theme" : "dark-theme"}`}>
             <div className={`overlay ${isSidebarOpen ? "show" : "hide"}`} onClick={() => setIsSidebarOpen(false)}></div>
-            <Sidebar conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} setActiveConversation={setActiveConversation} theme={theme} setTheme={setTheme} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-            <main className="main-container">
+            <Sidebar conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} setActiveConversation={setActiveConversation} theme={theme} setTheme={setTheme} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} navigate={navigate} currentPath={location.pathname} />
+            {/*<main className="main-container">*/}
 
-                <header className="main-header">
-                    <button onClick={() => setIsSidebarOpen(true)} className="sidebar-toggle">
-                        <Menu size={18} />
-                    </button>
-                </header>
-                {currentConversation.messages.length === 0 ? (
-                    // Welcome container
-                        <div className="welcome-container">
-                            <img className="welcome-logo" src="/download.png" alt="Meal" />
-                            <h1 className="welcome-heading">Create a meal</h1>
-                            <p className="welcome-text">Choose a scenario to get started</p>
-                            <ScenarioCards onSelectScenario={handleSelectScenario} />
+            {/*    <header className="main-header">*/}
+            {/*        <button onClick={() => setIsSidebarOpen(true)} className="sidebar-toggle">*/}
+            {/*            <Menu size={18} />*/}
+            {/*        </button>*/}
+            {/*    </header>*/}
+            {/*    {currentConversation.messages.length === 0 ? (*/}
+            {/*        // Welcome container*/}
+            {/*            <div className="welcome-container">*/}
+            {/*                <img className="welcome-logo" src="/download.png" alt="Meal" />*/}
+            {/*                <h1 className="welcome-heading">Create a meal</h1>*/}
+            {/*                <p className="welcome-text">Choose a scenario to get started</p>*/}
+            {/*                <ScenarioCards onSelectScenario={handleSelectScenario} />*/}
+            {/*            </div>*/}
+            {/*    ) : (*/}
+            {/*        // Messages container*/}
+            {/*        <div className="messages-container" ref={messagesContainerRef}>*/}
+            {/*            {currentConversation.messages.map((message) => (*/}
+            {/*                <Message key={message.id} message={message} />*/}
+            {/*            ))}*/}
+            {/*        </div>*/}
+            {/*    )}*/}
+            {/*    /!* Prompt input *!/*/}
+            {/*    <div className="prompt-container">*/}
+            {/*        <div className="prompt-wrapper">*/}
+            {/*            <PromptForm conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} generateResponse={generateResponse} isLoading={isLoading} setIsLoading={setIsLoading} />*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</main>*/}
+            <Routes>
+                <Route path="/" element={
+                    <main className="main-container">
+                        <header className="main-header">
+                            <button onClick={() => setIsSidebarOpen(true)} className="sidebar-toggle">
+                                <Menu size={18} />
+                            </button>
+                        </header>
+                        {currentConversation.messages.length === 0 ? (
+                            <div className="welcome-container">
+                                {/*<img className="welcome-logo" src='download.png' alt="Meal" />*/}
+                                <h1 className="welcome-heading">Create a meal</h1>
+                                <p className="welcome-text">Choose a scenario to get started</p>
+                                <ScenarioCards onSelectScenario={handleSelectScenario} />
+                            </div>
+                        ) : (
+                            <div className="messages-container" ref={messagesContainerRef}>
+                                {currentConversation.messages.map((message) => (
+                                    <Message key={message.id} message={message} />
+                                ))}
+                            </div>
+                        )}
+                        <div className="prompt-container">
+                            <div className="prompt-wrapper">
+                                <PromptForm
+                                    conversations={conversations}
+                                    setConversations={setConversations}
+                                    activeConversation={activeConversation}
+                                    generateResponse={generateResponse}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                />
+                            </div>
+                            <p className="disclaimer-text">Describe your goal or choose from templates</p>
                         </div>
-                ) : (
-                    // Messages container
-                    <div className="messages-container" ref={messagesContainerRef}>
-                        {currentConversation.messages.map((message) => (
-                            <Message key={message.id} message={message} />
-                        ))}
-                    </div>
-                )}
-                {/* Prompt input */}
-                <div className="prompt-container">
-                    <div className="prompt-wrapper">
-                        <PromptForm conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} generateResponse={generateResponse} isLoading={isLoading} setIsLoading={setIsLoading} />
-                    </div>
-                </div>
-            </main>
+                    </main>
+                } />
+                <Route path="/dashboard" element={
+                    <main className="main-container dashboard-page">
+                        <header className="main-header">
+                            <button onClick={() => setIsSidebarOpen(true)} className="sidebar-toggle">
+                                <Menu size={18} />
+                            </button>
+                        </header>
+                        <Dashboard theme={theme} />
+                    </main>
+                } />
+            </Routes>
         </div>
     );
 };
