@@ -134,23 +134,26 @@ const App = () => {
   };
   // Generate AI response
   const generateResponse = async (conversation, botMessageId) => {
-    // Format messages for API
-    const formattedMessages = conversation.messages?.map((msg) => ({
-      role: msg.role === "bot" ? "model" : msg.role,
-      parts: [{ text: msg.content }],
-    }));
+    // Get the last user message as the query
+    const userMessages = conversation.messages.filter(msg => msg.role === "user");
+    const query = userMessages[userMessages.length - 1]?.content || "";
+    
     try {
-      const res = await fetch(import.meta.env.VITE_API_URL, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: formattedMessages }),
+        body: JSON.stringify({ 
+          query: query,
+          thread_id: conversation.id,
+          use_retrieval: true,
+          top_k: 3
+        }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error.message);
-      // Clean up response formatting
-      const responseText = data.candidates[0].content.parts[0].text
-        .replace(/\*\*([^*]+)\*\*/g, "$1")
-        .trim();
+      if (!res.ok) throw new Error(data.error?.message || "Request failed");
+      
+      // Use the response from RAG system
+      const responseText = data.response;
       typingEffect(responseText, botMessageId);
     } catch (error) {
       setIsLoading(false);
