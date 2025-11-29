@@ -245,7 +245,6 @@ import Message from "./components/Message";
 import PromptForm from "./components/PromptForm";
 import Sidebar from "./components/Sidebar";
 import { Menu } from "lucide-react";
-import Header from "./components/Header.jsx";
 const App = () => {
     // Main app state
     const [isLoading, setIsLoading] = useState(false);
@@ -395,9 +394,6 @@ const App = () => {
             <div className={`overlay ${isSidebarOpen ? "show" : "hide"}`} onClick={() => setIsSidebarOpen(false)}></div>
             <Sidebar conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} setActiveConversation={setActiveConversation} theme={theme} setTheme={setTheme} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
             <main className="main-container">
-                <nav className="justify-end">
-                    <Header />
-                </nav>
 
                 <header className="main-header">
                     <button onClick={() => setIsSidebarOpen(true)} className="sidebar-toggle">
