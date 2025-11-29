@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import { ReactLenis } from 'lenis/react'
+import Sidebar from "./components/Sidebar.jsx";
+import Header from "./components/Header.jsx";
 
 function App() {
   const [messages, setMessages] = useState([]);
