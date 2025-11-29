@@ -6,6 +6,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     OPENAI_API_KEY: str
 
+    QDRANT_API_KEY: str
+    QDRANT_DATABASE_URL: str
+
     @model_validator(mode="before")
     @classmethod
     def ensure_no_empty_vars(cls, values: dict):
