@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from pathlib import Path
+import json
 from typing import Any
 
 from pydantic_ai import Agent, RunContext
@@ -21,6 +23,8 @@ class ChatDeps:
     radius_m: int
     types: list[str]
     max_per_brand: int = 1
+    # thread id to persist tool results into thread-scoped data
+    thread_id: str | None = None
 
 
 # Single shared agent instance using OpenAI via Pydantic AI
@@ -49,4 +53,25 @@ def find_nearby_places(ctx: RunContext[ChatDeps | None], top_k: int = 5) -> list
         max_pages=5,
         max_per_brand=deps.max_per_brand,
     )
+    # Persist full places (with coords) into thread_data if we know the thread
+    if deps.thread_id:
+        td_dir = Path("./backend/thread_data")
+        td_dir.mkdir(parents=True, exist_ok=True)
+        td_file = td_dir / f"{deps.thread_id}.json"
+        data: dict[str, Any] = {}
+        if td_file.exists():
+            try:
+                with td_file.open("r", encoding="utf-8") as fh:
+                    data = json.load(fh)
+            except Exception:
+                data = {}
+        data["places"] = places  # full payload incl. lat/lng
+        try:
+            with td_file.open("w", encoding="utf-8") as fh:
+                json.dump(data, fh)
+        except Exception:
+            # fail-soft on persistence
+            pass
+
+    # Return minimal info to the model (name + distance only)
     return [{"name": p["name"], "distance_m": p["distance_m"]} for p in places[: max(1, top_k)]]

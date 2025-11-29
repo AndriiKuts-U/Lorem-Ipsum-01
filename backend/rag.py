@@ -166,6 +166,7 @@ class RAGSystem:
                     lng=float(d.get("lng")),
                     radius_m=int(d.get("radius_m", 5000)),
                     types=d.get("types", ["supermarket"]),
+                    thread_id=thread_id,
                 )
             except Exception:
                 deps_any = None
@@ -244,6 +245,7 @@ class RAGSystem:
                     lng=float(d.get("lng")),
                     radius_m=int(d.get("radius_m", 5000)),
                     types=d.get("types", ["supermarket"]),
+                    thread_id=thread_id,
                 )
             except Exception:
                 deps_any = None

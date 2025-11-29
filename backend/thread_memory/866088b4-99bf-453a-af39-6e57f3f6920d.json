@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "What supermarkets are nearby?"
+  },
+  {
+    "role": "assistant",
+    "content": "Here are some nearby supermarkets:\n\n1. **FRESH Plus Merk\u00far** - 98 meters away\n2. **BILLA** - 1,017 meters away\n3. **Lidl** - 1,175 meters away\n4. **KLAS Potraviny - \u010c\u00ed\u017eik** - 1,286 meters away\n5. **Kaufland** - 1,855 meters away\n\nYou can find your Tesco items or similar products in these stores!"
+  },
+  {
+    "role": "user",
+    "content": "Based on those, suggest a quick breakfast shopping list under \u20ac10."
+  },
+  {
+    "role": "assistant",
+    "content": "Here's a quick breakfast shopping list under \u20ac10 based on your preferences:\n\n1. **Fresh Eggs (M, 10 pcs)** - Approx. \u20ac2.00\n2. **Selected Snacks (Snack Day)** from Lidl Plus - \u20ac0.35\n3. **Selected Spreads (Chef Select)** from Lidl Plus - \u20ac0.69\n4. **Bread** - Approx. \u20ac1.00 (check Lidl or any nearby supermarket)\n5. **Bananas** (or any seasonal fruit) - Approx. \u20ac1.00\n6. **Yogurt or Milk** - Approx. \u20ac1.00\n\nEstimated Total: \u20ac6.04 \n\nThis leaves you room to add an extra item like a pastry or coffee, staying comfortably under \u20ac10!"
+  },
+  {
+    "role": "user",
+    "content": "Remind me which stores you mentioned first."
+  },
+  {
+    "role": "assistant",
+    "content": "Here are the nearby supermarkets I mentioned earlier:\n\n1. **FRESH Plus Merk\u00far** - 98 meters away\n2. **BILLA** - 1,017 meters away\n3. **Lidl** - 1,175 meters away\n4. **KLAS Potraviny - \u010c\u00ed\u017eik** - 1,286 meters away\n5. **Kaufland** - 1,855 meters away\n\nYou can shop at any of these stores for your breakfast items!"
+  }
+]
