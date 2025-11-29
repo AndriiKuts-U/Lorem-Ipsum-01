@@ -135,11 +135,15 @@ function App() {
   };
 
   return (
-    <main className="flex pl-[250px] pt-20 flex-row gap-8">
+    <main
+      className={`flex  pt-20 flex-row gap-8 ${
+        messages.length === 0 ? "justify-center" : ""
+      }`}
+    >
       <div
-        className={`relative h-[82vh] bg-[#383838] rounded-2xl flex flex-col overflow-hidden ${
-          messages.length === 0 ? "w-[60vw]" : "w-[700px]"
-        }`}
+        className={`relative flex flex-col overflow-hidden ${
+          messages.length === 0 ? "h-[80vh] w-[50vw]" : "min-w-[20vw] h-[87vh]"
+        } `}
       >
         <div className="flex-1 p-6 overflow-y-auto">
           {messages.length === 0 ? (
@@ -199,7 +203,10 @@ function App() {
           )}
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-[#484848] p-4 flex gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-[#484848] p-4 m-4 rounded-4xl flex gap-4"
+        >
           <input
             type="text"
             value={inputValue}
@@ -219,7 +226,7 @@ function App() {
         </form>
       </div>
       {messages.length > 0 && (
-        <div className="h-screen -mt-20 w-[1000px] bg-[#2d3d2d] rounded-tl-3xl rounded-bl-3xl p-5">
+        <div className="h-screen -mt-20 w-[1000px] bg-[#283628] rounded-tl-4xl rounded-bl-4xl p-5">
           Dashboard Placeholder
         </div>
       )}
