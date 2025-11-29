@@ -3,6 +3,15 @@ import { ReactLenis } from 'lenis/react'
 import Sidebar from "./components/Sidebar.jsx";
 import Header from "./components/Header.jsx";
 
+const chats = {
+    "1": {
+        name: "Holiday Dinner"
+    },
+    "2": {
+        name: "Top 5 quick meals for lunch"
+    },
+}
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -135,102 +144,105 @@ function App() {
   };
 
   return (
-    <main
-      className={`flex  pt-20 flex-row gap-8 ${
-        messages.length === 0 ? "justify-center" : ""
-      }`}
-    >
-      <div
-        className={`relative flex flex-col overflow-hidden ${
-          messages.length === 0 ? "h-[80vh] w-[50vw]" : "min-w-[20vw] h-[87vh]"
-        } `}
-      >
-        <div className="flex-1 p-6 overflow-y-auto">
-          {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-100">
-              <h2 className="text-2xl font-semibold mb-4">
-                Welcome to xAI Chat!
-              </h2>
-              <button
-                onClick={handleScene}
-                className="text-gray-400 bg-[#2a2929] p-2 rounded-xl hover:cursor-pointer"
+      <div className="flex flex-row h-screen overflow-hidden">
+          <Sidebar chatHistory={chats} />
+          <main
+              className={`flex pt-20 flex-row gap-8 ml-[15vw] ${
+                messages.length === 0 ? "justify-center" : ""
+              }`}
+            >
+              <div
+                className={`relative flex flex-col overflow-hidden ${
+                  messages.length === 0 ? "h-[80vh] w-[50vw]" : "min-w-[20vw] h-[87vh]"
+                } `}
               >
-                Make a meal
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[70%] p-4 rounded-2xl ${
-                      message.role === "user"
-                        ? "bg-[#514a3e] text-white"
-                        : "bg-[#232323] text-white"
-                    }`}
-                  >
-                    <p className="whitespace-pre-wrap">{message.content}</p>
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="max-w-[70%] p-4 rounded-2xl bg-[#232323] text-white">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-1">
-                        <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"></div>
-                        <div
-                          className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.1s" }}
-                        ></div>
-                        <div
-                          className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.2s" }}
-                        ></div>
-                      </div>
-                      <span>Thinking...</span>
+                <div className="flex-1 p-6 overflow-y-auto">
+                  {messages.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full text-gray-100">
+                      <h2 className="text-2xl font-semibold mb-4">
+                        Welcome to xAI Chat!
+                      </h2>
+                      <button
+                        onClick={handleScene}
+                        className="text-gray-400 bg-[#2a2929] p-2 rounded-xl hover:cursor-pointer"
+                      >
+                        Make a meal
+                      </button>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {messages.map((message, index) => (
+                        <div
+                          key={index}
+                          className={`flex ${
+                            message.role === "user" ? "justify-end" : "justify-start"
+                          }`}
+                        >
+                          <div
+                            className={`max-w-[70%] p-4 rounded-2xl ${
+                              message.role === "user"
+                                ? "bg-[#514a3e] text-white"
+                                : "bg-[#232323] text-white"
+                            }`}
+                          >
+                            <p className="whitespace-pre-wrap">{message.content}</p>
+                          </div>
+                        </div>
+                      ))}
+                      {isLoading && (
+                        <div className="flex justify-start">
+                          <div className="max-w-[70%] p-4 rounded-2xl bg-[#232323] text-white">
+                            <div className="flex items-center space-x-2">
+                              <div className="flex space-x-1">
+                                <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"></div>
+                                <div
+                                  className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"
+                                  style={{ animationDelay: "0.1s" }}
+                                ></div>
+                                <div
+                                  className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"
+                                  style={{ animationDelay: "0.2s" }}
+                                ></div>
+                              </div>
+                              <span>Thinking...</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      <div ref={messagesEndRef} />
+                    </div>
+                  )}
+                </div>
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="bg-[#484848] p-4 m-4 rounded-4xl flex gap-4"
+                >
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    className="flex-1 p-4  text-white rounded-2xl focus:outline-none"
+                    placeholder="Message here..."
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!inputValue.trim() || isLoading}
+                    className="px-8 py-4 bg-[#413727] hover:bg-[#524532] disabled:bg-[#767676] rounded-2xl text-white font-semibold transition-colors disabled:cursor-not-allowed"
+                  >
+                    {">"}
+                  </button>
+                </form>
+              </div>
+              {messages.length > 0 && (
+                <div className="h-screen -mt-20 w-[1000px] bg-[#283628] rounded-tl-4xl rounded-bl-4xl p-5">
+                  Dashboard Placeholder
                 </div>
               )}
-              <div ref={messagesEndRef} />
-            </div>
-          )}
-        </div>
-
-        <form
-          onSubmit={handleSubmit}
-          className="bg-[#484848] p-4 m-4 rounded-4xl flex gap-4"
-        >
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="flex-1 p-4  text-white rounded-2xl focus:outline-none"
-            placeholder="Message here..."
-            disabled={isLoading}
-          />
-          <button
-            type="submit"
-            disabled={!inputValue.trim() || isLoading}
-            className="px-8 py-4 bg-[#413727] hover:bg-[#524532] disabled:bg-[#767676] rounded-2xl text-white font-semibold transition-colors disabled:cursor-not-allowed"
-          >
-            {">"}
-          </button>
-        </form>
+          </main>
       </div>
-      {messages.length > 0 && (
-        <div className="h-screen -mt-20 w-[1000px] bg-[#283628] rounded-tl-4xl rounded-bl-4xl p-5">
-          Dashboard Placeholder
-        </div>
-      )}
-    </main>
   );
 }
 

@@ -9,7 +9,7 @@ const Header = () => {
         ];
 
     return (
-            <div className="flex justify-end items-center p-5">
+            <div className="flex justify-start items-center p-5">
                 <GlassSurface
                     width={150}
                     height={400}
