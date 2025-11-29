@@ -2,12 +2,12 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
-# Copy pyproject.toml first
-COPY pyproject.toml .
+# Copy pyproject.toml and README first
+COPY pyproject.toml README.md ./
 
-# Install dependencies
+# Install dependencies from pyproject.toml
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir fastapi openai pydantic-settings qdrant-client uvicorn requests beautifulsoup4
+    pip install --no-cache-dir .
 
 # Copy backend code
 COPY backend/ /app/backend/
