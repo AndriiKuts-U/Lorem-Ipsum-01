@@ -24,6 +24,13 @@ services:
     container_name: dtit25-frontend
     ports:
       - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost/api
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/index.html:/app/index.html
+      - /app/node_modules
     depends_on:
       - backend
     networks:
