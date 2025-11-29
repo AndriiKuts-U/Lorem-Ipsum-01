@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from backend.maps.address import find_nearby_places
+from backend.rag import RAGSystem
 from backend.rag_tools import GroceryPriceComparer
 
 

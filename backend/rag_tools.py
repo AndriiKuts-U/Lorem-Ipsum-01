@@ -5,7 +5,7 @@ Tools for comparing grocery prices across different stores using RAG.
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 from collections import defaultdict
-from rag import RAGSystem
+from backend.rag import RAGSystem
 
 
 @dataclass
