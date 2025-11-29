@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 
-from backend.rag import RAGSystem
+from rag import RAGSystem
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -10,7 +10,7 @@ from backend.maps.address import find_nearby_places
 # Pydantic models for request/response
 class Document(BaseModel):
     text: str = Field(..., description="Document text content")
-    metadata: dict[str, str] = Field(default_factory=dict, description="Optional metadata")
+    metadata: dict = Field(default_factory=dict, description="Optional metadata")
 
 
 class AddDocumentsRequest(BaseModel):
@@ -146,6 +146,7 @@ async def add_documents_endpoint(request: AddDocumentsRequest):
     try:
         # Convert Pydantic models to dicts
         docs = [doc.model_dump() for doc in request.documents]
+        # print(docs)
         app.state.rag_system.add_documents(docs)
         return AddDocumentsResponse(
             message="Documents added successfully", count=len(request.documents)

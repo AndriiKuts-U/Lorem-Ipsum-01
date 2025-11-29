@@ -12,7 +12,7 @@ from backend.settings import settings
 
 class RAGSystem:
     def __init__(
-        self, collection_name: str = "test_collection", memory_dir: str = "./thread_memory"
+        self, collection_name: str = "groceries", memory_dir: str = "./thread_memory"
     ):
         """
         Initialize RAG system with OpenAI, Qdrant, and local memory.
@@ -65,9 +65,9 @@ class RAGSystem:
             point = PointStruct(
                 id=str(uuid.uuid4()), vector=embedding, payload={"text": text, **metadata}
             )
+            # print(point)
             points.append(point)
-
-        self.qdrant.upsert(collection_name=self.collection_name, points=points)
+            self.qdrant.upsert(collection_name=self.collection_name, points=[point])
         print(f"Added {len(documents)} documents to collection")
 
     def retrieve_context(self, query: str, top_k: int = 3) -> list[dict]:
