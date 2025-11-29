@@ -1,7 +1,7 @@
 const Message = ({ message }) => {
     return (
         <div id={message.id} className={`message ${message.role}-message ${message.loading ? "loading" : ""} ${message.error ? "error" : ""}`}>
-            {message.role === "bot" && <img className="avatar" src="/icons/download.png" alt="Bot Avatar" />}
+            {message.role === "bot" && <img className="avatar" src="/download.png" alt="Bot Avatar" />}
             <p className="text">{message.content}</p>
         </div>
     );

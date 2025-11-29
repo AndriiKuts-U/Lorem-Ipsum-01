@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import Message from "./components/Message";
 import PromptForm from "./components/PromptForm";
 import Sidebar from "./components/Sidebar";
+import ScenarioCards from "./components/ScenarioCards";
 import { Menu } from "lucide-react";
+
 const App = () => {
     // Main app state
     const [isLoading, setIsLoading] = useState(false);
@@ -147,6 +149,40 @@ const App = () => {
             )
         );
     };
+
+    const handleSelectScenario = (prompt) => {
+        // Create user message
+        const userMessageId = `user-${Date.now()}`;
+        const botMessageId = `bot-${Date.now()}`;
+
+        const userMessage = {
+            id: userMessageId,
+            role: "user",
+            content: prompt,
+        };
+
+        const botMessage = {
+            id: botMessageId,
+            role: "bot",
+            content: "...",
+            loading: true,
+        };
+
+        // Update conversation with messages
+        const updatedConversation = {
+            ...currentConversation,
+            title: prompt.slice(0, 30) + (prompt.length > 30 ? "..." : ""),
+            messages: [...currentConversation.messages, userMessage, botMessage],
+        };
+
+        setConversations((prev) =>
+            prev.map((conv) => (conv.id === activeConversation ? updatedConversation : conv))
+        );
+
+        setIsLoading(true);
+        generateResponse(updatedConversation, botMessageId);
+    };
+
     return (
         <div className={`app-container ${theme === "light" ? "light-theme" : "dark-theme"}`}>
             <div className={`overlay ${isSidebarOpen ? "show" : "hide"}`} onClick={() => setIsSidebarOpen(false)}></div>
@@ -160,11 +196,12 @@ const App = () => {
                 </header>
                 {currentConversation.messages.length === 0 ? (
                     // Welcome container
-                    <div className="welcome-container">
-                        <img className="welcome-logo" src="/components/icons/download.png" alt="Gemini Logo" />
-                        <h1 className="welcome-heading">Create a meal</h1>
-                        {/*<p className="welcome-text">Let's </p>*/}
-                    </div>
+                        <div className="welcome-container">
+                            <img className="welcome-logo" src="/download.png" alt="Meal" />
+                            <h1 className="welcome-heading">Create a meal</h1>
+                            <p className="welcome-text">Choose a scenario to get started</p>
+                            <ScenarioCards onSelectScenario={handleSelectScenario} />
+                        </div>
                 ) : (
                     // Messages container
                     <div className="messages-container" ref={messagesContainerRef}>
@@ -178,7 +215,6 @@ const App = () => {
                     <div className="prompt-wrapper">
                         <PromptForm conversations={conversations} setConversations={setConversations} activeConversation={activeConversation} generateResponse={generateResponse} isLoading={isLoading} setIsLoading={setIsLoading} />
                     </div>
-                    <p className="disclaimer-text">Describe your goal or choose from templates</p>
                 </div>
             </main>
         </div>

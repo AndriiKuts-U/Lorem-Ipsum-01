@@ -281,8 +281,255 @@
 .messages-container .message.error {
     color: #d62939;
 }
+.suggestion-cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.suggestion-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.suggestion-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.app-container.light-theme .suggestion-title {
+    background: linear-gradient(135deg, #1a1a1a 0%, rgba(0,0,0,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.suggestion-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+}
+
+.suggestion-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.suggestion-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion-card:active {
+    transform: translateY(-2px);
+}
+
+.app-container.light-theme .suggestion-card {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+.app-container.light-theme .suggestion-card:hover {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-card-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.suggestion-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.suggestion-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+}
+
+.suggestion-card-description {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .suggestion-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .suggestion-title {
+        font-size: 1.5rem;
+    }
+
+    .suggestion-header {
+        margin-bottom: 24px;
+    }
+
+    .suggestion-card {
+        padding: 16px;
+    }
+
+    .suggestion-card-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    .suggestion-card-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+.welcome-text {
+    font-size: 1.1rem;
+    max-width: 400px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+}
+
+/* Scenario Cards - Apple Glass Style */
+.scenario-cards-container {
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+}
+
+.scenario-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.scenario-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.scenario-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.scenario-card:active {
+    transform: translateY(-2px);
+}
+
+.scenario-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.scenario-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+}
+
+.scenario-description {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* Light theme adjustments for scenario cards */
+.app-container.light-theme .scenario-card {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+.app-container.light-theme .scenario-card:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+    .scenario-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-container {
+        height: auto;
+        padding-top: 40px;
+    }
+}
+
 .main-container .prompt-container {
     padding: 16px 0;
+    margin-bottom: 20px;
     width: 100%;
     background: var(--color-bg-primary);
 }
