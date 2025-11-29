@@ -74,7 +74,7 @@ class RAGSystem:
             self.qdrant.upsert(collection_name=self.collection_name, points=[point])
         print(f"Added {len(documents)} documents to collection")
 
-    def retrieve_context(self, query: str, top_k: int = 3) -> list[dict]:
+    def retrieve_context(self, query: str, top_k: int = 3, include_metadata: bool = False) -> list[dict]:
         """Retrieve relevant documents from Qdrant."""
 
         query_embedding = self._get_embedding(query)
@@ -85,17 +85,22 @@ class RAGSystem:
             limit=top_k,
             with_payload=True,
         )
-        print(results)
+        # print(results)
         out = []
         for hit in results.points:
             payload = hit.payload or {}
             text_val = payload.get("text", "")
-            out.append(
-                {
-                    "text": text_val,
-                    "score": hit.score,
-                }
-            )
+
+            result = {
+                "text": text_val,
+                "score": hit.score,
+            }
+
+            # Include full metadata if requested
+            if include_metadata:
+                result.update(payload)
+
+            out.append(result)
         return out
 
     def _load_thread(self, thread_id: str) -> list[dict]:

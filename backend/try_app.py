@@ -24,15 +24,16 @@ def add_documents():
     print("2. ADD DOCUMENTS")
     print("="*60)
 
-    documents = json.load(open("data/lidl_products_parsed.json", encoding="utf-8"))
+    documents = json.load(open("data/tesco_parsed_turbo.json", encoding="utf-8"))
     insert_documents = []
     for i in documents:
         insert_documents.append({"text": i["name"],
-                                 "metadata": {"source":"lidl",
-                                              "price": i["price"],
-                                              "price_original": i["price_original"],
-                                              # "discount_percentage": i["discount_percentage"],
+                                 "metadata": {"source":"tesco",
+                                              "price": i["price_discounted"] if i["price_discounted"] is not None else i["price"],
+                                              "price_original": i["price"],
+                                              "discount_percentage": i["discount_percentage"] if i["discount_percentage"] is not None else 0,
                                               "amount": i["amount"],
+                                              "unit": i["unit"],
                                               "description": i["description"],
                                               "category": i["category"]
                                               }})
@@ -157,7 +158,7 @@ def run_full_demo():
         health_check()
 
         # # 2. Add documents to the vector database
-        add_documents()
+        # add_documents()
 
         # 3. Search for documents
         search_documents("What is Python?", top_k=2)
@@ -264,13 +265,13 @@ def interactive_chat():
 
 
 if __name__ == "__main__":
-    # import sys
-    #
-    # if len(sys.argv) > 1 and sys.argv[1] == "interactive":
-    #     interactive_chat()
-    # else:
-    #     run_full_demo()
-    add_documents()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "interactive":
+        interactive_chat()
+    else:
+        run_full_demo()
+    # add_documents()
         # Uncomment to run interactive mode after demo
         # print("\n\nStarting interactive mode...")
         # interactive_chat()

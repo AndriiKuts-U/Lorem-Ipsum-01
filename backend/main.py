@@ -7,13 +7,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from backend.maps.address import find_nearby_places
-from backend.rag import RAGSystem
+from backend.rag_tools import GroceryPriceComparer
 
 
 # Pydantic models for request/response
 class Document(BaseModel):
     text: str = Field(..., description="Document text content")
     metadata: dict = Field(default_factory=dict, description="Optional metadata")
+
+
+class ComparePricesRequest(BaseModel):
+    query: str = Field(..., description="Slovak text query (e.g., 'mlieko', 'chlieb')")
+    top_k: int = Field(10, description="Number of results to search")
+    price_threshold: float = Field(5.0, description="Price difference threshold in percentage")
+
+
+class ShoppingListRequest(BaseModel):
+    items: list[str] = Field(..., description="List of Slovak product queries")
+    price_threshold: float = Field(5.0, description="Price difference threshold in percentage")
+
+
 
 
 class AddDocumentsRequest(BaseModel):
@@ -312,6 +325,69 @@ async def get_thread_endpoint(thread_id: str):
         return {"thread_id": thread_id, "messages": messages, "message_count": len(messages)}
     except HTTPException:
         raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/prices/compare", tags=["Price Comparison"])
+async def compare_prices_endpoint(request: ComparePricesRequest):
+    """
+    Compare prices for a grocery item across different stores.
+
+    - **query**: Slovak text query (e.g., "mlieko", "chlieb", "maslo")
+    - **top_k**: Number of similar items to retrieve
+    - **price_threshold**: Price difference threshold in percentage (e.g., 5.0 for 5%)
+
+    Returns price comparison with cheapest store and price differences.
+    """
+    try:
+        comparer = GroceryPriceComparer(
+            rag_system=app.state.rag_system,
+            price_threshold_percent=request.price_threshold
+        )
+
+        result = comparer.compare_prices(query=request.query, top_k=request.top_k)
+
+        if not result:
+            raise HTTPException(status_code=404, detail=f"No products found for query: {request.query}")
+
+        # Convert dataclass to dict for JSON response
+        return {
+            "query": result.query,
+            "cheapest_store": result.cheapest_store,
+            "cheapest_price": result.cheapest_price,
+            "price_differences": result.price_differences,
+            "recommendation": result.recommendation,
+            "items_count": sum(len(items) for items in result.items_by_store.values()),
+            "stores_found": list(result.items_by_store.keys())
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/prices/shopping-list", tags=["Price Comparison"])
+async def shopping_list_endpoint(request: ShoppingListRequest):
+    """
+    Find the best store for buying all items in a shopping list.
+
+    - **items**: List of Slovak product queries (e.g., ["mlieko", "chlieb", "maslo"])
+    - **price_threshold**: Price difference threshold in percentage
+
+    Returns analysis of which store is best for your entire shopping list with total savings.
+    """
+    try:
+        comparer = GroceryPriceComparer(
+            rag_system=app.state.rag_system,
+            price_threshold_percent=request.price_threshold
+        )
+
+        result = comparer.get_best_store_for_list(items=request.items)
+
+        return result
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
