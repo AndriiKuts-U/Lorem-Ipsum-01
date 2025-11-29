@@ -1,10 +1,13 @@
+import json
 from contextlib import asynccontextmanager
+from pathlib import Path
 
-from backend.rag import RAGSystem
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+
 from backend.maps.address import find_nearby_places
+from backend.rag import RAGSystem
 
 
 # Pydantic models for request/response
@@ -78,6 +81,21 @@ class NearbyPlacesResponse(BaseModel):
     places: list[NearbyPlace]
 
 
+# Session models
+class SetLocationRequest(BaseModel):
+    thread_id: str
+    lat: float
+    lng: float
+    radius_m: int | None = Field(default=5000, ge=1)
+
+
+class LocationResponse(BaseModel):
+    thread_id: str
+    lat: float
+    lng: float
+    radius_m: int
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     rag_system = RAGSystem()
@@ -124,7 +142,7 @@ async def chat_endpoint(request: ChatRequest):
     - **top_k**: Number of documents to retrieve (if use_retrieval is True)
     """
     try:
-        result = app.state.rag_system.chat(
+        result = await app.state.rag_system.chat_async(
             query=request.query,
             thread_id=request.thread_id,
             use_retrieval=request.use_retrieval,
@@ -172,6 +190,60 @@ async def search_documents_endpoint(request: SearchRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+THREAD_DATA_DIR = Path("./backend/thread_data")
+THREAD_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+
+@app.post("/session/location", response_model=LocationResponse, tags=["Session"])
+async def set_location(request: SetLocationRequest):
+    try:
+        data = {
+            "lat": request.lat,
+            "lng": request.lng,
+            "radius_m": request.radius_m or 5000,
+        }
+        f = THREAD_DATA_DIR / f"{request.thread_id}.json"
+        with f.open("w", encoding="utf-8") as fh:
+            json.dump(data, fh)
+        return LocationResponse(
+            thread_id=request.thread_id,
+            lat=data["lat"],
+            lng=data["lng"],
+            radius_m=data["radius_m"],
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/session/location/{thread_id}", response_model=LocationResponse, tags=["Session"])
+async def get_location(thread_id: str):
+    f = THREAD_DATA_DIR / f"{thread_id}.json"
+    if not f.exists():
+        raise HTTPException(status_code=404, detail="Location not set for thread")
+    try:
+        with f.open("r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        return LocationResponse(
+            thread_id=thread_id,
+            lat=float(data.get("lat")),
+            lng=float(data.get("lng")),
+            radius_m=int(data.get("radius_m", 5000)),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/session/location/{thread_id}", response_model=DeleteThreadResponse, tags=["Session"])
+async def delete_location(thread_id: str):
+    f = THREAD_DATA_DIR / f"{thread_id}.json"
+    if f.exists():
+        try:
+            f.unlink()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+    return DeleteThreadResponse(message="Location removed", thread_id=thread_id)
+
+
 @app.post("/places/nearby", response_model=NearbyPlacesResponse, tags=["Places"])
 async def nearby_places_endpoint(request: NearbyPlacesRequest):
     """Return nearby places by Google Places v1 around given coordinates."""
@@ -180,7 +252,7 @@ async def nearby_places_endpoint(request: NearbyPlacesRequest):
             request.lat,
             request.lng,
             radius_m=request.radius_m,
-            place_types=request.types or ("supermarket", "grocery_store"),
+            place_types=request.types or ["supermarket"],
             min_unique=20,
             max_pages=5,
             max_per_brand=request.max_per_brand,

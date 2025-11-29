@@ -7,13 +7,13 @@ from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 
+from backend.agent_ai import ChatDeps, agent
+from anyio import from_thread
 from backend.settings import settings
 
 
 class RAGSystem:
-    def __init__(
-        self, collection_name: str = "groceries", memory_dir: str = "./thread_memory"
-    ):
+    def __init__(self, collection_name: str = "groceries", memory_dir: str = "./thread_memory"):
         """
         Initialize RAG system with OpenAI, Qdrant, and local memory.
 
@@ -23,9 +23,9 @@ class RAGSystem:
             collection_name: Name of the Qdrant collection
             memory_dir: Directory to store conversation threads
         """
-        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
         self.qdrant = QdrantClient(
-            url=settings.QDRANT_DATABASE_URL, api_key=settings.QDRANT_API_KEY
+            url=settings.QDRANT_DATABASE_URL,
+            api_key=settings.QDRANT_API_KEY,
         )
         self.collection_name = collection_name
         self.memory_dir = Path(memory_dir)
@@ -47,8 +47,12 @@ class RAGSystem:
     #     print(f"Created collection: {self.collection_name}")
 
     def _get_embedding(self, text: str) -> list[float]:
-        """Get embedding vector for text using OpenAI."""
-        response = self.client.embeddings.create(model="text-embedding-3-small", input=text)
+        """Get embedding vector for text using OpenAI embeddings via Pydantic AI's model."""
+        # For embeddings we still use OpenAI directly through qdrant workflows; keep existing model name.
+        # If desired, switch to pydantic-ai embeddings helper when available.
+
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        response = client.embeddings.create(model="text-embedding-3-small", input=text)
         return response.data[0].embedding
 
     def add_documents(self, documents: list[dict[str, Any]]):
@@ -134,26 +138,44 @@ class RAGSystem:
                     f"- {doc['text']}" for doc in retrieved_docs
                 )
 
-        # Build messages for API call
-        api_messages = []
-
-        # System message with context
-        system_content = "You are a helpful assistant."
+        # Build a single prompt for the agent including prior history and dynamic context
+        history_text = "\n\n".join(
+            f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
+        )
+        prompt_parts = []
+        if history_text:
+            prompt_parts.append("Conversation so far:\n" + history_text)
         if context_text:
-            system_content += f"{context_text}\n\nUse the above context to answer the user's question when relevant."
+            prompt_parts.append(
+                context_text
+                + "\nUse the above context to answer the user's question when relevant."
+            )
+        prompt_parts.append("User: " + query)
+        agent_input = "\n\n".join(prompt_parts)
 
-        api_messages.append({"role": "system", "content": system_content})
+        # Load per-thread location deps if available
+        deps_any: Any = None
+        td_dir = Path("./backend/thread_data")
+        td_file = td_dir / f"{thread_id}.json"
+        if td_file.exists():
+            try:
+                with td_file.open("r", encoding="utf-8") as fh:
+                    d = json.load(fh)
+                deps_any = ChatDeps(
+                    lat=float(d.get("lat")),
+                    lng=float(d.get("lng")),
+                    radius_m=int(d.get("radius_m", 5000)),
+                    types=d.get("types", ["supermarket"]),
+                )
+            except Exception:
+                deps_any = None
 
-        # Add conversation history
-        api_messages.extend(messages)
-
-        # Add current query
-        api_messages.append({"role": "user", "content": query})
-
-        # Get response from OpenAI
-        response = self.client.chat.completions.create(model="gpt-4o-mini", messages=api_messages)
-
-        assistant_message = response.choices[0].message.content
+        # Run the agent on the running event loop from this worker thread
+        if deps_any is not None:
+            result = from_thread.run(lambda: agent.run(agent_input, deps=deps_any))
+        else:
+            result = from_thread.run(lambda: agent.run(agent_input))
+        assistant_message = str(result.output)
 
         # Update thread memory
         messages.append({"role": "user", "content": query})
@@ -176,3 +198,68 @@ class RAGSystem:
         if thread_file.exists():
             thread_file.unlink()
             print(f"Deleted thread: {thread_id}")
+
+    async def chat_async(
+        self,
+        query: str,
+        thread_id: str | None = None,
+        use_retrieval: bool = True,
+        top_k: int = 3,
+    ) -> dict:
+        if thread_id is None:
+            thread_id = str(uuid.uuid4())
+        messages = self._load_thread(thread_id)
+
+        context_text = ""
+        retrieved_docs: list[dict] = []
+        if use_retrieval:
+            retrieved_docs = self.retrieve_context(query, top_k=top_k)
+            if retrieved_docs:
+                context_text = "\n\nRelevant context:\n" + "\n".join(
+                    f"- {doc['text']}" for doc in retrieved_docs
+                )
+
+        history_text = "\n\n".join(
+            f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
+        )
+        prompt_parts: list[str] = []
+        if history_text:
+            prompt_parts.append("Conversation so far:\n" + history_text)
+        if context_text:
+            prompt_parts.append(
+                context_text
+                + "\nUse the above context to answer the user's question when relevant."
+            )
+        prompt_parts.append("User: " + query)
+        agent_input = "\n\n".join(prompt_parts)
+
+        deps_any: Any = None
+        td_file = Path("./backend/thread_data") / f"{thread_id}.json"
+        if td_file.exists():
+            try:
+                with td_file.open("r", encoding="utf-8") as fh:
+                    d = json.load(fh)
+                deps_any = ChatDeps(
+                    lat=float(d.get("lat")),
+                    lng=float(d.get("lng")),
+                    radius_m=int(d.get("radius_m", 5000)),
+                    types=d.get("types", ["supermarket"]),
+                )
+            except Exception:
+                deps_any = None
+
+        if deps_any is not None:
+            result = await agent.run(agent_input, deps=deps_any)
+        else:
+            result = await agent.run(agent_input)
+
+        assistant_message = str(result.output)
+        messages.append({"role": "user", "content": query})
+        messages.append({"role": "assistant", "content": assistant_message})
+        self._save_thread(thread_id, messages)
+
+        return {
+            "response": assistant_message,
+            "thread_id": thread_id,
+            "retrieved_context": retrieved_docs,
+        }

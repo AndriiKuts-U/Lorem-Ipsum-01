@@ -1,6 +1,5 @@
 import json
 import os
-from collections.abc import Iterable
 from typing import Any
 
 import requests
@@ -40,7 +39,7 @@ def find_nearby_places(
     lng: float,
     *,
     radius_m: int = 5000,
-    place_types: Iterable[str] | None = ("supermarket"),  # , "grocery_store"
+    place_types: list[str] | None = ["supermarket"],  # , "grocery_store"
     min_unique: int = 20,
     max_pages: int = 5,
     max_per_brand: int = 1,
@@ -140,11 +139,14 @@ if __name__ == "__main__":
     g_params = {"address": test_address, "key": GOOGLE_API_KEY}
     r = requests.get(g_url, params=g_params)
     j = r.json()
+
     if j.get("status") != "OK":
         print("Geocode error:", j.get("status"), j.get("error_message"))
         raise SystemExit(1)
+
     loc = j["results"][0]["geometry"]["location"]
     print(f"Coordinates for '{test_address}': {loc['lat']}, {loc['lng']}")
+
     places = find_nearby_places(loc["lat"], loc["lng"])
     for i, p in enumerate(places, start=1):
         print(f"{i}. {p['distance_m']} m - {p['name']} ({p['lat']}, {p['lng']})")
