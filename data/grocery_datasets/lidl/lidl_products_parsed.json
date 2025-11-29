@@ -1,0 +1,1372 @@
+[
+  {
+    "product_id": "10029886",
+    "name": "Trvanlivé mlieko",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 0.55,
+    "amount": "1,5% tuku",
+    "description": "1,5% tuku Akcia je platná do 30. 11. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii. *Cena za kus pri kúpe 12 kusov = 0,55 €. **Cena za kus pri kúpe 1 kusa = 0,82 €. Cena za 12 kusov = 6,56 €.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029657",
+    "name": "Rona fľaša",
+    "price": 5.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 l",
+    "description": "objem: 1 l",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029850",
+    "name": "Sushi4You Katsuo",
+    "price": 4.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029868",
+    "name": "Kačacie stehná XXL",
+    "price": 0.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "100 g",
+    "description": "cena za 100 g",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029900",
+    "name": "Rosso káva",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 9.99,
+    "amount": null,
+    "description": "zrnková káva Akcia je platná do 30. 11. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029905",
+    "name": "Toaletný papier 2-vrstvový ",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 1.49,
+    "amount": "8",
+    "description": "8 kotúčikov",
+    "category": "Food"
+  },
+  {
+    "product_id": "10026867",
+    "name": "Losos atlantický",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "celá fileta s kožou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029894",
+    "name": "Slnečnicové semienka",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 0.45,
+    "amount": null,
+    "description": "pražené solené Akcia je platná do 30. 11. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029902",
+    "name": "Pšeničná múka",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 0.42,
+    "amount": null,
+    "description": "+ záloh za obal 0,15 €",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029003",
+    "name": "Fitness bageta",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 0.18,
+    "amount": null,
+    "description": "*Cena za kus pri kúpe 7 kusov = 0,18 €. ** Cena za kus pri kúpe 1 kusa = 0,25 €. Cena za 7 kusov = 1,25 €.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029876",
+    "name": "Bagetka malá",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 0.15,
+    "amount": null,
+    "description": "Akcia je platná do 30. 11. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii. *Cena za kus pri kúpe 7 kusov = 0,15 €. **Cena za kus pri kúpe 1 kusa = 0,21 €. Cena za 7 kusov = 1,05 €.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10026566",
+    "name": "Bravčové karé",
+    "price": null,
+    "price_original": null,
+    "price_lidl_plus": 3.49,
+    "amount": null,
+    "description": "v celku, bez kosti cena bez Lidl Plus 3,79 €",
+    "category": "Food"
+  },
+  {
+    "product_id": "10027311",
+    "name": "Koktejlové paradajky strapcové",
+    "price": 1.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10027559",
+    "name": "Biele šampiňóny",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "chladené *Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10027648",
+    "name": "Tmavé hrozno stolové",
+    "price": 1.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10027982",
+    "name": "Sushi",
+    "price": 2.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy",
+    "category": "Food"
+  },
+  {
+    "product_id": "10027995",
+    "name": "Pšeničný bochník",
+    "price": 1.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10028186",
+    "name": "Čučoriedky",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10028486",
+    "name": "Šalátové uhorky",
+    "price": 0.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10028487",
+    "name": "Cibuľa",
+    "price": 1.45,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10028674",
+    "name": "Biela kapusta",
+    "price": 0.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10028829",
+    "name": "Hovädzie pliecko",
+    "price": 11.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10028845",
+    "name": "Ružové hrozno bezjadierkové",
+    "price": 1.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10028846",
+    "name": "Pomaranče",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029063",
+    "name": "Zrelé mango",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029066",
+    "name": "Mandarínky",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029076",
+    "name": "Filety z lososa atlantického",
+    "price": 16.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029185",
+    "name": "Kuracie prsné rezne XXL",
+    "price": 5.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029186",
+    "name": "Mleté mäso MIX XXL",
+    "price": 5.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "bravčové a hovädzie",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029267",
+    "name": "Červené jablká",
+    "price": 0.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029449",
+    "name": "Čučoriedky",
+    "price": 3.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029459",
+    "name": "Kuracie štvrte",
+    "price": 2.09,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029604",
+    "name": "Koktejlové paradajky kríčkové",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029610",
+    "name": "Hovädzí krk",
+    "price": 11.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029680",
+    "name": "Ľadový šalát",
+    "price": 0.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029684",
+    "name": "Bravčový bok",
+    "price": 3.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "s kožou bez kosti",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029685",
+    "name": "Bravčové črevá",
+    "price": 2.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "25 m",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029686",
+    "name": "Bravčový výrez",
+    "price": 3.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029687",
+    "name": "Chrbtová slanina sa smaženie",
+    "price": 2.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029688",
+    "name": "Huspeninový balíček",
+    "price": 3.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029689",
+    "name": "Bravčové koleno zadné",
+    "price": 2.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "s kosťou a kožou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029690",
+    "name": "Bravčová pečeň",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029716",
+    "name": "Bravčová krkovička",
+    "price": 4.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "v celku, bez kosti",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029728",
+    "name": "Cappuccino likér",
+    "price": 6.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "17 % alkoholu",
+    "description": "17 % alkoholu",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029729",
+    "name": "Encián",
+    "price": 1.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029730",
+    "name": "Smotana na šľahanie",
+    "price": 2.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "33 % tuku",
+    "description": "33 % tuku",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029731",
+    "name": "Mliečna čokoláda",
+    "price": 1.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "22 % podiel",
+    "description": "s praženými a solenými kešu orieškami 22 % podiel kešu",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029732",
+    "name": "Mangový nektár",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "+ záloh za obal 0,15 €",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029733",
+    "name": "Pistáciový likér",
+    "price": 5.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "17 % alkoholu",
+    "description": "17 % alkoholu",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029785",
+    "name": "Kuracie stehná XXL",
+    "price": 2.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "horné/dolné",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029824",
+    "name": "Celozrnný chlieb",
+    "price": 2.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "s ovsenými zrnami",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029825",
+    "name": "Vianočný syr kapor",
+    "price": 4.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "parený údený chladené",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029826",
+    "name": "Čokoládové pralinky",
+    "price": 3.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "v tvare srdca",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029827",
+    "name": "Hydrate10 Vitamínový nápoj",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy + záloh za obal 0,15 €",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029828",
+    "name": "Čerstvá šťava z ananásu",
+    "price": 2.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "+ záloh za obal 0,15 € chladené",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029830",
+    "name": "Colgate Ústna voda",
+    "price": 3.95,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029839",
+    "name": "Pšenično-ražný chlieb",
+    "price": 0.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029841",
+    "name": "American Cookies šiška",
+    "price": 0.67,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029842",
+    "name": "Pizza lodička",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "so salámou a mozzarellou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029843",
+    "name": "Burek",
+    "price": 0.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "so syrom",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029844",
+    "name": "Koláčik",
+    "price": 0.45,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "so slivkovou náplňou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029847",
+    "name": "Mleté bravčové mäso XXL",
+    "price": 4.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "welfare chov zo stehna",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029849",
+    "name": "Sumček africký",
+    "price": 0.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "pitvaný, bez hlavy",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029851",
+    "name": "Konzumné zemiaky neskoré",
+    "price": 2.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "varný typ B - prílohové neprané",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029852",
+    "name": "Zrelé avokádo",
+    "price": 0.89,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029854",
+    "name": "Reďkovky",
+    "price": 0.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029855",
+    "name": "Jedlé gaštany",
+    "price": 0.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029856",
+    "name": "Kivi",
+    "price": 0.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029857",
+    "name": "Lahôdková cibuľka",
+    "price": 0.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029858",
+    "name": "Brokolica",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029859",
+    "name": "Tmavé ringloty",
+    "price": 1.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029860",
+    "name": "Hrušky",
+    "price": 1.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029861",
+    "name": "Citróny",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štandardne ponúkanej veľkosti.",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029862",
+    "name": "Kivi žlté",
+    "price": 0.67,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029864",
+    "name": "Kurča celé a 2 kuracie štvrte",
+    "price": 2.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029865",
+    "name": "Sliepka celá",
+    "price": 2.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029866",
+    "name": "Kuracie krídla",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029867",
+    "name": "Mleté hovädzie mäso",
+    "price": 4.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029869",
+    "name": "Kačacie prsia XXL",
+    "price": 0.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "s kožou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029871",
+    "name": "Premium treska",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "chrbtové filety",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029872",
+    "name": "Bravčové karé",
+    "price": 3.18,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 kg",
+    "description": "*Cena za 1 kg pri kúpe od 2 kg = od 3,18 €. **Cena za 1 kg pri kúpe menej ako 2 kg = 6,35 €.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029873",
+    "name": "Cherry paradajky ďatlové",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "*Úspora na jednotkovej cene v porovnaní s produktom v štanadardne ponúkanej veľkosti.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029874",
+    "name": "Kuracie stehná XXL",
+    "price": 2.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "horné/dolné",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029875",
+    "name": "Kuracie prsné rezne",
+    "price": 5.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029885",
+    "name": "Vybrané nátierky Chef Select od 0,69 s Lidl Plus",
+    "price": 0.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "chladené Akcia je platná do 30. 11. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029892",
+    "name": "Vybrané snacky Snack Day od 0,35 s Lidl Plus",
+    "price": 0.35,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Akcia je platná do 30. 11. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029912",
+    "name": "Vianočné oblátky",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029914",
+    "name": "Karfiol",
+    "price": 1.28,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "mrazené",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029915",
+    "name": "Olmíci s dražé",
+    "price": 0.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy chladené",
+    "category": "Food"
+  },
+  {
+    "product_id": "10030019",
+    "name": "Losos atlantický",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "celá fileta s kožou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029916",
+    "name": "Fit Protein kaša",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "s karamelovou príchuťou",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029917",
+    "name": "Kokosová šťava",
+    "price": 1.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029918",
+    "name": "Palmolive Tuhé mydlo",
+    "price": 0.85,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029919",
+    "name": "Varené červené víno Premium",
+    "price": 2.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "rôzne druhy",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029960",
+    "name": "Banány",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029966",
+    "name": "Červená minidyňa",
+    "price": 1.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029967",
+    "name": "Červená paprika špicatá Kapia",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029968",
+    "name": "Ružičkový kel",
+    "price": 0.69,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029969",
+    "name": "Bataty - sladké zemiaky",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029971",
+    "name": "Pór",
+    "price": 0.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "10029974",
+    "name": "Kuracie krídla",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029975",
+    "name": "Kuracie chrbty",
+    "price": 1.39,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029976",
+    "name": "Celá hus",
+    "price": 7.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029977",
+    "name": "Bravčová panenka",
+    "price": 6.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029978",
+    "name": "Morčacie horné stehno",
+    "price": 4.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029979",
+    "name": "Bravčové mäsité rebierka",
+    "price": 3.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029981",
+    "name": "Teľacie stehno orech",
+    "price": 12.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "z mliečneho teľaťa v celku",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029982",
+    "name": "Hovädzia falošná sviečková",
+    "price": 11.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029984",
+    "name": "Pstruh dúhový lososovitý",
+    "price": 1.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "fileta",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029985",
+    "name": "Sumček africký",
+    "price": 1.19,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "bez kože a kosti",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029987",
+    "name": "Bravčová krkovička XXL",
+    "price": 4.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "plátky, bez kosti",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029988",
+    "name": "Kuracie štvrte XXL",
+    "price": 1.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10029989",
+    "name": "Hovädzie stehno",
+    "price": 6.95,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "1 kg",
+    "description": "*Cena za 1 kg pri kúpe od 2 kg = od 6,95 €. **Cena za 1 kg pri kúpe menej ako 2 kg = 13,89 €.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10030003",
+    "name": "Olivový olej",
+    "price": 7.79,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "extra panenský Akcia je platná do 4. 12. 2025. Viac informácií o akcii nájdeš vo svojej Lidl Plus aplikácii.",
+    "category": "Food"
+  },
+  {
+    "product_id": "10030018",
+    "name": "Rump steak",
+    "price": 1.59,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10030020",
+    "name": "Konzumný chlieb",
+    "price": 1.29,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Food"
+  },
+  {
+    "product_id": "10030021",
+    "name": "Šalátové srdiečka",
+    "price": 0.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "OG"
+  },
+  {
+    "product_id": "100394913",
+    "name": "Detská pizza pec",
+    "price": 17.99,
+    "price_original": 22.99,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Interaktívna súprava na hranie pre malých pizzérov",
+    "category": "Kategórie/Detský svet/Hračky/Detské rolové hračky"
+  },
+  {
+    "product_id": "100394940",
+    "name": "Hračka na prípravu burgrov",
+    "price": 17.99,
+    "price_original": 22.99,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Realistické možnosti hry",
+    "category": "Kategórie/Detský svet/Hračky/Detské rolové hračky"
+  },
+  {
+    "product_id": "100395550",
+    "name": "Stavebnica Clippy S",
+    "price": 8.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Kompatibilné so všetkými bežnými fixačnými stavebnicami",
+    "category": "Kategórie/Detský svet/Hračky/Detské rolové hračky"
+  },
+  {
+    "product_id": "100395707",
+    "name": "Kladivo",
+    "price": 7.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Pogumované držadlo na optimálne držanie",
+    "category": "Kategórie/Dom a záhrada/Dielňa/Zariadenie dielne/Ručné náradie"
+  },
+  {
+    "product_id": "100395932",
+    "name": "Detektor dymu RM520",
+    "price": 7.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Vďaka 85 dB hlasnému výstražnému alarmu môžete predísť život ohrozujúcim situáciám",
+    "category": "Kategórie/Multimédiá/Inteligentná domácnosť a bezpečnosť/Inteligentná domácnosť/Inteligentný hlásič dymu"
+  },
+  {
+    "product_id": "100396082",
+    "name": "10349 Veselé rastlinky",
+    "price": 13.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Poskladané rastliny sa môžu umiestniť samostatne alebo spolu na poličku, aby vyčarili úsmev na tvári každému, kto vstúpi do miestnosti",
+    "category": "Kategórie/Detský svet/Hračky/Stavebnica a konštrukcia"
+  },
+  {
+    "product_id": "100396460",
+    "name": "Chlebník Bistro",
+    "price": 15.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Udrží chlieb a pečivo dlhšie čerstvé",
+    "category": "Kategórie/Domácnosť a kuchyňa/Kuchynské príslušenstvo/Uchovávanie a poriadok"
+  },
+  {
+    "product_id": "100396487",
+    "name": "N Series Agility",
+    "price": 9.49,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Pre extrémnu presnosť, rýchlosť a dosah",
+    "category": "Kategórie/Šport a voľný čas/Kemping a outdoor/Hračky na von"
+  },
+  {
+    "product_id": "100396512",
+    "name": "Hracie karty",
+    "price": 5.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Kategórie/Detský svet/Hračky/Spoločenské hry/Doskové hry"
+  },
+  {
+    "product_id": "100396514",
+    "name": "Magnetická stavebnica",
+    "price": 15.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "35-dielna súprava",
+    "category": "Kategórie/Detský svet/Hračky/Stavebnica a konštrukcia"
+  },
+  {
+    "product_id": "100396593",
+    "name": "Vrecká do vysávača PFT 30 A1/PVFT 30 A1/PFBW 30 A1",
+    "price": 7.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Vhodné pre výrobky PARKSIDE série PNTS 1400, PNTS 1500, PWD 25 a PWD 30, ako aj množstvo bežných značkových výrobkov, napr. od Kärcher, Einhell alebo ďalších výrobcov",
+    "category": "Kategórie/Dom a záhrada/Dielňa/Vysávače a prístroje na čistenie/Vysávače na mokré a suché vysávanie"
+  },
+  {
+    "product_id": "100396728",
+    "name": "10311 Orchidea",
+    "price": 37.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Stavebnica LEGO® „Orchidea“ (10311) vám umožní vytvoriť si vlastnú kvetinu, ktorá sa skvelo hodí do vašej obývačky alebo kancelárie",
+    "category": "Kategórie/Detský svet/Hračky/Stavebnica a konštrukcia"
+  },
+  {
+    "product_id": "100396790",
+    "name": "10362 Francúzska kaviareň",
+    "price": 59.99,
+    "price_original": 79.99,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Stavebnica vhodná pre osoby od 18 rokov",
+    "category": "Kategórie/Detský svet/Hračky/Stavebnica a konštrukcia"
+  },
+  {
+    "product_id": "100396849",
+    "name": "42669 Dom včelárov a kvetinová záhrada",
+    "price": 74.99,
+    "price_original": 99.99,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "Stavebnica je skvelý narodeninový alebo darček pre deti a mládež, ktorí milujú hračkárske zvieratá",
+    "category": "Kategórie/Detský svet/Hračky/Stavebnica a konštrukcia"
+  },
+  {
+    "product_id": "100397554",
+    "name": "Mop s vedrom H2PrO Spin",
+    "price": 44.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": "100 % oddelenie",
+    "description": "100 % oddelenie čistej a špinavej vody",
+    "category": "Kategórie/Domácnosť a kuchyňa/Čistenie/Čistiace systémy/Podlahový mop a utierky"
+  },
+  {
+    "product_id": "800010908",
+    "name": "Napínacia plachta, 90 – 100 x 200 cm, tmavosivá, 2 kusy",
+    "price": 11.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Kategórie/Bývanie a zariaďovanie/Posteľné produkty a matrace/Napínacie posteľné plachty"
+  },
+  {
+    "product_id": "800011060",
+    "name": "Prístroj na prípravu popcornu + Nádoby na popcorn + Nádoba na občerstvenie",
+    "price": 139,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Kategórie/Domácnosť a kuchyňa/Drobné kuchynské spotrebiče/Prístroj na výrobu popcornu"
+  },
+  {
+    "product_id": "800011061",
+    "name": "Prístroj na prípravu popcornu + Nádoby na popcorn + Poháre na nápoj",
+    "price": 109,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Kategórie/Domácnosť a kuchyňa/Drobné kuchynské spotrebiče/Prístroj na výrobu popcornu"
+  },
+  {
+    "product_id": "800011062",
+    "name": "Súprava pre fanúšikov LIDL, modrá",
+    "price": 24.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Kategórie/Domácnosť a kuchyňa/Riad a príbor/Porcelán/Šálky a poháre"
+  },
+  {
+    "product_id": "800011065",
+    "name": "Dávkovač cukríkov/orieškov + Elektrický hrniec na prípravu Fondue + Šálky, 2 kusy",
+    "price": 29.99,
+    "price_original": null,
+    "price_lidl_plus": null,
+    "amount": null,
+    "description": "",
+    "category": "Kategórie/Domácnosť a kuchyňa/Drobné kuchynské spotrebiče/Elektrické fondue"
+  }
+]
