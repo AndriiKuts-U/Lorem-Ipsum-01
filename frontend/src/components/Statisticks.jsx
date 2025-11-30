@@ -2,19 +2,19 @@ import {useState} from "react";
 
 const topStores = [
     {
-        name: "Lidl",
-        distance: 120,
+        name: "Fresh",
+        distance: 98,
         price: 1,
     },
     {
-        name: "Fresh",
-        distance: 250,
+        name: "Billa",
+        distance: 1000,
         price: 2,
     },
     {
-        name: "Tesko",
-        distance: 400,
-        price: 1,
+        name: "Lidl",
+        distance: 1200,
+        price: 3,
     }
 ];
 
