@@ -863,9 +863,9 @@
 }
 
 .dashboard-container {
-    padding: 20px;
+    padding: 30px;
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 0 0 0 18rem;
 }
 
 .dashboard-header {

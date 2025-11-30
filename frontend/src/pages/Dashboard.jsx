@@ -271,8 +271,8 @@ const Dashboard = ({theme}) => {
                             <AreaChart data={spendingData}>
                                 <defs>
                                     <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#0050AA" stopOpacity={0.3}/>
-                                        <stop offset="95%" stopColor="#0050AA" stopOpacity={0}/>
+                                        <stop offset="5%" stopColor="#79d98c" stopOpacity={0.3}/>
+                                        <stop offset="95%" stopColor="#79d98c" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
                                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -288,7 +288,7 @@ const Dashboard = ({theme}) => {
                                 />
                                 <Tooltip
                                     contentStyle={{
-                                        background: 'rgba(30,30,40,0.9)',
+                                        background: 'rgba(239,235,236,0.9)',
                                         border: '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '12px',
                                         backdropFilter: 'blur(10px)'
@@ -298,7 +298,7 @@ const Dashboard = ({theme}) => {
                                 <Area
                                     type="monotone"
                                     dataKey="amount"
-                                    stroke="#0050AA"
+                                    stroke="#e20074"
                                     strokeWidth={2}
                                     fillOpacity={1}
                                     fill="url(#colorAmount)"
