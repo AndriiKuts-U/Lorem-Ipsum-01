@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 
 const Statistics = () => {
     const [sidebar, setSidebar] = useState(null);
-    const [checkedItems, setCheckedItems] = useState([]);
+    const [uncheckedItems, setUncheckedItems] = useState([]);
     const fetchedRef = useRef(false);
 
     const handleCheck = (item) => {
-        setCheckedItems((prev) => [...prev, item]);
+        setUncheckedItems((prev) => prev.filter((i) => i !== item));
     };
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const Statistics = () => {
 
     /** Filter remaining grocery items */
     const visibleGroceries = sidebar?.grocery_list.filter(
-        (item) => !checkedItems.includes(item)
+        (item) => !uncheckedItems.includes(item)
     );
 
     return (
