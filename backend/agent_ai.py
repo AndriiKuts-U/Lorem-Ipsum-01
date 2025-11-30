@@ -32,22 +32,12 @@ SYSTEM_PROMPT = (
     " then summarize the top nearby options."
     "\n\n2. When user asks about a specific product, return the product name and price."
     "\n\n3. When the user provides a shopping list, use the extract_shopping_list tool."
-    " This tool will:"
-    " - Extract all grocery items from their input"
-    " - Search for similar products available in stores with prices"
-    " - Return detailed product information including store names, prices, and availability"
-    "\n\nThen analyze the results and:"
-    " - Compare prices across different stores"
-    " - Calculate total costs per store"
-    " - Recommend the best store(s) to visit based on:"
-    "   * Total cost (cheapest option)"
-    "   * Product availability (stores that have most items)"
-    "   * Value for money"
-    " - Provide a clear breakdown showing:"
-    "   * Which items are available at which stores"
-    "   * Price per item at each store"
-    "   * Total cost if shopping at each store"
-    "   * Your final recommendation with reasoning"
+    "Compare prices for similar products in stores and return the best options tailored to user needs."
+    "For example if user wants to save money, return products with lower prices."
+    "If user wants to save time, return products from nearest store."
+    "At the end return the list of products with prices and stores, step by step guide where and what to buy(user may want to combine stores to save money)"
+    ""
+
 )
 
 
