@@ -8,6 +8,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 
 from backend.agent_ai import ChatDeps, agent
+import logging
 from anyio import from_thread
 from backend.settings import settings
 
@@ -30,6 +31,7 @@ class RAGSystem:
         self.collection_name = collection_name
         self.memory_dir = Path(memory_dir)
         self.memory_dir.mkdir(parents=True, exist_ok=True)
+        self.logger = logging.getLogger(__name__)
 
         # Initialize collection if it doesn't exist
         # self._init_collection()
@@ -74,7 +76,9 @@ class RAGSystem:
             self.qdrant.upsert(collection_name=self.collection_name, points=[point])
         print(f"Added {len(documents)} documents to collection")
 
-    def retrieve_context(self, query: str, top_k: int = 3, include_metadata: bool = False) -> list[dict]:
+    def retrieve_context(
+        self, query: str, top_k: int = 3, include_metadata: bool = False
+    ) -> list[dict]:
         """Retrieve relevant documents from Qdrant."""
 
         query_embedding = self._get_embedding(query)
@@ -169,12 +173,34 @@ class RAGSystem:
                 deps_any = ChatDeps(
                     lat=float(d.get("lat")),
                     lng=float(d.get("lng")),
-                    radius_m=int(d.get("radius_m", 5000)),
+                    radius_m=int(d.get("radius_m", 2000)),
                     types=d.get("types", ["supermarket"]),
                     thread_id=thread_id,
                 )
             except Exception:
                 deps_any = None
+        if deps_any is None:
+            # Default fallback location, persist minimal thread_data and warn
+            deps_any = ChatDeps(
+                lat=48.7318664,
+                lng=21.2431019,
+                radius_m=2000,
+                types=["supermarket"],
+                thread_id=thread_id,
+            )
+            try:
+                td_dir.mkdir(parents=True, exist_ok=True)
+                with td_file.open("w", encoding="utf-8") as fh:
+                    json.dump(
+                        {"lat": deps_any.lat, "lng": deps_any.lng, "radius_m": deps_any.radius_m},
+                        fh,
+                    )
+            except Exception:
+                pass
+            self.logger.warning(
+                "Location not set for thread %s; using default coordinates (48.7318664, 21.2431019)",
+                thread_id,
+            )
 
         # Run the agent on the running event loop from this worker thread
         if deps_any is not None:
@@ -248,12 +274,35 @@ class RAGSystem:
                 deps_any = ChatDeps(
                     lat=float(d.get("lat")),
                     lng=float(d.get("lng")),
-                    radius_m=int(d.get("radius_m", 5000)),
+                    radius_m=int(d.get("radius_m", 2000)),
                     types=d.get("types", ["supermarket"]),
                     thread_id=thread_id,
                 )
             except Exception:
                 deps_any = None
+        if deps_any is None:
+            deps_any = ChatDeps(
+                lat=48.7318664,
+                lng=21.2431019,
+                radius_m=2000,
+                types=["supermarket"],
+                thread_id=thread_id,
+            )
+            try:
+                Path("./backend/thread_data").mkdir(parents=True, exist_ok=True)
+                with Path(f"./backend/thread_data/{thread_id}.json").open(
+                    "w", encoding="utf-8"
+                ) as fh:
+                    json.dump(
+                        {"lat": deps_any.lat, "lng": deps_any.lng, "radius_m": deps_any.radius_m},
+                        fh,
+                    )
+            except Exception:
+                pass
+            logging.getLogger(__name__).warning(
+                "Location not set for thread %s; using default coordinates (48.7318664, 21.2431019)",
+                thread_id,
+            )
 
         if deps_any is not None:
             result = await agent.run(agent_input, deps=deps_any)
