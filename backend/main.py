@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from backend.settings import settings
 
 from backend.rag import RAGSystem
+from backend.analytics import StatsService
 from backend.rag_tools import GroceryPriceComparer
 
 HEALTH_STATUS_PROMPT = (
@@ -121,10 +122,20 @@ class LocationResponse(BaseModel):
     radius_m: int
 
 
+class DashboardResponse(BaseModel):
+    updated_at: str
+    favorites: list[dict]
+    caloric_trend: list[dict]
+    recommendations: list[dict]
+    recipes: list[dict]
+    discounts: dict
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     rag_system = RAGSystem()
     app.state.rag_system = rag_system
+    app.state.stats = StatsService()
     # Run app
     yield
     # Shutdown
@@ -303,6 +314,24 @@ async def delete_location(thread_id: str):
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
     return DeleteThreadResponse(message="Location removed", thread_id=thread_id)
+
+
+@app.get("/dashboard", tags=["Dashboard"])
+async def get_dashboard():
+    try:
+        svc: StatsService = app.state.stats
+        return svc.compute_all(recompute=False)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/dashboard/recompute", tags=["Dashboard"])
+async def recompute_dashboard():
+    try:
+        svc: StatsService = app.state.stats
+        return svc.compute_all(recompute=True)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # @app.post("/places/nearby", response_model=NearbyPlacesResponse, tags=["Places"])

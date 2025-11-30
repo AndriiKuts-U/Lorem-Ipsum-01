@@ -1,2 +1,13 @@
 data-oriented future - statistic don't lie
 
+health, wealth and time, the most precious resources we have
+
+dashboard:
+
+potential time savings - estimated time saved using optimized routes
+
+potential money savings - estimated savings when utilizing discounts
+favorite foods - most frequently bought foods
+caloric trend - high calorie food preferences
+recommendations - personalized healthy food suggestions
+recipes - curated recipes from purchase history
