@@ -4,6 +4,7 @@ import PromptForm from "./components/PromptForm";
 import Sidebar from "./components/Sidebar";
 import ScenarioCards from "./components/ScenarioCards";
 import { Menu } from "lucide-react";
+import StoreMarquee from "@/components/StoreMarquee.jsx";
 
 const App = () => {
   // Main app state
@@ -37,6 +38,11 @@ const App = () => {
   const [activeConversation, setActiveConversation] = useState(() => {
     return localStorage.getItem("activeConversation") || "default";
   });
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsSidebarOpen(false);
+        }
+    }, []);
   useEffect(() => {
     localStorage.setItem("activeConversation", activeConversation);
   }, [activeConversation]);
@@ -66,8 +72,6 @@ const App = () => {
     scrollToBottom();
   }, [conversations, activeConversation]);
   const typingEffect = (text, messageId) => {
-    let textElement = document.querySelector(`#${messageId} .text`);
-    if (!textElement) return;
     // Initially set the content to empty and mark as loading
     setConversations((prev) =>
       prev.map((conv) =>
@@ -84,7 +88,6 @@ const App = () => {
       )
     );
     // Set up typing animation
-    textElement.textContent = "";
     const words = text.split(" ");
     let wordIndex = 0;
     let currentText = "";
@@ -93,7 +96,6 @@ const App = () => {
       if (wordIndex < words.length) {
         // Update the current text being displayed
         currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex++];
-        textElement.textContent = currentText;
         // Update state with current progress
         setConversations((prev) =>
           prev.map((conv) =>
@@ -219,10 +221,11 @@ const App = () => {
         theme === "light" ? "light-theme" : "dark-theme"
       }`}
     >
-      <div
-        className={`overlay ${isSidebarOpen ? "show" : "hide"}`}
-        onClick={() => setIsSidebarOpen(false)}
-      ></div>
+        <div
+            className={`overlay ${isSidebarOpen ? "show" : "hide"}`}
+            onClick={() => setIsSidebarOpen(false)}
+            style={{ zIndex: 20 }}
+        ></div>
       <Sidebar
         conversations={conversations}
         setConversations={setConversations}
@@ -234,21 +237,24 @@ const App = () => {
         setIsSidebarOpen={setIsSidebarOpen}
       />
       <main className="main-container">
+          <StoreMarquee />
         <header className="main-header">
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="sidebar-toggle"
-          >
-            <Menu size={18} />
-          </button>
+            <button
+                onClick={() => setIsSidebarOpen(true)}
+                className={`fixed top-4 left-4 z-[999] p-2 rounded-lg bg-white/10 
+    backdrop-blur-lg shadow-md md:hidden
+    ${isSidebarOpen ? "hidden" : "block"}`}
+            >
+                <Menu size={20} />
+            </button>
         </header>
         {currentConversation.messages.length === 0 ? (
           // Welcome container
-          <div className="welcome-container">
+          <div className="welcome-container justify-center items-center flex">
             <img className="welcome-logo" src="/download.png" alt="Meal" />
             <h1 className="welcome-heading">Create a meal</h1>
             <p className="welcome-text">Choose a scenario to get started</p>
-            <ScenarioCards onSelectScenario={handleSelectScenario} />
+              <ScenarioCards onSelectScenario={handleSelectScenario} />
           </div>
         ) : (
           // Messages container
@@ -272,9 +278,9 @@ const App = () => {
           </div>
         </div>
       </main>
-      {currentConversation.messages.length === 0 ? null : (
-        <div className="w-[90vw] bg-amber-200 rounded-l-4xl p-6">Dashboard</div>
-      )}
+      {/*{currentConversation.messages.length === 0 ? null : (*/}
+      {/*  <div className="w-[90vw] bg-amber-200 rounded-l-4xl p-6">Dashboard</div>*/}
+      {/*)}*/}
     </div>
   );
 };

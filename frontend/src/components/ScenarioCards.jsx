@@ -1,5 +1,6 @@
 // frontend/src/components/ScenarioCards.jsx
 import { Utensils, Salad, Clock, Heart } from 'lucide-react';
+import GlassSurface from "@/components/GlassSurface.jsx";
 
 const scenarios = [
     {
