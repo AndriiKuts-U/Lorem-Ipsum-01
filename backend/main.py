@@ -18,6 +18,7 @@ HEALTH_STATUS_PROMPT = (
     "Provide a short 2 sentences summary of the user's health status based on the conversation and give advice on how to improve diet while warning of potential issues."
     "Style your response in a friendly and supportive tone, in a way like you are talking to the user trying to motivate him to improve his diet."
     "Also return a rating of health status - represented by integer on a scale of 1 to 5, where 1 means very poor health and 5 means excellent health."
+    "Lastly return a suggested recipe for a healthy meal that the user can prepare based on the conversation. Return only the recipe name."
 )
 
 
@@ -60,6 +61,7 @@ class RetrievedDocument(BaseModel):
 class HealthStatusResponse(BaseModel):
     status: str
     rating: int
+    suggested_recipe: str
 
 
 class ChatResponse(BaseModel):
