@@ -334,7 +334,7 @@ const App = () => {
                                         <div className="flex flex-col flex-1 h-full">
 
                                             <div
-                                                className="flex-1 overflow-y-auto p-2"
+                                                className="messages-container flex-1 overflow-y-auto p-2"
                                                 ref={messagesContainerRef}
                                             >
                                                 {currentConversation.messages.map((message) => (
