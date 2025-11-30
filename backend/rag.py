@@ -27,7 +27,9 @@ class RAGSystem:
         self.collection_name = collection_name
         self.memory_dir = Path(memory_dir)
         self.memory_dir.mkdir(parents=True, exist_ok=True)
-
+        self.qdrant = QdrantClient(
+            url=settings.QDRANT_DATABASE_URL, api_key=settings.QDRANT_API_KEY
+        )
         # Initialize collection if it doesn't exist
         # self._init_collection()
 
