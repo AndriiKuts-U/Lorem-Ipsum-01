@@ -1,9 +1,8 @@
-import json
 import uuid
 
 import requests
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://127.0.0.1:8000"
 
 
 def run(lat: float, lng: float, radius_m: int = 2000):

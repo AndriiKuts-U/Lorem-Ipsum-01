@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     QDRANT_DATABASE_URL: str
     QDRANT_API_KEY: str
 
+    FOOD_DATA_API_KEY: str
+
     @model_validator(mode="before")
     @classmethod
     def ensure_no_empty_vars(cls, values: dict):

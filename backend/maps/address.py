@@ -2,7 +2,7 @@ import json
 from typing import Any
 
 import requests
-from settings import settings
+from backend.settings import settings
 
 BASE_URL = "https://places.googleapis.com/v1/places:searchNearby"
 
