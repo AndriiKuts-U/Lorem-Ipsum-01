@@ -318,7 +318,7 @@ const App = () => {
                   <ScenarioCards onSelectScenario={handleSelectScenario} />
                 </div>
               ) : (
-                <div className="flex flex-1 gap-4 p-2 overflow-hidden">
+                <div className="flex flex-1 gap-4 p-2 overflow-hidden mr-[200px]">
                   <div className="flex-1 flex flex-col h-full">
                     <div
                       className="messages-container flex-1 overflow-y-auto p-2"
@@ -341,15 +341,6 @@ const App = () => {
                       <p className="disclaimer-text text-xs text-gray-500 mt-1">
                         Describe your goal or choose from templates
                       </p>
-                    </div>
-                  </div>
-
-                  <div className="w-1/3 flex flex-col gap-4 h-full">
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 flex-1">
-                      <h2 className="text-sm font-semibold mb-2">Graph 1</h2>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 flex-1">
-                      <h2 className="text-sm font-semibold mb-2">Graph 2</h2>
                     </div>
                   </div>
                 </div>
