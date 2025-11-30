@@ -1,0 +1,62 @@
+[
+  {
+    "id": "259940",
+    "name": "MRKVA",
+    "price": 0.12,
+    "price_discounted": null,
+    "discount_percentage": null,
+    "amount": 0.12,
+    "unit": "kilograms",
+    "description": null,
+    "category": "ovocie a zelenina",
+    "url": "https://www.ifresh.sk/donaskake/shop/mrkva/"
+  },
+  {
+    "id": "252762",
+    "name": "PAPRIKA ZELENINOVÁ",
+    "price": 0.36,
+    "price_discounted": null,
+    "discount_percentage": null,
+    "amount": 0.12,
+    "unit": "kilograms",
+    "description": null,
+    "category": "ovocie a zelenina",
+    "url": "https://www.ifresh.sk/donaskake/shop/paprika-zeleninova/"
+  },
+  {
+    "id": "257935",
+    "name": "ZEMIAKY KRÁĽ. KONZ. PRANÉ ŽLTÉ 2,5kg „B“,",
+    "price": 3.09,
+    "price_discounted": null,
+    "discount_percentage": null,
+    "amount": 2.5,
+    "unit": "kilograms",
+    "description": null,
+    "category": "ovocie a zelenina",
+    "url": "https://www.ifresh.sk/donaskake/shop/zemiaky-kral-konz-prane-zlte-25kg-b/"
+  },
+  {
+    "id": "250965",
+    "name": "BANÁNY",
+    "price": 0.16,
+    "price_discounted": null,
+    "discount_percentage": null,
+    "amount": 0.1,
+    "unit": "kilograms",
+    "description": null,
+    "category": "ovocie a zelenina",
+    "url": "https://www.ifresh.sk/donaskake/shop/banany/"
+  },
+  {
+    "id": "256067",
+    "name": "JAHODY 500g",
+    "price": 4.49,
+    "price_discounted": null,
+    "discount_percentage": null,
+    "amount": 0.5,
+    "unit": "kilograms",
+    "description": null,
+    "category": "ovocie a zelenina",
+    "url": "https://www.ifresh.sk/donaskake/shop/jahody-500g/"
+  }
+]
