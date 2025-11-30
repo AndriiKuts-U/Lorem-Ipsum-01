@@ -114,7 +114,7 @@ const StatCard = ({ title, value, subtitle, trend, trendValue }) => (
     <div className="stat-card">
         <div className="stat-card-header">
             <div className="stat-icon">
-                <Icon size={20} />
+                {/*<Icon size={20} />*/}
             </div>
             {trend && (
                 <div className={`stat-trend ${trend}`}>
