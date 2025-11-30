@@ -11,7 +11,7 @@ const SideBar = {
 
 }
 
-const Statistics = () => {
+const Statistics = (SideBar) => {
     const [check, setCheck] = useState(SideBar.grocery_list);
 
     const handleCheck = (item) => {
