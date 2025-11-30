@@ -1,0 +1,28 @@
+{
+  "favorites": [
+    {
+      "name": "Fresh Eggs",
+      "count": 1
+    },
+    {
+      "name": "Bread",
+      "count": 1
+    },
+    {
+      "name": "Yogurt",
+      "count": 1
+    }
+  ],
+  "recipes": [
+    {
+      "title": "Banana Pancakes"
+    },
+    {
+      "title": "Overnight Oats"
+    },
+    {
+      "title": "Egg and Avocado Toast"
+    }
+  ],
+  "recommendation": "T"
+}

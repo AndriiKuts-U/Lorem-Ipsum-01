@@ -11,6 +11,7 @@ from backend.settings import settings
 
 ANALYTICS_DIR = Path("./thread_analytics")
 ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
+THREAD_DATA_DIR = Path("./thread_data")
 
 
 class StatsService:
@@ -119,6 +120,8 @@ class StatsService:
         all_favorites: Counter[str] = Counter()
         recipe_titles: Counter[str] = Counter()
 
+        spent_sum = 0.0
+        saved_sum = 0.0
         for tid in self.list_thread_ids():
             stats = None
             if not recompute:
@@ -135,10 +138,47 @@ class StatsService:
                 if title:
                     recipe_titles[title] += 1
 
+            # Aggregate side_bar totals from thread_data if present
+            td_file = THREAD_DATA_DIR / f"{tid}.json"
+            if td_file.exists():
+                try:
+                    with td_file.open("r", encoding="utf-8") as fh:
+                        td = json.load(fh)
+                    sb = td.get("side_bar") or {}
+                    spent_sum += float(sb.get("spent_total", 0.0))
+                    saved_sum += float(sb.get("saved_total", 0.0))
+                except Exception:
+                    pass
+
         top_fav = [{"name": n, "count": c} for n, c in all_favorites.most_common(3)]
         top_recipes = [{"title": t, "count": c} for t, c in recipe_titles.most_common(3)]
+        # Aggregate single recommendation string using LLM (safe fallback)
+        rec_prompt = (
+            "Given the user's top favorite foods and recipe titles, provide ONE short personalized "
+            "shopping or nutrition recommendation (max 20 words)."
+        )
+        fav_str = ", ".join(f["name"] for f in top_fav)
+        rec_titles = ", ".join(r["title"] for r in top_recipes)
+        recommendation = ""
+        try:
+            res = self.client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": rec_prompt},
+                    {
+                        "role": "user",
+                        "content": f"Favorites: {fav_str}\nRecipes: {rec_titles}\nOne short recommendation:",
+                    },
+                ],
+            )
+            recommendation = res.choices[0].message.content or ""
+        except Exception:
+            recommendation = "Consider adding more vegetables and lean proteins to weekly lists."
         return {
             "updated_at": datetime.now(timezone.utc).isoformat(),
             "top_favorites": top_fav,
             "top_recipes": top_recipes,
+            "recommendation": recommendation,
+            "spent_total": round(spent_sum, 2),
+            "saved_total": round(saved_sum, 2),
         }

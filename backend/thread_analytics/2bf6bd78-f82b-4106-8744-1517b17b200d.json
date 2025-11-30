@@ -1,0 +1,28 @@
+{
+  "favorites": [
+    {
+      "name": "Avocados",
+      "count": 1
+    },
+    {
+      "name": "Quinoa",
+      "count": 1
+    },
+    {
+      "name": "Almond Milk",
+      "count": 1
+    }
+  ],
+  "recipes": [
+    {
+      "title": "Chickpea Salad"
+    },
+    {
+      "title": "Vegetable Stir-Fry"
+    },
+    {
+      "title": "Avocado Toast"
+    }
+  ],
+  "recommendation": "C"
+}

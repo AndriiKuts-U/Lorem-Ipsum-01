@@ -1,0 +1,28 @@
+{
+  "favorites": [
+    {
+      "name": "Chicken breast",
+      "count": 1
+    },
+    {
+      "name": "Greek yogurt",
+      "count": 1
+    },
+    {
+      "name": "Broccoli",
+      "count": 1
+    }
+  ],
+  "recipes": [
+    {
+      "title": "Grilled chicken bowl"
+    },
+    {
+      "title": "Steamed broccoli"
+    },
+    {
+      "title": "Rice with olive oil"
+    }
+  ],
+  "recommendation": "C"
+}
