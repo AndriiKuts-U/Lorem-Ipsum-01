@@ -77,7 +77,6 @@ def chat_without_retrieval(query: str, thread_id: str | None = None):
     result = response.json()
     print(f"Thread ID: {result.get('thread_id')}")
     print(f"Response: {result.get('response')}")
-    print(f"Retrieved Context: {result.get('retrieved_context')}")
     return result
 
 
@@ -95,12 +94,11 @@ def chat_with_retrieval(query: str, thread_id: str | None = None, top_k: int = 3
     print(f"Query: '{query}'")
     response = requests.post(f"{BASE_URL}/chat", json=chat_request)
     print(f"Status Code: {response.status_code}")
+    print(response.json())
     result = response.json()
     print(f"Thread ID: {result.get('thread_id')}")
     print(f"Response: {result.get('response')}")
-    print(f"\nRetrieved Context ({len(result.get('retrieved_context', []))} documents):")
-    for i, doc in enumerate(result.get("retrieved_context", []), 1):
-        print(f"  {i}. [Score: {doc['score']:.4f}] {doc['text'][:100]}...")
+
     return result
 
 
@@ -160,41 +158,41 @@ def run_full_demo():
         # # 2. Add documents to the vector database
         # add_documents()
 
-        # 3. Search for documents
-        search_documents("What is Python?", top_k=2)
-        search_documents("Tell me about machine learning", top_k=3)
+        # # 3. Search for documents
+        # search_documents("What is Python?", top_k=2)
+        # search_documents("Tell me about machine learning", top_k=3)
 
-        # 4. Chat without retrieval
-        result1 = chat_without_retrieval("Hello! What can you help me with?")
-        thread_id = result1["thread_id"]
-
-        # 5. Continue conversation in same thread
-        chat_without_retrieval("What's 2+2?", thread_id=thread_id)
+        # # 4. Chat without retrieval
+        # result1 = chat_without_retrieval("Hello! What can you help me with?")
+        # thread_id = result1["thread_id"]
+        #
+        # # 5. Continue conversation in same thread
+        # chat_without_retrieval("What's 2+2?", thread_id=thread_id)
 
         # 6. Chat with retrieval (RAG)
-        result2 = chat_with_retrieval("What is Python and why is it popular?")
-        rag_thread_id = result2["thread_id"]
+        # result2 = chat_with_retrieval("What are the stores near me?", thread_id="0efdc7ab-eb37-43c2-a81b-e25a4a2b969e")
+        # rag_thread_id = result2["thread_id"]
 
         # 7. Continue RAG conversation
-        chat_with_retrieval("Can you tell me more about RAG?", thread_id=rag_thread_id)
+        chat_with_retrieval("Plan a meal(full plan recipe) for me with 30+g of protein for 1000 calories and find the cheapest possible stores to buy my groceries.(only lidl and tesco)", thread_id="0efdc7ab-eb37-43c2-a81b-e25a4a2b969e")
 
-        # 8. List all threads
-        threads_result = list_threads()
-
-        # 9. Get thread history
-        if threads_result["threads"]:
-            get_thread(threads_result["threads"][0])
-
-        # 10. Delete a thread
-        if len(threads_result["threads"]) > 0:
-            delete_thread(threads_result["threads"][0])
+        # # 8. List all threads
+        # threads_result = list_threads()
+        #
+        # # 9. Get thread history
+        # if threads_result["threads"]:
+        #     get_thread(threads_result["threads"][0])
+        #
+        # # 10. Delete a thread
+        # if len(threads_result["threads"]) > 0:
+        #     delete_thread(threads_result["threads"][0])
 
         # 11. Verify deletion
-        list_threads()
-
-        print("\n" + "#" * 60)
-        print("# DEMO COMPLETED SUCCESSFULLY!")
-        print("#" * 60)
+        # list_threads()
+        #
+        # print("\n" + "#" * 60)
+        # print("# DEMO COMPLETED SUCCESSFULLY!")
+        # print("#" * 60)
 
     except requests.exceptions.ConnectionError:
         print("\nL ERROR: Could not connect to the API.")

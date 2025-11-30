@@ -54,7 +54,7 @@ class RetrievedDocument(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     thread_id: str
-    retrieved_context: list[RetrievedDocument]
+    # retrieved_context: list[RetrievedDocument]
 
 
 class SearchRequest(BaseModel):
@@ -204,7 +204,7 @@ async def search_documents_endpoint(request: SearchRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-THREAD_DATA_DIR = Path("./backend/thread_data")
+THREAD_DATA_DIR = Path("./thread_data")
 THREAD_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 

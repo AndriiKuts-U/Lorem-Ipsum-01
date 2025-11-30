@@ -2,18 +2,68 @@ from dataclasses import dataclass
 from pathlib import Path
 import json
 from typing import Any
+import json
+from backend.settings import settings
 
+from pydantic import BaseModel
 from pydantic_ai import Agent, RunContext
-
+from openai import OpenAI
+from qdrant_client import QdrantClient
 from backend.maps.address import find_nearby_places as _find_nearby_places
+from pydantic_ai.models.openai import OpenAIResponsesModel, OpenAIResponsesModelSettings
+
+model = OpenAIResponsesModel('gpt-5')
+model_settings = OpenAIResponsesModelSettings(
+    openai_reasoning_effort='minimal',
+    openai_reasoning_summary='concise',
+)
+
+# Initialize OpenAI client for structured outputs
+openai_client = OpenAI()
+
+# Initialize Qdrant client for product search
+qdrant_client = QdrantClient(
+    url=settings.QDRANT_DATABASE_URL,
+    api_key=settings.QDRANT_API_KEY
+)
+
 
 SYSTEM_PROMPT = (
-    "You are a helpful shopping assistant."
+    "You are a helpful shopping assistant that helps users find the best stores for their grocery shopping."
     " Answer concisely and prefer concrete, actionable suggestions."
-    " When the user asks about nearby markets or stores,"
+    "\n\n1. When the user asks about nearby markets or stores,"
     " use the find_nearby_places tool based on the stored location context,"
     " then summarize the top nearby options."
+    "\n\n2. When user asks about a specific product, return the product name and price."
+    "\n\n3. When the user provides a shopping list, use the extract_shopping_list tool."
+    " This tool will:"
+    " - Extract all grocery items from their input"
+    " - Search for similar products available in stores with prices"
+    " - Return detailed product information including store names, prices, and availability"
+    "\n\nThen analyze the results and:"
+    " - Compare prices across different stores"
+    " - Calculate total costs per store"
+    " - Recommend the best store(s) to visit based on:"
+    "   * Total cost (cheapest option)"
+    "   * Product availability (stores that have most items)"
+    "   * Value for money"
+    " - Provide a clear breakdown showing:"
+    "   * Which items are available at which stores"
+    "   * Price per item at each store"
+    "   * Total cost if shopping at each store"
+    "   * Your final recommendation with reasoning"
 )
+
+
+class GroceryItem(BaseModel):
+    """A single grocery item extracted from user input."""
+    name: str
+    quantity: str | None = None
+
+
+class ShoppingList(BaseModel):
+    """A structured shopping list extracted from user input."""
+    items: list[GroceryItem]
 
 
 @dataclass
@@ -29,10 +79,51 @@ class ChatDeps:
 
 # Single shared agent instance using OpenAI via Pydantic AI
 agent: Agent = Agent(
-    model="openai:gpt-4o-mini",
+    model="openai:gpt-5-mini",
     system_prompt=SYSTEM_PROMPT,
     deps_type=ChatDeps,
+    model_settings=model_settings
 )
+
+qdrant = QdrantClient(
+    url=settings.QDRANT_DATABASE_URL,
+    api_key=settings.QDRANT_API_KEY,
+)
+
+
+def _get_embedding(text: str) -> list[float]:
+    """Get embedding vector for text using OpenAI embeddings."""
+    response = openai_client.embeddings.create(model="text-embedding-3-small", input=text)
+    return response.data[0].embedding
+
+def retrieve_context( query: str, top_k: int = 3, include_metadata: bool = False) -> list[dict]:
+    """Retrieve relevant documents from Qdrant."""
+
+    query_embedding = _get_embedding(query)
+
+    results = qdrant.query_points(
+        collection_name="groceries",
+        query=query_embedding,
+        limit=top_k,
+        with_payload=True,
+    )
+    # print(results)
+    out = []
+    for hit in results.points:
+        payload = hit.payload or {}
+        text_val = payload.get("text", "")
+
+        result = {
+            "text": text_val,
+            "score": hit.score,
+        }
+
+        # Include full metadata if requested
+        if include_metadata:
+            result.update(payload)
+
+        out.append(result)
+    return out
 
 
 @agent.tool
@@ -75,3 +166,71 @@ def find_nearby_places(ctx: RunContext[ChatDeps | None], top_k: int = 5) -> list
 
     # Return minimal info to the model (name + distance only)
     return [{"name": p["name"], "distance_m": p["distance_m"]} for p in places[: max(1, top_k)]]
+
+
+@agent.tool
+def extract_shopping_list(ctx: RunContext[ChatDeps | None], user_input: str, top_k_per_item: int = 10) -> dict[str, Any]:
+    """Extract grocery items from user's shopping list and find similar products in stores.
+
+    This tool:
+    1. Parses natural language shopping lists using GPT structured output
+    2. For each item, searches Qdrant for similar products available in stores
+    3. Returns structured data with product prices, stores, and availability
+
+    Args:
+        user_input: The user's shopping list in natural language (e.g., "I need milk, bread, 2kg tomatoes, and chicken")
+        top_k_per_item: Number of similar products to find per item (default: 10)
+
+    Returns:
+        A dictionary containing extracted items with their store availability and prices
+    """
+    try:
+        # Step 1: Extract grocery items using structured output
+        completion = openai_client.beta.chat.completions.parse(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an expert at parsing shopping lists. "
+                        "Extract all grocery items from the user's input, including quantities if mentioned. "
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ],
+            response_format=ShoppingList,
+        )
+
+        shopping_list = completion.choices[0].message.parsed
+
+        # Step 2: For each item, search Qdrant for similar products
+        items_with_products = []
+        for item in shopping_list.items:
+            # Search for similar products in Qdrant
+            similar_products = retrieve_context(
+                query=item.name,
+                top_k=top_k_per_item,
+                include_metadata=True
+            )
+
+            items_with_products.append({
+                "name": item.name,
+                "quantity": item.quantity,
+                "similar_products": similar_products
+            })
+
+        # Step 3: Compile the data for GPT to analyze
+        return {
+            "items": items_with_products,
+            "total_items": len(items_with_products),
+            "user_input": user_input
+        }
+
+    except Exception as e:
+        return {
+            "error": f"Failed to extract shopping list: {str(e)}",
+            "items": []
+        }
