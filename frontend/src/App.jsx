@@ -72,8 +72,6 @@ const App = () => {
     scrollToBottom();
   }, [conversations, activeConversation]);
   const typingEffect = (text, messageId) => {
-    let textElement = document.querySelector(`#${messageId} .text`);
-    if (!textElement) return;
     // Initially set the content to empty and mark as loading
     setConversations((prev) =>
       prev.map((conv) =>
@@ -90,7 +88,6 @@ const App = () => {
       )
     );
     // Set up typing animation
-    textElement.textContent = "";
     const words = text.split(" ");
     let wordIndex = 0;
     let currentText = "";
@@ -99,7 +96,6 @@ const App = () => {
       if (wordIndex < words.length) {
         // Update the current text being displayed
         currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex++];
-        textElement.textContent = currentText;
         // Update state with current progress
         setConversations((prev) =>
           prev.map((conv) =>
