@@ -11,14 +11,6 @@ import {
   ArrowDownRight,
 } from "lucide-react";
 
-const storeVisits = [
-  { name: "Lidl", visits: 22, color: "#0050AA", logo: "🟦" },
-  { name: "Kaufland", visits: 18, color: "#E10915", logo: "🟥" },
-  { name: "Tesco", visits: 14, color: "#00539F", logo: "🔵" },
-  { name: "Billa", visits: 10, color: "#FFD100", logo: "🟨" },
-  { name: "Fresh", visits: 6, color: "#7AB929", logo: "🟩" },
-];
-
 const colors = [
   "bg-red-500/10",
   "bg-green-400/10",
@@ -70,47 +62,7 @@ const StoreCard = ({ data }) => {
   );
 };
 
-// Product Row Component
-const ProductRow = ({ product }) => (
-  <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-colors duration-200">
-    <div
-      className="w-10 h-10 flex items-center justify-center rounded-lg text-xl"
-      style={{ background: "rgba(255,255,255,0.1)" }}
-    >
-      {product.emoji}
-    </div>
-    <div className="flex-1 min-w-0">
-      <div className="text-sm font-semibold">{product.name}</div>
-      <div className="text-xs text-white/70">
-        {product.purchases}× tento mesiac
-      </div>
-    </div>
-    <div className="text-right">
-      <div className="text-sm font-semibold">{`€${product.avgPrice.toFixed(
-        2
-      )}`}</div>
-      <div
-        className={`flex items-center justify-end gap-1 text-xs font-semibold ${
-          product.trend === "up" ? "text-red-400" : "text-green-400"
-        }`}
-      >
-        {product.trend === "up" ? (
-          <TrendingUp size={12} />
-        ) : (
-          <TrendingDown size={12} />
-        )}
-        <span>
-          {product.priceChange > 0 ? "+" : ""}
-          {product.priceChange}%
-        </span>
-      </div>
-    </div>
-  </div>
-);
-
-const Dashboard = ({ theme }) => {
-  const maxVisits = Math.max(...storeVisits.map((s) => s.visits));
-
+const Dashboard = () => {
   const [health, setHealth] = useState(null);
   const [other, setOther] = useState(null);
   const fetchedRef = useRef(false);
@@ -131,29 +83,26 @@ const Dashboard = ({ theme }) => {
           }
         );
         const data = await response.json();
-        setOther(data);
+        setHealth(data);
       } catch (error) {
         console.error("Error getting user location:", error);
-        setOther(null);
+        setHealth(null);
       }
     };
 
     const handleFetchOther = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/dashboard`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = await response.json();
-        setHealth(data);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/dashboard`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const da = await res.json();
+        setOther(da);
       } catch (error) {
         console.error("Error getting user location:", error);
-        setHealth(null);
+        setOther(null);
       }
     };
 
@@ -181,10 +130,8 @@ const Dashboard = ({ theme }) => {
   return (
     <div className="dashboard-container ">
       <div className="dashboard-header">
-        <h1 className="dashboard-title">Prehľad nákupov</h1>
-        <p className="dashboard-subtitle">
-          Sledujte svoje výdavky a šetrite peniaze
-        </p>
+        <h1 className="dashboard-title">Your dashboard</h1>
+        <p className="dashboard-subtitle">Track your expenses and save money</p>
       </div>
 
       {/* Stats Row */}
@@ -207,7 +154,7 @@ const Dashboard = ({ theme }) => {
         </div>
         <div className="div2">
           <StatCard
-            title="Todays meal"
+            title="Meal of the day"
             value={health?.suggested_recipe || "Loading..."}
           />
         </div>
@@ -218,9 +165,9 @@ const Dashboard = ({ theme }) => {
               Favorite recipes
             </h3>
           </div>
-          {other && (
+          {other && other.top_recipes && (
             <div className="stores-list">
-              {other?.top_recipes.map((recipe, index) => (
+              {other.top_recipes.map((recipe, index) => (
                 <StoreCard key={index} data={recipe.title} />
               ))}
             </div>
@@ -228,9 +175,8 @@ const Dashboard = ({ theme }) => {
         </div>
         <div className="div3">
           <StatCard
-            title={`${health ? health.status : "Loading..."}`}
+            title={health?.status || "Loading..."}
             value="Health suggeste"
-            icon={Package}
           />
         </div>
         <div className="list-card div5">
@@ -240,9 +186,9 @@ const Dashboard = ({ theme }) => {
               Favorite products
             </h3>
           </div>
-          {other && (
+          {other && other.top_favorites && (
             <div className="stores-list">
-              {other?.top_favorites.map((product, index) => (
+              {other.top_favorites.map((product, index) => (
                 <StoreCard key={index} data={product.name} />
               ))}
             </div>
