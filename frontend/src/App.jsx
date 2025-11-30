@@ -354,7 +354,7 @@ const App = () => {
                                             </div>
                                         </div>
 
-                                        <div className="w-1/3 flex flex-col gap-4 border-l-2 border-[#8a8276]">
+                                        <div className="w-1/3 flex flex-col gap-4 border-l-1 border-white shadow-xl">
                                             <Statistics />
                                         </div>
                                     </div>
