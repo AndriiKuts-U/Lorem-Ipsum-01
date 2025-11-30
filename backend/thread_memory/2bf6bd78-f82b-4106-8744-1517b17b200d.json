@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "hi\n\nNearby stores: FRESH Plus Merk\u00far (98 m), BILLA (1017 m), Lidl (1175 m), KLAS Potraviny - \u010c\u00ed\u017eik (1286 m), Kaufland (1855 m)."
+  },
+  {
+    "role": "assistant",
+    "content": "Hi \u2014 welcome! I see the nearby stores you provided: FRESH Plus Merk\u00far (98 m), BILLA (1,017 m), Lidl (1,175 m), KLAS Potraviny - \u010c\u00ed\u017eik (1,286 m), and Kaufland (1,855 m).\n\nHow can I help with your grocery shopping today? Options:\n- Find the best store for a specific shopping list (paste your list)\n- Look up a specific product and price\n- Summarize the top nearby stores (I can give pros/cons for each)\nTell me which you'd like."
+  }
+]

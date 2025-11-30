@@ -1,14 +1,14 @@
 import json
+import logging
 import uuid
 from pathlib import Path
 from typing import Any
 
 from openai import OpenAI
-
 from qdrant_client.models import PointStruct
 
-from backend.agent_ai import ChatDeps, agent
-from anyio import from_thread
+from backend.agent_ai import agent
+from backend.maps.address import find_nearby_places as _find_nearby_places
 from backend.settings import settings
 
 
@@ -71,8 +71,6 @@ class RAGSystem:
             self.qdrant.upsert(collection_name=self.collection_name, points=[point])
         print(f"Added {len(documents)} documents to collection")
 
-
-
     def _load_thread(self, thread_id: str) -> list[dict]:
         """Load conversation thread from local storage."""
         thread_file = self.memory_dir / f"{thread_id}.json"
@@ -86,82 +84,6 @@ class RAGSystem:
         thread_file = self.memory_dir / f"{thread_id}.json"
         with open(thread_file, "w") as f:
             json.dump(messages, f, indent=2)
-
-    # def chat(
-    #     self,
-    #     query: str,
-    #     thread_id: str | None = None,
-    #     use_retrieval: bool = True,
-    #     top_k: int = 3,
-    # ) -> dict:
-    #     """
-    #     Chat with the RAG system.
-    #     """
-    #     # Create or load thread
-    #     if thread_id is None:
-    #         thread_id = str(uuid.uuid4())
-    #
-    #     messages = self._load_thread(thread_id)
-    #
-    #     # Retrieve relevant context if enabled
-    #     context_text = ""
-    #     retrieved_docs = []
-    #     if use_retrieval:
-    #         retrieved_docs = self.retrieve_context(query, top_k=top_k)
-    #         if retrieved_docs:
-    #             context_text = "\n\nRelevant context:\n" + "\n".join(
-    #                 f"- {doc['text']}" for doc in retrieved_docs
-    #             )
-    #
-    #     # Build a single prompt for the agent including prior history and dynamic context
-    #     history_text = "\n\n".join(
-    #         f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
-    #     )
-    #     prompt_parts = []
-    #     if history_text:
-    #         prompt_parts.append("Conversation so far:\n" + history_text)
-    #     if context_text:
-    #         prompt_parts.append(
-    #             context_text
-    #             + "\nUse the above context to answer the user's question when relevant."
-    #         )
-    #     prompt_parts.append("User: " + query)
-    #     agent_input = "\n\n".join(prompt_parts)
-    #
-    #     # Load per-thread location deps if available
-    #     deps_any: Any = None
-    #     td_dir = Path("./backend/thread_data")
-    #     td_file = td_dir / f"{thread_id}.json"
-    #     if td_file.exists():
-    #         try:
-    #             with td_file.open("r", encoding="utf-8") as fh:
-    #                 d = json.load(fh)
-    #             deps_any = ChatDeps(
-    #                 lat=float(d.get("lat")),
-    #                 lng=float(d.get("lng")),
-    #                 radius_m=int(d.get("radius_m", 5000)),
-    #                 types=d.get("types", ["supermarket"]),
-    #             )
-    #         except Exception:
-    #             deps_any = None
-    #
-    #     # Run the agent on the running event loop from this worker thread
-    #     if deps_any is not None:
-    #         result = from_thread.run(lambda: agent.run(agent_input, deps=deps_any))
-    #     else:
-    #         result = from_thread.run(lambda: agent.run(agent_input))
-    #     assistant_message = str(result.output)
-    #
-    #     # Update thread memory
-    #     messages.append({"role": "user", "content": query})
-    #     messages.append({"role": "assistant", "content": assistant_message})
-    #     self._save_thread(thread_id, messages)
-    #
-    #     return {
-    #         "response": assistant_message,
-    #         "thread_id": thread_id,
-    #         "retrieved_context": retrieved_docs,
-    #     }
 
     def list_threads(self) -> list[str]:
         """list all available thread IDs."""
@@ -178,25 +100,102 @@ class RAGSystem:
         self,
         query: str,
         thread_id: str | None = None,
-        use_retrieval: bool = True,
-        top_k: int = 3,
     ) -> dict:
         if thread_id is None:
+            print("Warning: No thread_id provided; generating a new one.")
             thread_id = str(uuid.uuid4())
+
         messages = self._load_thread(thread_id)
-
-        # context_text = ""
-        # retrieved_docs: list[dict] = []
-        # if use_retrieval:
-        #     retrieved_docs = self.retrieve_context(query, top_k=top_k)
-        #     if retrieved_docs:
-        #         context_text = "\n\nRelevant context:\n" + "\n".join(
-        #             f"- {doc['text']}" for doc in retrieved_docs
-        #         )
-
         history_text = "\n\n".join(
             f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
         )
+        # Enrich the very first user message with nearby stores (pre-tool behavior)
+        # Determine location from thread_data or default fallback
+        td_dir = Path("./thread_data")
+        td_dir.mkdir(parents=True, exist_ok=True)
+        td_file = td_dir / f"{thread_id}.json"
+
+        lat: float | None = None
+        lng: float | None = None
+        radius_m: int | None = None
+        try:
+            if td_file.exists():
+                with td_file.open("r", encoding="utf-8") as fh:
+                    d = json.load(fh)
+                if "lat" in d and "lng" in d:
+                    lat = float(d["lat"])  # type: ignore[index]
+                    lng = float(d["lng"])  # type: ignore[index]
+                    radius_m = int(d.get("radius_m", 2000))
+        except Exception:
+            lat = lng = None
+
+        # Fallback to defaults when location is not provided by frontend
+        if lat is None or lng is None:
+            print("Location data not found; using default coordinates.")
+            lat = 48.7318664
+            lng = 21.2431019
+            radius_m = 2000 if radius_m is None else radius_m
+            logging.getLogger(__name__).warning(
+                "Location not set for thread %s; using default coordinates (48.7318664, 21.2431019)",
+                thread_id,
+            )
+            try:
+                minimal = {"lat": lat, "lng": lng, "radius_m": radius_m}
+                if td_file.exists():
+                    with td_file.open("r", encoding="utf-8") as fh:
+                        prev = json.load(fh)
+                    if isinstance(prev, dict):
+                        minimal.update(prev)
+                with td_file.open("w", encoding="utf-8") as fh:
+                    json.dump(minimal, fh)
+            except Exception as e:
+                print(f"Error occurred while saving thread data: {e}")
+                pass
+
+        user_content = query
+        if not messages:  # first turn in this thread (with location from thread_data or default)
+            try:
+                places = _find_nearby_places(
+                    lat,
+                    lng,
+                    radius_m=int(radius_m or 2000),
+                    place_types=["supermarket"],
+                    max_per_brand=1,
+                )
+                # Persist full places for frontend usage
+                snapshot: dict[str, Any] = {
+                    "lat": lat,
+                    "lng": lng,
+                    "radius_m": radius_m,
+                }
+                try:
+                    if td_file.exists():
+                        with td_file.open("r", encoding="utf-8") as fh:
+                            prev = json.load(fh)
+                        if isinstance(prev, dict):
+                            snapshot.update(prev)
+                except Exception as e:
+                    print(f"Error occurred while loading previous thread data: {e}")
+                    pass
+
+                snapshot["places"] = places
+                try:
+                    with td_file.open("w", encoding="utf-8") as fh:
+                        json.dump(snapshot, fh)
+                except Exception as e:
+                    print(f"Error occurred while saving thread data: {e}")
+                    pass
+
+                top = places[:5]
+                if top:
+                    summary = ", ".join(f"{p['name']} ({p['distance_m']} m)" for p in top)
+                    user_content = f"{query}\n\nNearby stores: {summary}."
+
+            except Exception as e:
+                print(f"Error occurred while finding nearby places: {e}")
+                # Fail-soft: if lookup fails, proceed without enrichment
+                user_content = str(e)
+
         prompt_parts: list[str] = []
         if history_text:
             prompt_parts.append("Conversation so far:\n" + history_text)
@@ -205,36 +204,14 @@ class RAGSystem:
         #         context_text
         #         + "\nUse the above context to answer the user's question when relevant."
         #     )
-        prompt_parts.append("User: " + query)
+        prompt_parts.append("User: " + user_content)
         agent_input = "\n\n".join(prompt_parts)
 
-        deps_any: Any = None
-        # td_file = Path("./thread_data") / f"{thread_id}.json"
-        # if td_file.exists():
-        #     try:
-        #         with td_file.open("r", encoding="utf-8") as fh:
-        #             d = json.load(fh)
-        #         deps_any = ChatDeps(
-        #             lat=float(d.get("lat")),
-        #             lng=float(d.get("lng")),
-        #             radius_m=int(d.get("radius_m", 5000)),
-        #             types=d.get("types", ["supermarket"]),
-        #         )
-        #     except Exception:
-        #         deps_any = None{"lat": 48.7318664, "lng": 21.2431019, "radius_m": 2000}
-        deps_any = ChatDeps(
-            lat=48.7318664,
-            lng=21.2431019,
-            radius_m=2000,
-            types=["supermarket"],
-        )
-        if deps_any is not None:
-            result = await agent.run(agent_input, deps=deps_any)
-        else:
-            result = await agent.run(agent_input)
+        # Run the agent without relying on a nearby-search tool (we already enriched the message)
+        result = await agent.run(agent_input)
 
         assistant_message = str(result.output)
-        messages.append({"role": "user", "content": query})
+        messages.append({"role": "user", "content": user_content})
         messages.append({"role": "assistant", "content": assistant_message})
         self._save_thread(thread_id, messages)
 

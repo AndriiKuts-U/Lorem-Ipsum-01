@@ -1,31 +1,41 @@
 import sys
+import uuid
+
 import requests
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://127.0.0.1:8000"
 
 
 def run(lat: float, lng: float) -> None:
-    # 1) Fetch nearby places and append to first user message
-    places_req = {"lat": lat, "lng": lng, "radius_m": 2000}
-    pr = requests.post(f"{BASE_URL}/places/nearby", json=places_req)
-    print("/places/nearby status:", pr.status_code)
-    nearby_text = ""
-    try:
-        pdata = pr.json()
-        items = pdata.get("places", [])[:10]
-        if items:
-            summary = ", ".join(f"{p['name']} ({p['distance_m']} m)" for p in items)
-            nearby_text = f"\n\nNearby stores: {summary}."
-    except Exception:
-        pass
+    thread_id = str(uuid.uuid4())
+    # 1) Set session location first
+    loc_req = {"thread_id": thread_id, "lat": lat, "lng": lng}
+    rs = requests.post(
+        f"{BASE_URL}/session/location",
+        json=loc_req,
+        timeout=10,
+    )
+    print("/session/location status:", rs.status_code)
+    if rs.status_code != 200:
+        try:
+            print("location error:", rs.text)
+        except Exception:
+            pass
+        return
 
-    # 2) Start chat with enriched user message
-    chat_req = {"query": "hi" + nearby_text}
+    # 2) Start chat on the same thread
+    chat_req = {"query": "hi", "thread_id": thread_id}
     r = requests.post(f"{BASE_URL}/chat", json=chat_req)
     print("/chat status:", r.status_code)
+    if r.status_code != 200:
+        try:
+            print("chat error:", r.text)
+        except Exception:
+            pass
+        return
+
     data = r.json()
-    thread_id = data.get("thread_id")
-    print("thread_id:", thread_id)
+    print("thread_id:", data.get("thread_id"))
     if not thread_id:
         print("No thread_id returned; aborting.")
         return

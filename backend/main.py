@@ -6,7 +6,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from backend.maps.address import find_nearby_places
 from backend.rag import RAGSystem
 from backend.rag_tools import GroceryPriceComparer
 
@@ -28,8 +27,6 @@ class ShoppingListRequest(BaseModel):
     price_threshold: float = Field(5.0, description="Price difference threshold in percentage")
 
 
-
-
 class AddDocumentsRequest(BaseModel):
     documents: list[Document] = Field(..., description="list of documents to add")
 
@@ -42,8 +39,6 @@ class AddDocumentsResponse(BaseModel):
 class ChatRequest(BaseModel):
     query: str = Field(..., description="User query")
     thread_id: str | None = Field(None, description="Thread ID for conversation continuity")
-    use_retrieval: bool = Field(True, description="Whether to use document retrieval")
-    top_k: int = Field(3, description="Number of documents to retrieve")
 
 
 class RetrievedDocument(BaseModel):
@@ -152,15 +147,11 @@ async def chat_endpoint(request: ChatRequest):
 
     - **query**: The user's question or message
     - **thread_id**: Optional thread ID for conversation continuity
-    - **use_retrieval**: Whether to retrieve relevant documents from the vector store
-    - **top_k**: Number of documents to retrieve (if use_retrieval is True)
     """
     try:
         result = await app.state.rag_system.chat_async(
             query=request.query,
             thread_id=request.thread_id,
-            use_retrieval=request.use_retrieval,
-            top_k=request.top_k,
         )
         return ChatResponse(**result)
 
@@ -258,22 +249,22 @@ async def delete_location(thread_id: str):
     return DeleteThreadResponse(message="Location removed", thread_id=thread_id)
 
 
-@app.post("/places/nearby", response_model=NearbyPlacesResponse, tags=["Places"])
-async def nearby_places_endpoint(request: NearbyPlacesRequest):
-    """Return nearby places by Google Places v1 around given coordinates."""
-    try:
-        places = find_nearby_places(
-            request.lat,
-            request.lng,
-            radius_m=request.radius_m,
-            place_types=request.types or ["supermarket"],
-            min_unique=20,
-            max_pages=5,
-            max_per_brand=request.max_per_brand,
-        )
-        return NearbyPlacesResponse(places=[NearbyPlace(**p) for p in places])
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+# @app.post("/places/nearby", response_model=NearbyPlacesResponse, tags=["Places"])
+# async def nearby_places_endpoint(request: NearbyPlacesRequest):
+#     """Return nearby places by Google Places v1 around given coordinates."""
+#     try:
+#         places = find_nearby_places(
+#             request.lat,
+#             request.lng,
+#             radius_m=request.radius_m,
+#             place_types=request.types or ["supermarket"],
+#             min_unique=20,
+#             max_pages=5,
+#             max_per_brand=request.max_per_brand,
+#         )
+#         return NearbyPlacesResponse(places=[NearbyPlace(**p) for p in places])
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/threads", response_model=ThreadlistResponse, tags=["Threads"])
@@ -343,14 +334,15 @@ async def compare_prices_endpoint(request: ComparePricesRequest):
     """
     try:
         comparer = GroceryPriceComparer(
-            rag_system=app.state.rag_system,
-            price_threshold_percent=request.price_threshold
+            rag_system=app.state.rag_system, price_threshold_percent=request.price_threshold
         )
 
         result = comparer.compare_prices(query=request.query, top_k=request.top_k)
 
         if not result:
-            raise HTTPException(status_code=404, detail=f"No products found for query: {request.query}")
+            raise HTTPException(
+                status_code=404, detail=f"No products found for query: {request.query}"
+            )
 
         # Convert dataclass to dict for JSON response
         return {
@@ -360,7 +352,7 @@ async def compare_prices_endpoint(request: ComparePricesRequest):
             "price_differences": result.price_differences,
             "recommendation": result.recommendation,
             "items_count": sum(len(items) for items in result.items_by_store.values()),
-            "stores_found": list(result.items_by_store.keys())
+            "stores_found": list(result.items_by_store.keys()),
         }
 
     except HTTPException:
@@ -381,8 +373,7 @@ async def shopping_list_endpoint(request: ShoppingListRequest):
     """
     try:
         comparer = GroceryPriceComparer(
-            rag_system=app.state.rag_system,
-            price_threshold_percent=request.price_threshold
+            rag_system=app.state.rag_system, price_threshold_percent=request.price_threshold
         )
 
         result = comparer.get_best_store_for_list(items=request.items)
