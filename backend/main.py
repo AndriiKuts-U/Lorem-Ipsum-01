@@ -211,6 +211,8 @@ async def health_status_endpoint():
 
         return HealthStatusResponse(
             status=result.status,  # type: ignore
+            rating=result.rating,  # type: ignore
+            suggested_recipe=result.suggested_recipe,  # type: ignore
         )
 
     except Exception as e:
