@@ -6,7 +6,6 @@ import Sidebar from "./components/Sidebar";
 import ScenarioCards from "./components/ScenarioCards";
 import { Menu } from "lucide-react";
 import Dashboard from "./pages/Dashboard.jsx";
-import StoreMarquee from "./components/StoreMarquee.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -298,7 +297,6 @@ const App = () => {
           path="/"
           element={
             <main className="main-container">
-              <StoreMarquee />
               <header className="main-header">
                 <button
                   onClick={() => setIsSidebarOpen(true)}
