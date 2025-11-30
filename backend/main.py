@@ -6,11 +6,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
-from backend.settings import settings
 
-from backend.rag import RAGSystem
 from backend.analytics import StatsService
+from backend.rag import RAGSystem
 from backend.rag_tools import GroceryPriceComparer
+from backend.settings import settings
 
 HEALTH_STATUS_PROMPT = (
     "You are a health monitoring system for a user. "
@@ -64,10 +64,13 @@ class HealthStatusResponse(BaseModel):
     rating: int
     suggested_recipe: str
 
+
 class SideBar(BaseModel):
     grocery_list: list[str]
     shops_to_visit: list[str]
     spent_total: float
+    saved_total: float
+
 
 class ChatResponse(BaseModel):
     response: str
@@ -339,6 +342,29 @@ async def recompute_dashboard():
     try:
         svc: StatsService = app.state.stats
         return svc.compute_all(recompute=True)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/thread_data/{thread_id}", tags=["Thread Data"])
+async def get_thread_data(thread_id: str):
+    """
+    Get the thread data for a specific thread.
+
+    - **thread_id**: The ID of the thread to retrieve
+    """
+    try:
+        f = THREAD_DATA_DIR / f"{thread_id}.json"
+        if not f.exists():
+            raise HTTPException(status_code=404, detail=f"Thread data for {thread_id} not found")
+
+        with f.open("r", encoding="utf-8") as fh:
+            data = json.load(fh)
+
+        return {"thread_id": thread_id, "data": data}
+
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
