@@ -38,49 +38,64 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, conversations, setConversati
     };
     return (
         <aside className={`sidebar ${isSidebarOpen ? "open" : "closed"}`}>
-            <div className="sidebar-top glass">
-                <div className="sidebar-header">
-                    <button className="sidebar-toggle rounded-xl" onClick={() => setIsSidebarOpen(prev => !prev)}>
-                        <Menu size={18} />
-                    </button>
-
-                    <button className="new-chat-btn" onClick={createNewConversation}>
-                        <Plus size={20} />
-                        <span>New chat</span>
-                    </button>
-                </div>
-
-                <div className="sidebar-content">
-                    <h2 className="sidebar-title">Chat history</h2>
-
-                    <ul className="conversation-list">
-                        {conversations.map(conv => (
-                            <li
-                                key={conv.id}
-                                className={`conversation-item ${activeConversation === conv.id ? "active" : ""}`}
-                                onClick={() => setActiveConversation(conv.id)}
-                            >
-                                <div className="conversation-icon-title">
-                                    <div className="conversation-icon">
-                                        <Sparkles size={14} />
-                                    </div>
-                                    <span className="conversation-title">{conv.title}</span>
-                                </div>
-
-                                <button
-                                    className={`delete-btn ${conversations.length > 1 || conv.title !== "New Chat" ? "" : "hide"}`}
-                                    onClick={e => deleteConversation(conv.id, e)}
-                                >
-                                    <Trash2 size={16} />
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            {/* Sidebar Header */}
+            <div className="sidebar-header">
+                <button className="sidebar-toggle" onClick={() => setIsSidebarOpen((prev) => !prev)}>
+                    <Menu size={18} />
+                </button>
+                <button className="new-chat-btn" onClick={() => { createNewConversation(); navigate('/'); }}>
+                    <Plus size={20} />
+                    <span>New chat</span>
+                </button>
             </div>
 
-            {/* Нижняя стеклянная панель */}
-            <div className="sidebar-bottom glass">
+            {/* Navigation */}
+            <div className="sidebar-nav">
+                <button
+                    className={`nav-item ${currentPath === '/' ? 'active' : ''}`}
+                    onClick={() => navigate('/')}
+                >
+                    <MessageSquare size={18} />
+                    <span>Chat</span>
+                </button>
+                <button
+                    className={`nav-item ${currentPath === '/dashboard' ? 'active' : ''}`}
+                    onClick={() => navigate('/dashboard')}
+                >
+                    <LayoutDashboard size={18} />
+                    <span>Dashboard</span>
+                </button>
+            </div>
+
+            {/* Conversation List */}
+            <div className="sidebar-content">
+                <h2 className="sidebar-title">Chat history</h2>
+                <ul className="conversation-list">
+                    {conversations.map((conv) => (
+                        <li
+                            key={conv.id}
+                            className={`conversation-item ${activeConversation === conv.id ? "active" : ""}`}
+                            onClick={() => { setActiveConversation(conv.id); navigate('/'); }}
+                        >
+                            <div className="conversation-icon-title">
+                                <div className="conversation-icon">
+                                    <Sparkles size={14} />
+                                </div>
+                                <span className="conversation-title">{conv.title}</span>
+                            </div>
+                            <button
+                                className={`delete-btn ${conversations.length > 1 || conv.title !== "New Chat" ? "" : "hide"}`}
+                                onClick={(e) => deleteConversation(conv.id, e)}
+                            >
+                                <Trash2 size={16} />
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Theme Toggle */}
+            <div className="sidebar-footer">
                 <button className="theme-toggle" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
                     {theme === "light" ? (
                         <>
@@ -96,8 +111,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, conversations, setConversati
                 </button>
             </div>
         </aside>
-
-
     );
 };
 export default Sidebar;
