@@ -316,6 +316,18 @@ const App = () => {
                     Choose a scenario to get started
                   </p>
                   <ScenarioCards onSelectScenario={handleSelectScenario} />
+                  <PromptForm
+                    className="mb-4"
+                    conversations={conversations}
+                    setConversations={setConversations}
+                    activeConversation={activeConversation}
+                    generateResponse={generateResponse}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                  />
+                  <p className="disclaimer-text text-xs text-gray-500 mt-1">
+                    Describe your goal or choose from templates
+                  </p>
                 </div>
               ) : (
                 <div className="flex flex-1 gap-4 p-2 overflow-hidden mr-[200px]">

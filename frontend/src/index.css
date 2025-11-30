@@ -13,8 +13,8 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 * {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 :root {
   /* Dark theme colors */
@@ -267,7 +267,7 @@
   position: relative;
   margin: 0 auto;
   width: 60%;
-    padding: 0 20px;
+  padding: 0 20px;
   max-width: 1000px;
 }
 .messages-container {
@@ -293,7 +293,7 @@
   border-radius: 50%;
   padding: 6px;
   margin-right: -7px;
-    overflow: hidden;
+  overflow: hidden;
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-hover-secondary);
 }
@@ -327,13 +327,13 @@
   color: #d62939;
 }
 .messages-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .messages-container .bot-message .avatar img,
 .messages-container .bot-message .avatar svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;       /* scale content to fit avatar */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* scale content to fit avatar */
 }
 .marquee-container {
   width: 100%;
@@ -640,17 +640,15 @@
   width: 40%;
 }
 .prompt-container .prompt-form {
-    height: 54px;
-    width: 100%;
-    position: relative;
-    border-radius: 130px;
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border-hr);
-    animation: 3s linear;
+  height: 54px;
+  width: 100%;
+  position: relative;
+  border-radius: 130px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-hr);
+  animation: 3s linear;
 }
 .prompt-container {
-  position: fixed;
-  bottom: 0;
   left: 20rem;
   width: 40%;
   max-width: 1000px;
@@ -688,14 +686,14 @@
 }
 
 .prompt-form {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    gap: 12px;
-    padding: 6px 12px;
-    border-radius: 40px;
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(10px);
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
 }
 .prompt-input {
   flex: 1;
@@ -706,12 +704,12 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   outline: none;
-    font-size: 1rem;
-    color: var(--color-text-primary);
+  font-size: 1rem;
+  color: var(--color-text-primary);
 }
 
 .prompt-input::placeholder {
-    color: var(--color-text-placeholder);
+  color: var(--color-text-placeholder);
 }
 .prompt-wrapper .prompt-form .prompt-input:valid ~ .send-prompt-btn {
   display: flex;
@@ -1126,7 +1124,7 @@
 .store-card {
   display: flex;
   align-items: center;
-  gap:8px;
+  gap: 8px;
   padding: 5px;
   border-radius: 12px;
   transition: background 0.2s ease;
@@ -1392,8 +1390,8 @@
 }
 
 .message .text li {
-  margin: 4px 0;
-  line-height: 1;
+  margin: 0 0;
+  line-height: 0.8;
 }
 
 .message .text code {
@@ -1466,8 +1464,8 @@
   font-style: italic;
 }
 .message img {
-    width: 42px;
-    height: 42px;
-    padding: 6px;
-    border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  padding: 6px;
+  border-radius: 999px;
 }
