@@ -3,7 +3,7 @@ import json
 import requests
 
 # Base URL for the API
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://127.0.0.1:8000"
 
 
 def health_check():
@@ -20,26 +20,36 @@ def health_check():
 
 def add_documents():
     """Add sample documents to the vector database."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("2. ADD DOCUMENTS")
-    print("="*60)
+    print("=" * 60)
 
     documents = json.load(open("data/tesco_parsed_turbo.json", encoding="utf-8"))
     insert_documents = []
     for i in documents:
-        insert_documents.append({"text": i["name"],
-                                 "metadata": {"source":"tesco",
-                                              "price": i["price_discounted"] if i["price_discounted"] is not None else i["price"],
-                                              "price_original": i["price"],
-                                              "discount_percentage": i["discount_percentage"] if i["discount_percentage"] is not None else 0,
-                                              "amount": i["amount"],
-                                              "unit": i["unit"],
-                                              "description": i["description"],
-                                              "category": i["category"]
-                                              }})
+        insert_documents.append(
+            {
+                "text": i["name"],
+                "metadata": {
+                    "source": "tesco",
+                    "price": i["price_discounted"]
+                    if i["price_discounted"] is not None
+                    else i["price"],
+                    "price_original": i["price"],
+                    "discount_percentage": i["discount_percentage"]
+                    if i["discount_percentage"] is not None
+                    else 0,
+                    "amount": i["amount"],
+                    "unit": i["unit"],
+                    "description": i["description"],
+                    "category": i["category"],
+                },
+            }
+        )
 
-
-    response = requests.post(f"{BASE_URL}/documents", json={"documents": insert_documents}, timeout=1000000)
+    response = requests.post(
+        f"{BASE_URL}/documents", json={"documents": insert_documents}, timeout=1000000
+    )
     print(f"Status Code: {response.status_code}")
     print(f"Response: {json.dumps(response.json(), indent=2)}")
     return response.json()
@@ -174,7 +184,10 @@ def run_full_demo():
         # rag_thread_id = result2["thread_id"]
 
         # 7. Continue RAG conversation
-        chat_with_retrieval("Plan a meal(full plan recipe) for me with 30+g of protein for 1000 calories and find the cheapest possible stores to buy my groceries.(only lidl and tesco)", thread_id="0efdc7ab-eb37-43c2-a81b-e25a4a2b969e")
+        chat_with_retrieval(
+            "Plan a meal(full plan recipe) for me with 30+g of protein for 1000 calories and find the cheapest possible stores to buy my groceries.(only lidl and tesco)",
+            thread_id="0efdc7ab-eb37-43c2-a81b-e25a4a2b969e",
+        )
 
         # # 8. List all threads
         # threads_result = list_threads()
@@ -270,6 +283,6 @@ if __name__ == "__main__":
     else:
         run_full_demo()
     # add_documents()
-        # Uncomment to run interactive mode after demo
-        # print("\n\nStarting interactive mode...")
-        # interactive_chat()
+    # Uncomment to run interactive mode after demo
+    # print("\n\nStarting interactive mode...")
+    # interactive_chat()
