@@ -185,7 +185,7 @@ class RAGSystem:
             thread_id = str(uuid.uuid4())
         messages = self._load_thread(thread_id)
 
-        context_text = ""
+        # context_text = ""
         # retrieved_docs: list[dict] = []
         # if use_retrieval:
         #     retrieved_docs = self.retrieve_context(query, top_k=top_k)
@@ -209,7 +209,7 @@ class RAGSystem:
         agent_input = "\n\n".join(prompt_parts)
 
         deps_any: Any = None
-        td_file = Path("./thread_data") / f"{thread_id}.json"
+        # td_file = Path("./thread_data") / f"{thread_id}.json"
         # if td_file.exists():
         #     try:
         #         with td_file.open("r", encoding="utf-8") as fh:
