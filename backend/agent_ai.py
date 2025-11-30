@@ -1,31 +1,27 @@
+import json
 from dataclasses import dataclass
 from pathlib import Path
-import json
 from typing import Any
-import json
-from backend.settings import settings
 
+from openai import OpenAI
 from pydantic import BaseModel
 from pydantic_ai import Agent, RunContext
-from openai import OpenAI
+from pydantic_ai.models.openai import OpenAIResponsesModelSettings
 from qdrant_client import QdrantClient
-from backend.maps.address import find_nearby_places as _find_nearby_places
-from pydantic_ai.models.openai import OpenAIResponsesModel, OpenAIResponsesModelSettings
 
-model = OpenAIResponsesModel('gpt-5')
+from backend.settings import settings
+from backend.maps.address import find_nearby_places as _find_nearby_places
+
 model_settings = OpenAIResponsesModelSettings(
-    openai_reasoning_effort='minimal',
-    openai_reasoning_summary='concise',
+    openai_reasoning_effort="minimal",
+    openai_reasoning_summary="concise",
 )
 
 # Initialize OpenAI client for structured outputs
 openai_client = OpenAI()
 
 # Initialize Qdrant client for product search
-qdrant_client = QdrantClient(
-    url=settings.QDRANT_DATABASE_URL,
-    api_key=settings.QDRANT_API_KEY
-)
+qdrant_client = QdrantClient(url=settings.QDRANT_DATABASE_URL, api_key=settings.QDRANT_API_KEY)
 
 
 SYSTEM_PROMPT = (
@@ -57,12 +53,14 @@ SYSTEM_PROMPT = (
 
 class GroceryItem(BaseModel):
     """A single grocery item extracted from user input."""
+
     name: str
     quantity: str | None = None
 
 
 class ShoppingList(BaseModel):
     """A structured shopping list extracted from user input."""
+
     items: list[GroceryItem]
 
 
@@ -82,7 +80,7 @@ agent: Agent = Agent(
     model="openai:gpt-5-mini",
     system_prompt=SYSTEM_PROMPT,
     deps_type=ChatDeps,
-    model_settings=model_settings
+    model_settings=model_settings,
 )
 
 qdrant = QdrantClient(
@@ -96,7 +94,8 @@ def _get_embedding(text: str) -> list[float]:
     response = openai_client.embeddings.create(model="text-embedding-3-small", input=text)
     return response.data[0].embedding
 
-def retrieve_context( query: str, top_k: int = 3, include_metadata: bool = False) -> list[dict]:
+
+def retrieve_context(query: str, top_k: int = 3, include_metadata: bool = False) -> list[dict]:
     """Retrieve relevant documents from Qdrant."""
 
     query_embedding = _get_embedding(query)
@@ -169,7 +168,11 @@ def find_nearby_places(ctx: RunContext[ChatDeps | None], top_k: int = 5) -> list
 
 
 @agent.tool
-def extract_shopping_list(ctx: RunContext[ChatDeps | None], user_input: str, top_k_per_item: int = 10) -> dict[str, Any]:
+def extract_shopping_list(
+    ctx: RunContext[ChatDeps | None],
+    user_input: str,
+    top_k_per_item: int = 10,
+) -> dict[str, Any]:
     """Extract grocery items from user's shopping list and find similar products in stores.
 
     This tool:
@@ -185,6 +188,19 @@ def extract_shopping_list(ctx: RunContext[ChatDeps | None], user_input: str, top
         A dictionary containing extracted items with their store availability and prices
     """
     try:
+        # Log tool invocation
+        # Note: we do not persist this result; it's ephemeral for analysis
+        # Logging here helps tests observe tool usage
+        import logging
+
+        tool_log = logging.getLogger("agent.tools")
+
+        tool_log.info(
+            "extract_shopping_list called: thread_id=%s items_hint=%s top_k_per_item=%s",
+            getattr(ctx.deps, "thread_id", None) if ctx.deps else None,
+            user_input[:50].replace("\n", " "),
+            top_k_per_item,
+        )
         # Step 1: Extract grocery items using structured output
         completion = openai_client.beta.chat.completions.parse(
             model="gpt-4o-mini",
@@ -194,43 +210,70 @@ def extract_shopping_list(ctx: RunContext[ChatDeps | None], user_input: str, top
                     "content": (
                         "You are an expert at parsing shopping lists. "
                         "Extract all grocery items from the user's input, including quantities if mentioned. "
-                    )
+                    ),
                 },
-                {
-                    "role": "user",
-                    "content": user_input
-                }
+                {"role": "user", "content": user_input},
             ],
             response_format=ShoppingList,
         )
 
         shopping_list = completion.choices[0].message.parsed
+        # Log actual ingredient names parsed
+        try:
+            names_list = [getattr(i, "name", "") for i in shopping_list.items]  # type: ignore[attr-defined]
+        except Exception:
+            names_list = []
+        tool_log.info("extract_shopping_list ingredients=%s", ", ".join(n for n in names_list if n))
+        # Count parsed items and warn on unusually large lists
+        try:
+            parsed_count = len(shopping_list.items)  # type: ignore[attr-defined]
+        except Exception:
+            parsed_count = 0
+        tool_log.info("extract_shopping_list parsed items_count=%s", parsed_count)
+        if parsed_count > 50:
+            tool_log.warning("extract_shopping_list large item count: %s > %s", parsed_count, 50)
 
         # Step 2: For each item, search Qdrant for similar products
         items_with_products = []
-        for item in shopping_list.items:
+        for item in shopping_list.items:  # type: ignore[attr-defined]
             # Search for similar products in Qdrant
+            tool_log.info(
+                "extract_shopping_list searching item=%s top_k=%s",
+                getattr(item, "name", ""),
+                top_k_per_item,
+            )
             similar_products = retrieve_context(
-                query=item.name,
-                top_k=top_k_per_item,
-                include_metadata=True
+                query=item.name, top_k=top_k_per_item, include_metadata=True
+            )
+            tool_log.info(
+                "extract_shopping_list found=%s for item=%s",
+                len(similar_products),
+                getattr(item, "name", ""),
             )
 
-            items_with_products.append({
-                "name": item.name,
-                "quantity": item.quantity,
-                "similar_products": similar_products
-            })
+            items_with_products.append(
+                {
+                    "name": item.name,
+                    "quantity": item.quantity,
+                    "similar_products": similar_products,
+                }
+            )
 
         # Step 3: Compile the data for GPT to analyze
-        return {
+        result = {
             "items": items_with_products,
             "total_items": len(items_with_products),
-            "user_input": user_input
+            "user_input": user_input,
         }
+        tool_log.info(
+            "extract_shopping_list extracted %d items: %s",
+            len(items_with_products),
+            ", ".join(i.get("name", "") for i in items_with_products if i.get("name")),
+        )
+        return result
 
     except Exception as e:
-        return {
-            "error": f"Failed to extract shopping list: {str(e)}",
-            "items": []
-        }
+        import logging
+
+        logging.getLogger("agent.tools").warning("extract_shopping_list failed: %s", str(e))
+        return {"error": f"Failed to extract shopping list: {str(e)}", "items": []}
