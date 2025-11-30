@@ -1,13 +1,8 @@
 import json
-import os
 from typing import Any
 
 import requests
-from dotenv import load_dotenv
-
-load_dotenv()
-
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+from backend.settings import settings
 
 BASE_URL = "https://places.googleapis.com/v1/places:searchNearby"
 
@@ -44,13 +39,10 @@ def find_nearby_places(
     max_pages: int = 5,
     max_per_brand: int = 1,
 ) -> list[dict[str, Any]]:
-    if not GOOGLE_API_KEY:
-        raise RuntimeError("GOOGLE_API_KEY is not set")
-
     types = list(place_types) if place_types else ["supermarket"]
     headers = {
         "Content-Type": "application/json",
-        "X-Goog-Api-Key": GOOGLE_API_KEY,
+        "X-Goog-Api-Key": settings.GOOGLE_API_KEY,
         "X-Goog-FieldMask": "places.id,places.displayName,places.location",
     }
 
@@ -136,7 +128,7 @@ if __name__ == "__main__":
         test_address = " ".join(sys.argv[1:])
 
     g_url = "https://maps.googleapis.com/maps/api/geocode/json"
-    g_params = {"address": test_address, "key": GOOGLE_API_KEY}
+    g_params = {"address": test_address, "key": settings.GOOGLE_API_KEY}
     r = requests.get(g_url, params=g_params)
     j = r.json()
 

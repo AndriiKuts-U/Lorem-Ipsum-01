@@ -10,6 +10,7 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - QDRANT_DATABASE_URL=${QDRANT_DATABASE_URL}
       - QDRANT_API_KEY=${QDRANT_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
       - ./backend:/app/backend
       - ./data:/app/data
