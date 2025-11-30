@@ -244,6 +244,23 @@ const Dashboard = ({ theme }) => {
     handleHealth();
   }, []);
 
+  const handleHealthStatus = (stat) => {
+    switch (stat) {
+      case 1:
+        return "Bad";
+      case 2:
+        return "Worse";
+      case 3:
+        return "Avarage";
+      case 4:
+        return "Better";
+      case 5:
+        return "Good";
+      default:
+        return "Unknown";
+    }
+  };
+
   return (
     <div className="dashboard-container ">
       <div className="dashboard-header">
@@ -256,6 +273,22 @@ const Dashboard = ({ theme }) => {
       {/* Stats Row */}
       <div className="parent">
         <div className="div1">
+          <div className="flex flex-col justify-center w-full h-full items-center gap-3 bg-blue-500/10 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-colors duration-200">
+            <h3>Health status {handleHealthStatus(1)}</h3>
+            <div
+              className="w-[90%] h-[25px] rounded-full relative"
+              style={{
+                background: "linear-gradient(to left, #22c55e, #ef4444)",
+              }}
+            >
+              <div
+                className="absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg border-2 border-white/50 transition-all duration-300"
+                style={{ left: `calc(${10}% - 16px)` }}
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div className="div2">
           <StatCard
             title="Tento mesiac"
             value={`€${totalSpentThisMonth.toLocaleString()}`}
@@ -264,14 +297,6 @@ const Dashboard = ({ theme }) => {
             trendValue={5.8}
           />
         </div>
-        <div className="div2">
-          <StatCard
-            title="Mesačný priemer"
-            value={`€${avgSpending.toLocaleString()}`}
-            icon={DollarSign}
-          />
-        </div>
-
         <div className="list-card div4">
           <div className="list-header">
             <h3 className="list-title">
