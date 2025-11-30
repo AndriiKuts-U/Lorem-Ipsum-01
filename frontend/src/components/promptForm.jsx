@@ -43,12 +43,14 @@ const PromptForm = ({ conversations, setConversations, activeConversation, gener
         }, 300);
     };
     return (
-        <form className="prompt-form" onSubmit={handleSubmit}>
-            <input placeholder="Describe your goal..." className="prompt-input" value={promptText} onChange={(e) => setPromptText(e.target.value)} required />
-            <button type="submit" className="send-prompt-btn">
-                <ArrowUp size={20} />
-            </button>
-        </form>
+        <div className="prompt-wrapper">
+            <form className="prompt-form flex items-center" onSubmit={handleSubmit}>
+                <input placeholder="Describe your goal..." className="prompt-input flex-1" value={promptText} onChange={(e) => setPromptText(e.target.value)} required />
+                <button type="submit" className="send-prompt-btn">
+                    <ArrowUp size={20} />
+                </button>
+            </form>
+        </div>
     );
 };
 export default PromptForm;
