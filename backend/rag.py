@@ -4,11 +4,10 @@ from pathlib import Path
 from typing import Any
 
 from openai import OpenAI
-from qdrant_client import QdrantClient
+
 from qdrant_client.models import PointStruct
 
 from backend.agent_ai import ChatDeps, agent
-import logging
 from anyio import from_thread
 from backend.settings import settings
 
@@ -24,14 +23,10 @@ class RAGSystem:
             collection_name: Name of the Qdrant collection
             memory_dir: Directory to store conversation threads
         """
-        self.qdrant = QdrantClient(
-            url=settings.QDRANT_DATABASE_URL,
-            api_key=settings.QDRANT_API_KEY,
-        )
+
         self.collection_name = collection_name
         self.memory_dir = Path(memory_dir)
         self.memory_dir.mkdir(parents=True, exist_ok=True)
-        self.logger = logging.getLogger(__name__)
 
         # Initialize collection if it doesn't exist
         # self._init_collection()
@@ -76,36 +71,7 @@ class RAGSystem:
             self.qdrant.upsert(collection_name=self.collection_name, points=[point])
         print(f"Added {len(documents)} documents to collection")
 
-    def retrieve_context(
-        self, query: str, top_k: int = 3, include_metadata: bool = False
-    ) -> list[dict]:
-        """Retrieve relevant documents from Qdrant."""
 
-        query_embedding = self._get_embedding(query)
-
-        results = self.qdrant.query_points(
-            collection_name=self.collection_name,
-            query=query_embedding,
-            limit=top_k,
-            with_payload=True,
-        )
-        # print(results)
-        out = []
-        for hit in results.points:
-            payload = hit.payload or {}
-            text_val = payload.get("text", "")
-
-            result = {
-                "text": text_val,
-                "score": hit.score,
-            }
-
-            # Include full metadata if requested
-            if include_metadata:
-                result.update(payload)
-
-            out.append(result)
-        return out
 
     def _load_thread(self, thread_id: str) -> list[dict]:
         """Load conversation thread from local storage."""
@@ -121,104 +87,81 @@ class RAGSystem:
         with open(thread_file, "w") as f:
             json.dump(messages, f, indent=2)
 
-    def chat(
-        self,
-        query: str,
-        thread_id: str | None = None,
-        use_retrieval: bool = True,
-        top_k: int = 3,
-    ) -> dict:
-        """
-        Chat with the RAG system.
-        """
-        # Create or load thread
-        if thread_id is None:
-            thread_id = str(uuid.uuid4())
-
-        messages = self._load_thread(thread_id)
-
-        # Retrieve relevant context if enabled
-        context_text = ""
-        retrieved_docs = []
-        if use_retrieval:
-            retrieved_docs = self.retrieve_context(query, top_k=top_k)
-            if retrieved_docs:
-                context_text = "\n\nRelevant context:\n" + "\n".join(
-                    f"- {doc['text']}" for doc in retrieved_docs
-                )
-
-        # Build a single prompt for the agent including prior history and dynamic context
-        history_text = "\n\n".join(
-            f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
-        )
-        prompt_parts = []
-        if history_text:
-            prompt_parts.append("Conversation so far:\n" + history_text)
-        if context_text:
-            prompt_parts.append(
-                context_text
-                + "\nUse the above context to answer the user's question when relevant."
-            )
-        prompt_parts.append("User: " + query)
-        agent_input = "\n\n".join(prompt_parts)
-
-        # Load per-thread location deps if available
-        deps_any: Any = None
-        td_dir = Path("./backend/thread_data")
-        td_file = td_dir / f"{thread_id}.json"
-        if td_file.exists():
-            try:
-                with td_file.open("r", encoding="utf-8") as fh:
-                    d = json.load(fh)
-                deps_any = ChatDeps(
-                    lat=float(d.get("lat")),
-                    lng=float(d.get("lng")),
-                    radius_m=int(d.get("radius_m", 2000)),
-                    types=d.get("types", ["supermarket"]),
-                    thread_id=thread_id,
-                )
-            except Exception:
-                deps_any = None
-        if deps_any is None:
-            # Default fallback location, persist minimal thread_data and warn
-            deps_any = ChatDeps(
-                lat=48.7318664,
-                lng=21.2431019,
-                radius_m=2000,
-                types=["supermarket"],
-                thread_id=thread_id,
-            )
-            try:
-                td_dir.mkdir(parents=True, exist_ok=True)
-                with td_file.open("w", encoding="utf-8") as fh:
-                    json.dump(
-                        {"lat": deps_any.lat, "lng": deps_any.lng, "radius_m": deps_any.radius_m},
-                        fh,
-                    )
-            except Exception:
-                pass
-            self.logger.warning(
-                "Location not set for thread %s; using default coordinates (48.7318664, 21.2431019)",
-                thread_id,
-            )
-
-        # Run the agent on the running event loop from this worker thread
-        if deps_any is not None:
-            result = from_thread.run(lambda: agent.run(agent_input, deps=deps_any))
-        else:
-            result = from_thread.run(lambda: agent.run(agent_input))
-        assistant_message = str(result.output)
-
-        # Update thread memory
-        messages.append({"role": "user", "content": query})
-        messages.append({"role": "assistant", "content": assistant_message})
-        self._save_thread(thread_id, messages)
-
-        return {
-            "response": assistant_message,
-            "thread_id": thread_id,
-            "retrieved_context": retrieved_docs,
-        }
+    # def chat(
+    #     self,
+    #     query: str,
+    #     thread_id: str | None = None,
+    #     use_retrieval: bool = True,
+    #     top_k: int = 3,
+    # ) -> dict:
+    #     """
+    #     Chat with the RAG system.
+    #     """
+    #     # Create or load thread
+    #     if thread_id is None:
+    #         thread_id = str(uuid.uuid4())
+    #
+    #     messages = self._load_thread(thread_id)
+    #
+    #     # Retrieve relevant context if enabled
+    #     context_text = ""
+    #     retrieved_docs = []
+    #     if use_retrieval:
+    #         retrieved_docs = self.retrieve_context(query, top_k=top_k)
+    #         if retrieved_docs:
+    #             context_text = "\n\nRelevant context:\n" + "\n".join(
+    #                 f"- {doc['text']}" for doc in retrieved_docs
+    #             )
+    #
+    #     # Build a single prompt for the agent including prior history and dynamic context
+    #     history_text = "\n\n".join(
+    #         f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
+    #     )
+    #     prompt_parts = []
+    #     if history_text:
+    #         prompt_parts.append("Conversation so far:\n" + history_text)
+    #     if context_text:
+    #         prompt_parts.append(
+    #             context_text
+    #             + "\nUse the above context to answer the user's question when relevant."
+    #         )
+    #     prompt_parts.append("User: " + query)
+    #     agent_input = "\n\n".join(prompt_parts)
+    #
+    #     # Load per-thread location deps if available
+    #     deps_any: Any = None
+    #     td_dir = Path("./backend/thread_data")
+    #     td_file = td_dir / f"{thread_id}.json"
+    #     if td_file.exists():
+    #         try:
+    #             with td_file.open("r", encoding="utf-8") as fh:
+    #                 d = json.load(fh)
+    #             deps_any = ChatDeps(
+    #                 lat=float(d.get("lat")),
+    #                 lng=float(d.get("lng")),
+    #                 radius_m=int(d.get("radius_m", 5000)),
+    #                 types=d.get("types", ["supermarket"]),
+    #             )
+    #         except Exception:
+    #             deps_any = None
+    #
+    #     # Run the agent on the running event loop from this worker thread
+    #     if deps_any is not None:
+    #         result = from_thread.run(lambda: agent.run(agent_input, deps=deps_any))
+    #     else:
+    #         result = from_thread.run(lambda: agent.run(agent_input))
+    #     assistant_message = str(result.output)
+    #
+    #     # Update thread memory
+    #     messages.append({"role": "user", "content": query})
+    #     messages.append({"role": "assistant", "content": assistant_message})
+    #     self._save_thread(thread_id, messages)
+    #
+    #     return {
+    #         "response": assistant_message,
+    #         "thread_id": thread_id,
+    #         "retrieved_context": retrieved_docs,
+    #     }
 
     def list_threads(self) -> list[str]:
         """list all available thread IDs."""
@@ -243,13 +186,13 @@ class RAGSystem:
         messages = self._load_thread(thread_id)
 
         context_text = ""
-        retrieved_docs: list[dict] = []
-        if use_retrieval:
-            retrieved_docs = self.retrieve_context(query, top_k=top_k)
-            if retrieved_docs:
-                context_text = "\n\nRelevant context:\n" + "\n".join(
-                    f"- {doc['text']}" for doc in retrieved_docs
-                )
+        # retrieved_docs: list[dict] = []
+        # if use_retrieval:
+        #     retrieved_docs = self.retrieve_context(query, top_k=top_k)
+        #     if retrieved_docs:
+        #         context_text = "\n\nRelevant context:\n" + "\n".join(
+        #             f"- {doc['text']}" for doc in retrieved_docs
+        #         )
 
         history_text = "\n\n".join(
             f"{m.get('role', 'user').capitalize()}: {m.get('content', '')}" for m in messages
@@ -257,53 +200,34 @@ class RAGSystem:
         prompt_parts: list[str] = []
         if history_text:
             prompt_parts.append("Conversation so far:\n" + history_text)
-        if context_text:
-            prompt_parts.append(
-                context_text
-                + "\nUse the above context to answer the user's question when relevant."
-            )
+        # if context_text:
+        #     prompt_parts.append(
+        #         context_text
+        #         + "\nUse the above context to answer the user's question when relevant."
+        #     )
         prompt_parts.append("User: " + query)
         agent_input = "\n\n".join(prompt_parts)
 
         deps_any: Any = None
-        td_file = Path("./backend/thread_data") / f"{thread_id}.json"
-        if td_file.exists():
-            try:
-                with td_file.open("r", encoding="utf-8") as fh:
-                    d = json.load(fh)
-                deps_any = ChatDeps(
-                    lat=float(d.get("lat")),
-                    lng=float(d.get("lng")),
-                    radius_m=int(d.get("radius_m", 2000)),
-                    types=d.get("types", ["supermarket"]),
-                    thread_id=thread_id,
-                )
-            except Exception:
-                deps_any = None
-        if deps_any is None:
-            deps_any = ChatDeps(
-                lat=48.7318664,
-                lng=21.2431019,
-                radius_m=2000,
-                types=["supermarket"],
-                thread_id=thread_id,
-            )
-            try:
-                Path("./backend/thread_data").mkdir(parents=True, exist_ok=True)
-                with Path(f"./backend/thread_data/{thread_id}.json").open(
-                    "w", encoding="utf-8"
-                ) as fh:
-                    json.dump(
-                        {"lat": deps_any.lat, "lng": deps_any.lng, "radius_m": deps_any.radius_m},
-                        fh,
-                    )
-            except Exception:
-                pass
-            logging.getLogger(__name__).warning(
-                "Location not set for thread %s; using default coordinates (48.7318664, 21.2431019)",
-                thread_id,
-            )
-
+        td_file = Path("./thread_data") / f"{thread_id}.json"
+        # if td_file.exists():
+        #     try:
+        #         with td_file.open("r", encoding="utf-8") as fh:
+        #             d = json.load(fh)
+        #         deps_any = ChatDeps(
+        #             lat=float(d.get("lat")),
+        #             lng=float(d.get("lng")),
+        #             radius_m=int(d.get("radius_m", 5000)),
+        #             types=d.get("types", ["supermarket"]),
+        #         )
+        #     except Exception:
+        #         deps_any = None{"lat": 48.7318664, "lng": 21.2431019, "radius_m": 2000}
+        deps_any = ChatDeps(
+            lat=48.7318664,
+            lng=21.2431019,
+            radius_m=2000,
+            types=["supermarket"],
+        )
         if deps_any is not None:
             result = await agent.run(agent_input, deps=deps_any)
         else:
@@ -317,5 +241,5 @@ class RAGSystem:
         return {
             "response": assistant_message,
             "thread_id": thread_id,
-            "retrieved_context": retrieved_docs,
+            # "retrieved_context": retrieved_docs,
         }
