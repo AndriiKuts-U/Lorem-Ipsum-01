@@ -278,11 +278,11 @@ const Dashboard = ({theme}) => {
                                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                                 <XAxis
                                     dataKey="month"
-                                    stroke="rgba(255,255,255,0.5)"
+                                    stroke="rgba(1,1,1,0.5)"
                                     fontSize={12}
                                 />
                                 <YAxis
-                                    stroke="rgba(255,255,255,0.5)"
+                                    stroke="rgba(1,1,1,0.5)"
                                     fontSize={12}
                                     tickFormatter={(value) => `€${value}`}
                                 />
@@ -329,8 +329,8 @@ const Dashboard = ({theme}) => {
                                 </Pie>
                                 <Tooltip
                                     contentStyle={{
-                                        background: 'rgba(30,30,40,0.9)',
-                                        border: '1px solid rgba(255,255,255,0.1)',
+                                        background: 'rgba(255,255,255,0.9)',
+                                        border: '1px solid rgba(1,1,1,0.1)',
                                         borderRadius: '12px'
                                     }}
                                     formatter={(value, name) => [`${value} návštev`, name]}
