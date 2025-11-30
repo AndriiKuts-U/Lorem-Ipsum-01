@@ -176,7 +176,7 @@ const Dashboard = () => {
         <div className="div3">
           <StatCard
             title={health?.status || "Loading..."}
-            value="Health suggeste"
+            value="Health suggestion"
           />
         </div>
         <div className="list-card div5">
@@ -209,7 +209,7 @@ const Dashboard = () => {
         <div className="div8">
           <StatCard
             title={other?.recommendation || "Loading..."}
-            value="Finance suggeste"
+            value="Finance suggestion"
           />
         </div>
       </div>
