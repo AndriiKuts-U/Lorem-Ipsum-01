@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import ScenarioCards from "./components/ScenarioCards";
 import { Menu } from "lucide-react";
 import Dashboard from "./pages/Dashboard.jsx";
+import Statistics from "@/components/Statisticks.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -237,9 +238,9 @@ const App = () => {
           reject(error);
         },
         {
-          enableHighAccuracy: true, // More accurate but slower
-          timeout: 10000, // 10 seconds timeout
-          maximumAge: 5 * 60 * 1000, // Cache location for 5 minutes
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 5 * 60 * 1000,
         }
       );
     });
@@ -289,83 +290,90 @@ const App = () => {
         currentPath={location.pathname}
       />
 
-      <main
-        className={`flex-1 flex flex-col transition-[margin-left] duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-20"
-        } overflow-hidden`}
-      >
-        <header className="main-header p-2 flex items-center">
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="sidebar-toggle"
-          >
-            <Menu size={18} />
-          </button>
-        </header>
+        <main className={`flex-1 flex flex-col transition-[margin-left] duration-300 ${isSidebarOpen ? "ml-64" : "ml-20"}`}>
+            <header className="main-header p-2 flex items-center">
+                <button onClick={() => setIsSidebarOpen(true)} className={`overlay ${isSidebarOpen ? "show" : ""}`}>
+                    <Menu size={18} />
+                </button>
+            </header>
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              currentConversation.messages.length === 0 ? (
-                <div className="welcome-container flex-1 flex flex-col items-center justify-center">
-                  <h1 className="welcome-heading text-2xl font-bold">
-                    Create a meal
-                  </h1>
-                  <p className="welcome-text mt-2 text-gray-500">
-                    Choose a scenario to get started
-                  </p>
-                  <ScenarioCards onSelectScenario={handleSelectScenario} />
-                </div>
-              ) : (
-                <div className="flex flex-1 gap-4 p-2 overflow-hidden">
-                  <div className="flex-1 flex flex-col h-full">
-                    <div
-                      className="messages-container flex-1 overflow-y-auto p-2"
-                      ref={messagesContainerRef}
-                    >
-                      {currentConversation.messages.map((message) => (
-                        <Message key={message.id} message={message} />
-                      ))}
-                    </div>
+            <div className="flex-1">
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <main className="main-container flex h-full w-full">
 
-                    <div className="prompt-container sticky bottom-0 bg-white/80 dark:bg-gray-800/80 p-2 rounded-t-lg">
-                      <PromptForm
-                        conversations={conversations}
-                        setConversations={setConversations}
-                        activeConversation={activeConversation}
-                        generateResponse={generateResponse}
-                        isLoading={isLoading}
-                        setIsLoading={setIsLoading}
-                      />
-                      <p className="disclaimer-text text-xs text-gray-500 mt-1">
-                        Describe your goal or choose from templates
-                      </p>
-                    </div>
-                  </div>
+                                {currentConversation.messages.length === 0 ? (
+                                    <div className="flex flex-col flex-1 items-center justify-center relative">
 
-                  <div className="w-1/3 flex flex-col gap-4 h-full">
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 flex-1">
-                      <h2 className="text-sm font-semibold mb-2">Graph 1</h2>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 flex-1">
-                      <h2 className="text-sm font-semibold mb-2">Graph 2</h2>
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <div className="flex-1 flex flex-col h-full overflow-scroll">
-                <Dashboard theme={theme} />
-              </div>
-            }
-          />
-        </Routes>
-      </main>
+                                        <div className="text-center mt-24 mb-12">
+                                            <h1 className="welcome-heading">Create a meal</h1>
+                                            <p className="welcome-text">Choose a scenario to get started</p>
+                                        </div>
+
+                                        <ScenarioCards onSelectScenario={handleSelectScenario} />
+
+                                        <div className="flex-1 gap-4 h-full rounded-full">
+                                            <PromptForm
+                                                conversations={conversations}
+                                                setConversations={setConversations}
+                                                activeConversation={activeConversation}
+                                                generateResponse={generateResponse}
+                                                isLoading={isLoading}
+                                                setIsLoading={setIsLoading}
+                                                myMargin={'ml-44'}
+                                            />
+                                        </div>
+
+                                    </div>
+
+                                ) : (
+                                    <div className="flex flex-1 gap-4 h-full">
+
+                                        <div className="flex flex-col flex-1 h-full">
+
+                                            <div
+                                                className="flex-1 overflow-y-auto p-2"
+                                                ref={messagesContainerRef}
+                                            >
+                                                {currentConversation.messages.map((message) => (
+                                                    <Message key={message.id} message={message} />
+                                                ))}
+                                            </div>
+                                            <div className="p-2">
+                                                <PromptForm
+                                                    conversations={conversations}
+                                                    setConversations={setConversations}
+                                                    activeConversation={activeConversation}
+                                                    generateResponse={generateResponse}
+                                                    isLoading={isLoading}
+                                                    setIsLoading={setIsLoading}
+                                                    myMargin={'mr-60'}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="w-1/3 flex flex-col gap-4 border-l-2 border-[#8a8276]">
+                                            <Statistics />
+                                        </div>
+                                    </div>
+                                )}
+                            </main>
+                        }
+                    />
+
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <div className="flex-1 flex flex-col h-full">
+                                <Dashboard theme={theme} />
+                            </div>
+                        }
+                    />
+                </Routes>
+            </div>
+        </main>
     </div>
   );
 };
