@@ -1,1 +1,95 @@
-{"places": [{"distance_m": 98, "name": "FRESH Plus Merk\u00far", "lat": 48.730989199999996, "lng": 21.2429097, "place_id": "ChIJc32bxVjgPkcR30tW3CnAzsM"}, {"distance_m": 280, "name": "Carib Seamoss s.r.o.", "lat": 48.7295357, "lng": 21.24457, "place_id": "ChIJc0ghrBThPkcRXIVgkfPMmIQ"}, {"distance_m": 471, "name": "MILK-AGRO", "lat": 48.734856799999996, "lng": 21.2476661, "place_id": "ChIJa9nCLfTgPkcRzwFv5dlOAxk"}, {"distance_m": 494, "name": "M\u00f4jobchod - Potraviny RION", "lat": 48.727893699999996, "lng": 21.246127299999998, "place_id": "ChIJjdW3ZV7gPkcR251PKePMHbE"}, {"distance_m": 629, "name": "Berries bufet\u00edk", "lat": 48.7328793, "lng": 21.251548, "place_id": "ChIJR7gbEwDhPkcRytoQ3ssR8X8"}, {"distance_m": 642, "name": "Potraviny Market Point", "lat": 48.7298499, "lng": 21.251307699999998, "place_id": "ChIJ5VuNdGDgPkcRUjp5DY8eA7Y"}, {"distance_m": 716, "name": "Slan\u00e9 torty Ko\u0161ice", "lat": 48.7254358, "lng": 21.243761, "place_id": "ChIJHw8Dpl3hPkcRYkGM61efz1M"}, {"distance_m": 717, "name": "MBiO Ovocie A Zelenina", "lat": 48.7258248, "lng": 21.2465565, "place_id": "ChIJ5bWw7V3gPkcRPIw0S03qRnI"}, {"distance_m": 721, "name": "Obchod", "lat": 48.734039599999996, "lng": 21.2523751, "place_id": "ChIJW5KpP4vhPkcRDMLLToWqqD0"}, {"distance_m": 834, "name": "KLAS Potraviny - OC Beta", "lat": 48.735070099999994, "lng": 21.2533893, "place_id": "ChIJFaULvPTgPkcRmdX_t300-08"}, {"distance_m": 865, "name": "BIOpotraviny RAJ", "lat": 48.7281398, "lng": 21.253469199999998, "place_id": "ChIJh6nFYGPgPkcRjR_8u_2JfGc"}, {"distance_m": 906, "name": "Odrody oliv", "lat": 48.7293078, "lng": 21.254838, "place_id": "ChIJY8AQymHgPkcRhi8CAjOGQpA"}, {"distance_m": 1017, "name": "BILLA", "lat": 48.739111699999995, "lng": 21.251584299999998, "place_id": "ChIJ44eINyrhPkcR9W9v_x2OGqE"}]}
+{
+  "places": [
+    {
+      "distance_m": 98,
+      "name": "FRESH Plus Merk\u00far",
+      "lat": 48.730989199999996,
+      "lng": 21.2429097,
+      "place_id": "ChIJc32bxVjgPkcR30tW3CnAzsM"
+    },
+    {
+      "distance_m": 280,
+      "name": "Carib Seamoss s.r.o.",
+      "lat": 48.7295357,
+      "lng": 21.24457,
+      "place_id": "ChIJc0ghrBThPkcRXIVgkfPMmIQ"
+    },
+    {
+      "distance_m": 471,
+      "name": "MILK-AGRO",
+      "lat": 48.734856799999996,
+      "lng": 21.2476661,
+      "place_id": "ChIJa9nCLfTgPkcRzwFv5dlOAxk"
+    },
+    {
+      "distance_m": 494,
+      "name": "M\u00f4jobchod - Potraviny RION",
+      "lat": 48.727893699999996,
+      "lng": 21.246127299999998,
+      "place_id": "ChIJjdW3ZV7gPkcR251PKePMHbE"
+    },
+    {
+      "distance_m": 629,
+      "name": "Berries bufet\u00edk",
+      "lat": 48.7328793,
+      "lng": 21.251548,
+      "place_id": "ChIJR7gbEwDhPkcRytoQ3ssR8X8"
+    },
+    {
+      "distance_m": 642,
+      "name": "Potraviny Market Point",
+      "lat": 48.7298499,
+      "lng": 21.251307699999998,
+      "place_id": "ChIJ5VuNdGDgPkcRUjp5DY8eA7Y"
+    },
+    {
+      "distance_m": 716,
+      "name": "Slan\u00e9 torty Ko\u0161ice",
+      "lat": 48.7254358,
+      "lng": 21.243761,
+      "place_id": "ChIJHw8Dpl3hPkcRYkGM61efz1M"
+    },
+    {
+      "distance_m": 717,
+      "name": "MBiO Ovocie A Zelenina",
+      "lat": 48.7258248,
+      "lng": 21.2465565,
+      "place_id": "ChIJ5bWw7V3gPkcRPIw0S03qRnI"
+    },
+    {
+      "distance_m": 721,
+      "name": "Obchod",
+      "lat": 48.734039599999996,
+      "lng": 21.2523751,
+      "place_id": "ChIJW5KpP4vhPkcRDMLLToWqqD0"
+    },
+    {
+      "distance_m": 834,
+      "name": "KLAS Potraviny - OC Beta",
+      "lat": 48.735070099999994,
+      "lng": 21.2533893,
+      "place_id": "ChIJFaULvPTgPkcRmdX_t300-08"
+    },
+    {
+      "distance_m": 865,
+      "name": "BIOpotraviny RAJ",
+      "lat": 48.7281398,
+      "lng": 21.253469199999998,
+      "place_id": "ChIJh6nFYGPgPkcRjR_8u_2JfGc"
+    },
+    {
+      "distance_m": 906,
+      "name": "Odrody oliv",
+      "lat": 48.7293078,
+      "lng": 21.254838,
+      "place_id": "ChIJY8AQymHgPkcRhi8CAjOGQpA"
+    },
+    {
+      "distance_m": 1017,
+      "name": "BILLA",
+      "lat": 48.739111699999995,
+      "lng": 21.251584299999998,
+      "place_id": "ChIJ44eINyrhPkcR9W9v_x2OGqE"
+    }
+  ]
+}

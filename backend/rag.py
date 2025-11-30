@@ -16,6 +16,7 @@ from backend.settings import settings
 
 class SideBar(BaseModel):
     """Structured output for grocery list sidebar information."""
+
     grocery_list: list[str]
     shops_to_visit: list[str]
     spent_total: float
@@ -55,7 +56,7 @@ def extract_grocery_sidebar(agent_output: str) -> SideBar | None:
         sidebar = completion.choices[0].message.parsed
 
         # Return None if there's no actual grocery data
-        if not sidebar.grocery_list and not sidebar.shops_to_visit:
+        if not sidebar.grocery_list and not sidebar.shops_to_visit:  # type: ignore
             return None
 
         return sidebar
@@ -274,7 +275,7 @@ class RAGSystem:
         # Extract grocery sidebar if present
         sidebar = extract_grocery_sidebar(assistant_message)
         if thread_id:
-            td_dir = Path("./backend/thread_data")
+            td_dir = Path("./thread_data")
             td_dir.mkdir(parents=True, exist_ok=True)
             td_file = td_dir / f"{thread_id}.json"
             data: dict[str, Any] = {}
@@ -284,7 +285,9 @@ class RAGSystem:
                         data = json.load(fh)
                 except Exception:
                     data = {}
-            data["side_bar"] = sidebar.model_dump() if sidebar else None  # full payload incl. lat/lng
+            data["side_bar"] = (
+                sidebar.model_dump() if sidebar else None
+            )  # full payload incl. lat/lng
             try:
                 with td_file.open("w", encoding="utf-8") as fh:
                     json.dump(data, fh)
