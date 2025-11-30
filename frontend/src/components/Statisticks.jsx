@@ -79,7 +79,7 @@ const Statistics = () => {
             ))}
 
             {Object.keys(check).length > 0 && (
-                <div className="w-80 mt-4 flex flex-col gap-2 shadow bg-gradient-to-r from-[#e20074] to-[#79d98c] rounded-xl p-2">
+                <div className="w-80 mt-4 flex flex-col gap-2 shadow bg-gradient-to-r from-[#e20074] to-[#79d98c] opacity-70 rounded-xl p-2">
                     {Object.entries(check).map(([item, price], idx) => (
                         <label
                             key={idx}
