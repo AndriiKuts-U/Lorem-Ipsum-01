@@ -4,7 +4,7 @@ from pathlib import Path
 
 from openai import AsyncOpenAI
 from pydantic import BaseModel
-from settings import settings
+from backend.settings import settings
 
 SYSTEM_PROMPT = "You are an expert data parser. " \
 "Given a JSON object representing a product from Lidl, extract data about the product and return it in a structured format. " \
