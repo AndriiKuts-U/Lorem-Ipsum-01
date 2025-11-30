@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import {
   TrendingUp,
   TrendingDown,
@@ -149,27 +150,6 @@ const StatCard = ({ title, value, subtitle, trend, trendValue }) => {
 const StoreCard = ({ store, maxVisits }) => {
   const percentage = (store.visits / maxVisits) * 100;
   return (
-    // <div className="store-card">
-    //     <div className="store-logo" style={{background: `${store.color}20`}}>
-    //         <span style={{color: store.color, fontWeight: 700, fontSize: '0.75rem'}}>
-    //             {store.name.charAt(0)}
-    //         </span>
-    //     </div>
-    //     <div className="store-info">
-    //         <div className="store-name">{store.name}</div>
-    //         <div className="store-visits">{store.visits} návštev</div>
-    //     </div>
-    //     <div className="store-bar-container">
-    //         <div
-    //             className="store-bar"
-    //             style={{
-    //                 width: `${percentage}%`,
-    //                 background: store.color
-    //             }}
-    //         />
-    //     </div>
-    // </div>
-
     <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-colors duration-200">
       <div
         className="w-10 h-10 flex items-center justify-center rounded-lg"
@@ -193,20 +173,6 @@ const StoreCard = ({ store, maxVisits }) => {
 
 // Product Row Component
 const ProductRow = ({ product }) => (
-  // <div className="product-row">
-  //     <div className="product-emoji">{product.emoji}</div>
-  //     <div className="product-info">
-  //         <div className="product-name">{product.name}</div>
-  //         <div className="product-purchases">{product.purchases}× tento mesiac</div>
-  //     </div>
-  //     <div className="product-price">
-  //         <div className="price-value">€{product.avgPrice.toFixed(2)}</div>
-  //         <div className={`price-change ${product.trend}`}>
-  //             {product.trend === 'up' ? <TrendingUp size={12}/> : <TrendingDown size={12}/>}
-  //             <span>{product.priceChange > 0 ? '+' : ''}{product.priceChange}%</span>
-  //         </div>
-  //     </div>
-  // </div>
   <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-colors duration-200">
     <div
       className="w-10 h-10 flex items-center justify-center rounded-lg text-xl"
@@ -249,8 +215,37 @@ const Dashboard = ({ theme }) => {
   const avgSpending = 329;
   const lastPurchase = 47.85;
 
+  const [health, setHealth] = useState(null);
+  const fetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+
+    const handleHealth = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/health-status`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setHealth(data);
+      } catch (error) {
+        console.error("Error getting user location:", error);
+        setHealth(null);
+      }
+    };
+
+    handleHealth();
+  }, []);
+
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container ">
       <div className="dashboard-header">
         <h1 className="dashboard-title">Prehľad nákupov</h1>
         <p className="dashboard-subtitle">
@@ -259,138 +254,25 @@ const Dashboard = ({ theme }) => {
       </div>
 
       {/* Stats Row */}
-      <div className="stats-grid">
-        <StatCard
-          title="Tento mesiac"
-          value={`€${totalSpentThisMonth.toLocaleString()}`}
-          icon={Calendar}
-          trend="down"
-          trendValue={5.8}
-        />
-        <StatCard
-          title="Mesačný priemer"
-          value={`€${avgSpending.toLocaleString()}`}
-          icon={DollarSign}
-        />
-        <StatCard
-          title="Posledný nákup"
-          value={`€${lastPurchase.toFixed(2)}`}
-          subtitle="Pred 2 dňami v Lidl"
-          icon={ShoppingCart}
-        />
-        <StatCard
-          title="Celkom nákupov"
-          value="70"
-          subtitle="Tento mesiac"
-          icon={Package}
-        />
-        <StatCard
-          title="Ušetrené celkom"
-          value={`€${totalSavings.toLocaleString()}`}
-          subtitle="Od začiatku používania"
-          icon={DollarSign}
-          trend="up"
-          trendValue={12.3}
-        />
-      </div>
-
-      {/* Charts Row */}
-      <div className="charts-grid">
-        {/* Spending Chart */}
-        <div className="chart-card large">
-          <h3 className="chart-title">Výdavky za obdobie</h3>
-          <div className="chart-container">
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart data={spendingData}>
-                <defs>
-                  <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#79d98c" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#79d98c" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.1)"
-                />
-                <XAxis dataKey="month" stroke="rgba(1,1,1,0.5)" fontSize={12} />
-                <YAxis
-                  stroke="rgba(1,1,1,0.5)"
-                  fontSize={12}
-                  tickFormatter={(value) => `€${value}`}
-                />
-                <Tooltip
-                  contentStyle={{
-                    background: "rgba(239,235,236,0.9)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "12px",
-                    backdropFilter: "blur(10px)",
-                  }}
-                  formatter={(value) => [`€${value}`, "Výdavky"]}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="amount"
-                  stroke="#e20074"
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#colorAmount)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+      <div className="parent">
+        <div className="div1">
+          <StatCard
+            title="Tento mesiac"
+            value={`€${totalSpentThisMonth.toLocaleString()}`}
+            icon={Calendar}
+            trend="down"
+            trendValue={5.8}
+          />
+        </div>
+        <div className="div2">
+          <StatCard
+            title="Mesačný priemer"
+            value={`€${avgSpending.toLocaleString()}`}
+            icon={DollarSign}
+          />
         </div>
 
-        {/* Store Visits Pie Chart */}
-        <div className="chart-card">
-          <h3 className="chart-title">Rozdelenie obchodov</h3>
-          <div className="chart-container pie-chart-container">
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie
-                  data={storeVisits}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="visits"
-                >
-                  {storeVisits.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={STORE_COLORS[index % STORE_COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    background: "rgba(255,255,255,0.9)",
-                    border: "1px solid rgba(1,1,1,0.1)",
-                    borderRadius: "12px",
-                  }}
-                  formatter={(value, name) => [`${value} návštev`, name]}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="pie-legend">
-              {storeVisits.slice(0, 3).map((store, index) => (
-                <div key={index} className="legend-item">
-                  <span
-                    className="legend-dot"
-                    style={{ background: store.color }}
-                  ></span>
-                  <span>{store.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Row */}
-      <div className="bottom-grid">
-        {/* Store Visits List */}
-        <div className="list-card">
+        <div className="list-card div4">
           <div className="list-header">
             <h3 className="list-title">
               <Store size={18} />
@@ -403,20 +285,48 @@ const Dashboard = ({ theme }) => {
             ))}
           </div>
         </div>
-
-        {/* Frequent Products */}
-        <div className="list-card">
+        <div className="div3">
+          <StatCard
+            title={`${health ? health.status : "Načítavanie..."}`}
+            value="Navrh"
+            icon={Package}
+          />
+        </div>
+        <div className="list-card div5">
           <div className="list-header">
             <h3 className="list-title">
-              <Package size={18} />
-              Časté produkty
+              <Store size={18} />
+              Najnavštevovanejšie obchody
             </h3>
           </div>
-          <div className="products-list">
-            {frequentProducts.map((product, index) => (
-              <ProductRow key={index} product={product} />
+          <div className="stores-list">
+            {storeVisits.map((store, index) => (
+              <StoreCard key={index} store={store} maxVisits={maxVisits} />
             ))}
           </div>
+        </div>
+        <div className="div6">
+          <StatCard
+            title="Tento mesiac"
+            value={`€${totalSpentThisMonth.toLocaleString()}`}
+            icon={Calendar}
+            trend="down"
+            trendValue={5.8}
+          />
+        </div>
+        <div className="div7">
+          <StatCard
+            title="Mesačný priemer"
+            value={`€${avgSpending.toLocaleString()}`}
+            icon={DollarSign}
+          />
+        </div>
+        <div className="div8">
+          <StatCard
+            title="Mesačný priemer"
+            value={`€${avgSpending.toLocaleString()}`}
+            icon={DollarSign}
+          />
         </div>
       </div>
     </div>
