@@ -2,6 +2,7 @@ import json
 from typing import Any
 
 import requests
+
 from backend.settings import settings
 
 BASE_URL = "https://places.googleapis.com/v1/places:searchNearby"
@@ -114,6 +115,11 @@ def find_nearby_places(
             "lat": plat,
             "lng": plng,
             "place_id": pid,
+            "directions_url": (
+                f"https://www.google.com/maps/dir/?api=1"
+                f"&origin={lat},{lng}"  # Origin is the search center
+                f"&destination={plat},{plng}"  # Destination is the found place
+            ),
         }
         for dist, name, plat, plng, pid in results
     ]
@@ -141,4 +147,4 @@ if __name__ == "__main__":
 
     places = find_nearby_places(loc["lat"], loc["lng"])
     for i, p in enumerate(places, start=1):
-        print(f"{i}. {p['distance_m']} m - {p['name']} ({p['lat']}, {p['lng']})")
+        print(places)

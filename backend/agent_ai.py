@@ -9,8 +9,8 @@ from pydantic_ai import Agent, RunContext
 from pydantic_ai.models.openai import OpenAIResponsesModelSettings
 from qdrant_client import QdrantClient
 
-from backend.settings import settings
 from backend.maps.address import find_nearby_places as _find_nearby_places
+from backend.settings import settings
 
 model_settings = OpenAIResponsesModelSettings(
     openai_reasoning_effort="minimal",
@@ -41,7 +41,6 @@ SYSTEM_PROMPT = (
     "Always use the weight/volume of the item. Don't split the item into smaller parts."
     "Missing items should be marked with 'not found'"
     ""
-
 )
 
 
@@ -149,6 +148,7 @@ def find_nearby_places(ctx: RunContext[ChatDeps | None], top_k: int = 5) -> list
                     data = json.load(fh)
             except Exception:
                 data = {}
+
         data["places"] = places  # full payload incl. lat/lng
         try:
             with td_file.open("w", encoding="utf-8") as fh:
