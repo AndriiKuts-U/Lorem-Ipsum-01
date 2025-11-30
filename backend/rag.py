@@ -6,7 +6,7 @@ from typing import Any
 from openai import OpenAI
 
 from qdrant_client.models import PointStruct
-
+from qdrant_client import QdrantClient
 from backend.agent_ai import ChatDeps, agent
 from anyio import from_thread
 from backend.settings import settings
@@ -27,7 +27,9 @@ class RAGSystem:
         self.collection_name = collection_name
         self.memory_dir = Path(memory_dir)
         self.memory_dir.mkdir(parents=True, exist_ok=True)
-
+        self.qdrant = QdrantClient(
+            url=settings.QDRANT_DATABASE_URL, api_key=settings.QDRANT_API_KEY
+        )
         # Initialize collection if it doesn't exist
         # self._init_collection()
 
