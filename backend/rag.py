@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from openai import OpenAI
+from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 
 from backend.agent_ai import agent
