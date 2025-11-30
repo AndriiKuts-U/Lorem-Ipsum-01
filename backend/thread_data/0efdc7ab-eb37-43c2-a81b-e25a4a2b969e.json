@@ -1,7 +1,7 @@
 {
   "lat": 48.7318664,
   "lng": 21.2431019,
-  "radius_m": 5000,
+  "radius_m": 2000,
   "places": [
     {
       "distance_m": 98,
@@ -44,13 +44,22 @@
       "lat": 48.7411647,
       "lng": 21.265636399999998,
       "place_id": "ChIJJ4mqXZLgPkcRj76MVTFG4hY"
-    },
-    {
-      "distance_m": 2008,
-      "name": "Everland",
-      "lat": 48.7171223,
-      "lng": 21.258920099999997,
-      "place_id": "ChIJ23IuflrhPkcRTngHUHzx1p0"
     }
-  ]
+  ],
+  "side_bar": {
+    "grocery_list": [
+      "Chicken Breast Fillets \u2014 200 g from Lidl",
+      "Long rice \u2014 150 g from Lidl",
+      "Broccoli \u2014 100 g from Lidl",
+      "Olive oil \u2014 20 ml from Lidl",
+      "Greek yogurt \u2014 150 g from Tesco",
+      "Almonds \u2014 30 g (not found, estimate \u20ac0.25 in-store)"
+    ],
+    "shops_to_visit": [
+      "Lidl",
+      "Tesco"
+    ],
+    "spent_total": 2.31,
+    "saved_total": 0.0
+  }
 }

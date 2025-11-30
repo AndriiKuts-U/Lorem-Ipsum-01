@@ -1,20 +1,18 @@
-"""
-Tools for comparing grocery prices across different stores using RAG.
-"""
-
-from typing import List, Dict, Optional, Tuple
-from dataclasses import dataclass
 from collections import defaultdict
+from dataclasses import dataclass
+from typing import Any
+
 from backend.rag import RAGSystem
 
 
 @dataclass
 class GroceryItem:
     """Represents a grocery item from a store."""
+
     name: str
     store: str
     price: float
-    price_original: Optional[float]
+    price_original: float | None
     amount: str
     unit: str
     description: str
@@ -25,11 +23,12 @@ class GroceryItem:
 @dataclass
 class PriceComparison:
     """Result of price comparison across stores."""
+
     query: str
     cheapest_store: str
     cheapest_price: float
-    items_by_store: Dict[str, List[GroceryItem]]
-    price_differences: Dict[str, float]  # percentage difference from cheapest
+    items_by_store: dict[str, list[GroceryItem]]
+    price_differences: dict[str, float]  # percentage difference from cheapest
     recommendation: str
 
 
@@ -40,7 +39,7 @@ class GroceryPriceComparer:
         self,
         rag_system: RAGSystem,
         price_threshold_percent: float = 5.0,
-        min_similarity_score: float = 0.6
+        min_similarity_score: float = 0.6,
     ):
         """
         Initialize the price comparer.
@@ -54,11 +53,7 @@ class GroceryPriceComparer:
         self.price_threshold = price_threshold_percent
         self.min_similarity = min_similarity_score
 
-    def search_groceries(
-        self,
-        query: str,
-        top_k: int = 10
-    ) -> List[GroceryItem]:
+    def search_groceries(self, query: str, top_k: int = 10) -> list[GroceryItem]:
         """
         Search for groceries matching the query.
 
@@ -67,7 +62,7 @@ class GroceryPriceComparer:
             top_k: Number of results to retrieve
 
         Returns:
-            List of GroceryItem objects
+            list of GroceryItem objects
         """
         # IMPORTANT: Pass include_metadata=True to get price and store info
         results = self.rag.retrieve_context(query, top_k=top_k, include_metadata=True)
@@ -75,37 +70,35 @@ class GroceryPriceComparer:
         items = []
         for result in results:
             # Skip if similarity is too low
-            if result['score'] < self.min_similarity:
+            if result["score"] < self.min_similarity:
                 continue
 
             # Extract metadata
             try:
-                price = float(result.get('price', 0))
-                price_original = float(result.get('price_original', 0)) if result.get('price_original') else None
+                price = float(result.get("price", 0))
+                price_original = (
+                    float(result.get("price_original", 0)) if result.get("price_original") else None
+                )
             except (ValueError, TypeError):
                 price = 0.0
                 price_original = None
 
             item = GroceryItem(
-                name=result.get('text', ''),
-                store=result.get('source', 'unknown'),
+                name=result.get("text", ""),
+                store=result.get("source", "unknown"),
                 price=price,
                 price_original=price_original,
-                amount=result.get('amount', ''),
-                unit=result.get('unit', ''),
-                description=result.get('description', ''),
-                category=result.get('category', ''),
-                similarity_score=result['score']
+                amount=result.get("amount", ""),
+                unit=result.get("unit", ""),
+                description=result.get("description", ""),
+                category=result.get("category", ""),
+                similarity_score=result["score"],
             )
             items.append(item)
 
         return items
 
-    def compare_prices(
-        self,
-        query: str,
-        top_k: int = 10
-    ) -> Optional[PriceComparison]:
+    def compare_prices(self, query: str, top_k: int = 10) -> PriceComparison | None:
         """
         Compare prices for a grocery item across stores.
 
@@ -135,7 +128,7 @@ class GroceryPriceComparer:
             store_prices[store] = cheapest.price
 
         # Find overall cheapest
-        cheapest_store = min(store_prices, key=store_prices.get)
+        cheapest_store = min(store_prices, key=store_prices.get)  # type: ignore
         cheapest_price = store_prices[cheapest_store]
 
         # Calculate price differences
@@ -149,11 +142,7 @@ class GroceryPriceComparer:
 
         # Generate recommendation
         recommendation = self._generate_recommendation(
-            query,
-            cheapest_store,
-            cheapest_price,
-            store_prices,
-            price_differences
+            query, cheapest_store, cheapest_price, store_prices, price_differences
         )
 
         return PriceComparison(
@@ -162,7 +151,7 @@ class GroceryPriceComparer:
             cheapest_price=cheapest_price,
             items_by_store=dict(items_by_store),
             price_differences=price_differences,
-            recommendation=recommendation
+            recommendation=recommendation,
         )
 
     def _generate_recommendation(
@@ -170,17 +159,17 @@ class GroceryPriceComparer:
         query: str,
         cheapest_store: str,
         cheapest_price: float,
-        store_prices: Dict[str, float],
-        price_differences: Dict[str, float]
+        store_prices: dict[str, float],
+        price_differences: dict[str, float],
     ) -> str:
         """Generate a human-readable recommendation in English."""
 
         recommendation_parts = [
             f"Price Comparison for '{query}':",
-            f"\n{'='*50}",
-            f"\nCHEAPEST OPTION:",
+            f"\n{'=' * 50}",
+            "\nCHEAPEST OPTION:",
             f"  ✓ {cheapest_store}: €{cheapest_price:.2f} - BEST PRICE",
-            f"\n{'='*50}"
+            f"\n{'=' * 50}",
         ]
 
         # Add other stores with price differences
@@ -208,12 +197,15 @@ class GroceryPriceComparer:
             if store != cheapest_store
         )
 
-        recommendation_parts.append(f"\n{'='*50}")
+        recommendation_parts.append(f"\n{'=' * 50}")
         if significant_savings:
             max_savings = max(
-                (store_prices[store] - cheapest_price
-                 for store in store_prices if store != cheapest_store),
-                default=0
+                (
+                    store_prices[store] - cheapest_price
+                    for store in store_prices
+                    if store != cheapest_store
+                ),
+                default=0,
             )
             recommendation_parts.append(
                 f"RECOMMENDATION: Buy at {cheapest_store} - Save up to €{max_savings:.2f}!"
@@ -223,20 +215,18 @@ class GroceryPriceComparer:
                 f"RECOMMENDATION: Prices are similar (difference < {self.price_threshold}%), "
                 f"you can buy at any store."
             )
-        recommendation_parts.append(f"{'='*50}")
+        recommendation_parts.append(f"{'=' * 50}")
 
         return "\n".join(recommendation_parts)
 
     def compare_shopping_list(
-        self,
-        items: List[str],
-        top_k_per_item: int = 10
-    ) -> Dict[str, PriceComparison]:
+        self, items: list[str], top_k_per_item: int = 10
+    ) -> dict[str, PriceComparison]:
         """
         Compare prices for multiple items (shopping list).
 
         Args:
-            items: List of product queries (e.g., ["milk", "bread", "butter"])
+            items: list of product queries (e.g., ["milk", "bread", "butter"])
             top_k_per_item: Number of results per item
 
         Returns:
@@ -249,16 +239,12 @@ class GroceryPriceComparer:
                 results[item] = comparison
         return results
 
-    def get_best_store_for_list(
-        self,
-        items: List[str],
-        top_k_per_item: int = 10
-    ) -> Dict[str, any]:
+    def get_best_store_for_list(self, items: list[str], top_k_per_item: int = 10) -> dict[str, Any]:
         """
         Determine the best store for buying all items in a shopping list.
 
         Args:
-            items: List of product queries
+            items: list of product queries
             top_k_per_item: Number of results per item
 
         Returns:
@@ -271,7 +257,7 @@ class GroceryPriceComparer:
                 "recommendation": "No products found",
                 "total_by_store": {},
                 "items": {},
-                "item_details": []
+                "item_details": [],
             }
 
         # Calculate total cost per store and track item details
@@ -285,10 +271,7 @@ class GroceryPriceComparer:
             all_stores.update(comparison.items_by_store.keys())
 
         for item_query, comparison in comparisons.items():
-            item_info = {
-                "query": item_query,
-                "prices_by_store": {}
-            }
+            item_info = {"query": item_query, "prices_by_store": {}}
 
             for store in all_stores:
                 store_items = comparison.items_by_store.get(store, [])
@@ -299,7 +282,7 @@ class GroceryPriceComparer:
                         "price": round(best_match.price, 2),
                         "amount": best_match.amount,
                         "unit": best_match.unit,
-                        "similarity": round(best_match.similarity_score, 3)
+                        "similarity": round(best_match.similarity_score, 3),
                     }
                     store_totals[store] += best_match.price
                     store_item_counts[store] += 1
@@ -321,10 +304,10 @@ class GroceryPriceComparer:
                 "recommendation": "No store has most of the products",
                 "total_by_store": dict(store_totals),
                 "items": comparisons,
-                "item_details": item_details
+                "item_details": item_details,
             }
 
-        best_store = min(valid_stores, key=valid_stores.get)
+        best_store = min(valid_stores, key=valid_stores.get)  # type: ignore
         best_total = valid_stores[best_store]
 
         # Build detailed recommendation text
@@ -340,7 +323,7 @@ class GroceryPriceComparer:
         for item_info in item_details:
             recommendation_parts.append(f"\n📋 {item_info['query']}:")
             for store in sorted(all_stores):
-                price_info = item_info['prices_by_store'].get(store)
+                price_info = item_info["prices_by_store"].get(store)
                 if price_info:
                     marker = "✓ BEST" if store == best_store else "  "
                     unit_str = f" ({price_info['amount']} {price_info['unit']})".strip()
@@ -388,12 +371,12 @@ class GroceryPriceComparer:
         # Calculate max savings
         if len(valid_stores) > 1:
             max_savings = max(
-                total - best_total
-                for store, total in valid_stores.items()
-                if store != best_store
+                total - best_total for store, total in valid_stores.items() if store != best_store
             )
             if max_savings > 0:
-                recommendation_parts.append(f"✓ You save up to: €{max_savings:.2f} by choosing {best_store}!")
+                recommendation_parts.append(
+                    f"✓ You save up to: €{max_savings:.2f} by choosing {best_store}!"
+                )
 
         recommendation_parts.append("=" * 70)
 
@@ -405,18 +388,16 @@ class GroceryPriceComparer:
             "recommendation": recommendation,
             "total_by_store": {k: round(v, 2) for k, v in store_totals.items()},
             "items": comparisons,
-            "item_details": item_details
+            "item_details": item_details,
         }
 
 
 # Standalone functions for easy use
 
+
 def compare_grocery_prices(
-    query: str,
-    rag_system: RAGSystem,
-    price_threshold: float = 5.0,
-    top_k: int = 10
-) -> Optional[PriceComparison]:
+    query: str, rag_system: RAGSystem, price_threshold: float = 5.0, top_k: int = 10
+) -> PriceComparison | None:
     """
     Simple function to compare grocery prices.
 
@@ -434,15 +415,13 @@ def compare_grocery_prices(
 
 
 def find_best_store(
-    shopping_list: List[str],
-    rag_system: RAGSystem,
-    price_threshold: float = 5.0
-) -> Dict:
+    shopping_list: list[str], rag_system: RAGSystem, price_threshold: float = 5.0
+) -> dict:
     """
     Find the best store for a shopping list.
 
     Args:
-        shopping_list: List of product queries
+        shopping_list: list of product queries
         rag_system: RAG system instance
         price_threshold: Price difference threshold in %
 
@@ -459,9 +438,9 @@ if __name__ == "__main__":
     rag = RAGSystem()
 
     # Example 1: Compare single item
-    print("="*60)
+    print("=" * 60)
     print("Price comparison for a single product:")
-    print("="*60)
+    print("=" * 60)
 
     result = compare_grocery_prices("chicken", rag, price_threshold=5.0)
     if result:
@@ -469,9 +448,9 @@ if __name__ == "__main__":
         print()
 
     # Example 2: Shopping list comparison
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Shopping list comparison:")
-    print("="*60)
+    print("=" * 60)
 
     shopping_list = ["Radishes", "Chicken thigh", "milk", "tomatoes", "potatoes", "bread"]
     best_store_result = find_best_store(shopping_list, rag)

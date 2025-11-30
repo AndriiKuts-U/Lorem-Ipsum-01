@@ -139,7 +139,7 @@ def find_nearby_places(ctx: RunContext[ChatDeps | None], top_k: int = 5) -> list
     )
     # Persist full places (with coords) into thread_data if we know the thread
     if deps.thread_id:
-        td_dir = Path("./backend/thread_data")
+        td_dir = Path("./thread_data")
         td_dir.mkdir(parents=True, exist_ok=True)
         td_file = td_dir / f"{deps.thread_id}.json"
         data: dict[str, Any] = {}

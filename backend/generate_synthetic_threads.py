@@ -3,7 +3,7 @@ import uuid
 from collections.abc import Iterable
 from pathlib import Path
 
-THREAD_DIR = Path("./backend/thread_memory")
+THREAD_DIR = Path("./thread_memory")
 THREAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
