@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import ScenarioCards from "./components/ScenarioCards";
 import { Menu } from "lucide-react";
 import Dashboard from "./pages/Dashboard.jsx";
+import Statistics from "@/components/Statisticks.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -237,9 +238,9 @@ const App = () => {
           reject(error);
         },
         {
-          enableHighAccuracy: true, // More accurate but slower
-          timeout: 10000, // 10 seconds timeout
-          maximumAge: 5 * 60 * 1000, // Cache location for 5 minutes
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 5 * 60 * 1000,
         }
       );
     });
@@ -292,17 +293,16 @@ const App = () => {
       <main
         className={`flex-1 flex flex-col transition-[margin-left] duration-300 ${
           isSidebarOpen ? "ml-64" : "ml-20"
-        } overflow-hidden`}
+        }`}
       >
         <header className="main-header p-2 flex items-center">
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="sidebar-toggle"
+            className={`overlay ${isSidebarOpen ? "show" : ""}`}
           >
             <Menu size={18} />
           </button>
         </header>
-
         <Routes>
           <Route
             path="/"

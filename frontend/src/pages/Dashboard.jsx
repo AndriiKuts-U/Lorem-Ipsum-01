@@ -207,10 +207,10 @@ const Dashboard = () => {
           />
         </div>
         <div className="div8">
-          <StatCard
-            title={other?.recommendation || "Loading..."}
-            value="Finance suggestion"
-          />
+            <StatCard
+                title={other?.recommendation || "Loading..."}
+                value="Finance suggestion"
+            />
         </div>
       </div>
     </div>

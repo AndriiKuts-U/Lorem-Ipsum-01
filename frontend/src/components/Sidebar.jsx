@@ -13,34 +13,26 @@ const Sidebar = ({
                      currentPath
                  }) => {
     const createNewConversation = () => {
-        // Check if any existing conversation is empty
         const emptyConversation = conversations.find((conv) => conv.messages.length === 0);
         if (emptyConversation) {
-            // If an empty conversation exists, make it active instead of creating a new one
             setActiveConversation(emptyConversation.id);
             return;
         }
-        // Only create a new conversation if there are no empty ones
         const newId = `conv-${Date.now()}`;
         setConversations([{ id: newId, title: "New Chat", messages: [] }, ...conversations]);
         setActiveConversation(newId);
     };
-    // Delete conversation and handle active selection
+
     const deleteConversation = (id, e) => {
-        e.stopPropagation(); // Prevent triggering conversation selection
-        // Check if this is the last conversation
+        e.stopPropagation();
         if (conversations.length === 1) {
-            // Create new conversation with ID "default"
             const newConversation = { id: "default", title: "New Chat", messages: [] };
             setConversations([newConversation]);
-            setActiveConversation("default"); // Set active to match the new conversation ID
+            setActiveConversation("default");
         } else {
-            // Remove the conversation
             const updatedConversations = conversations.filter((conv) => conv.id !== id);
             setConversations(updatedConversations);
-            // If deleting the active conversation, switch to another one
             if (activeConversation === id) {
-                // Find the first conversation that isn't being deleted
                 const nextConversation = updatedConversations[0];
                 setActiveConversation(nextConversation.id);
             }
@@ -49,7 +41,6 @@ const Sidebar = ({
 
     return (
         <aside className={`sidebar ${isSidebarOpen ? "open" : "closed"}`}>
-            {/* Sidebar Header */}
             <div className="sidebar-header">
                 <button className="sidebar-toggle" onClick={() => setIsSidebarOpen((prev) => !prev)}>
                     <Menu size={18} />
@@ -60,7 +51,6 @@ const Sidebar = ({
                 </button>
             </div>
 
-            {/* Navigation */}
             <div className="sidebar-nav">
                 <button
                     className={`nav-item ${currentPath === '/' ? 'active' : ''}`}
@@ -78,7 +68,6 @@ const Sidebar = ({
                 </button>
             </div>
 
-            {/* Conversation List */}
             <div className="sidebar-content">
                 <h2 className="sidebar-title">Chat history</h2>
                 <ul className="conversation-list">
@@ -105,7 +94,6 @@ const Sidebar = ({
                 </ul>
             </div>
 
-            {/* Theme Toggle */}
             <div className="sidebar-footer">
                 <button className="theme-toggle" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
                     {theme === "light" ? (
