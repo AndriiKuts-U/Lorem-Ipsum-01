@@ -64,11 +64,15 @@ class HealthStatusResponse(BaseModel):
     rating: int
     suggested_recipe: str
 
+class SideBar(BaseModel):
+    grocery_list: list[str]
+    shops_to_visit: list[str]
+    spent_total: float
 
 class ChatResponse(BaseModel):
     response: str
     thread_id: str
-    # retrieved_context: list[RetrievedDocument]
+    side_bar: SideBar | None
 
 
 class SearchRequest(BaseModel):
@@ -182,6 +186,7 @@ async def chat_endpoint(request: ChatRequest):
             query=request.query,
             thread_id=request.thread_id,
         )
+        print(result)
         return ChatResponse(**result)
 
     except Exception as e:

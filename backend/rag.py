@@ -5,12 +5,64 @@ from pathlib import Path
 from typing import Any
 
 from openai import OpenAI
+from pydantic import BaseModel
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 
 from backend.agent_ai import agent
 from backend.maps.address import find_nearby_places as _find_nearby_places
 from backend.settings import settings
+
+
+class SideBar(BaseModel):
+    """Structured output for grocery list sidebar information."""
+    grocery_list: list[str]
+    shops_to_visit: list[str]
+    spent_total: float
+    saved_total: float
+
+
+def extract_grocery_sidebar(agent_output: str) -> SideBar | None:
+    """
+    Extract structured grocery list information from agent output using OpenAI structured output.
+
+    Args:
+        agent_output: The string output from the agent
+
+    Returns:
+        SideBar instance if grocery list is found, None otherwise
+    """
+    try:
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
+        completion = client.beta.chat.completions.parse(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "Extract grocery list information from the assistant's response. "
+                        "If there's no grocery list, return empty lists and 0.0 for spent_total."
+                        "Calculate total money spent on groceries with this list."
+                        "Calculate total money saved by buying groceries from this list in comparison to the most expencive options from the list."
+                    ),
+                },
+                {"role": "user", "content": agent_output},
+            ],
+            response_format=SideBar,
+        )
+
+        sidebar = completion.choices[0].message.parsed
+
+        # Return None if there's no actual grocery data
+        if not sidebar.grocery_list and not sidebar.shops_to_visit:
+            return None
+
+        return sidebar
+
+    except Exception as e:
+        logging.getLogger(__name__).warning(f"Error extracting grocery sidebar: {e}")
+        return None
 
 
 class RAGSystem:
@@ -216,10 +268,31 @@ class RAGSystem:
         assistant_message = str(result.output)
         messages.append({"role": "user", "content": user_content})
         messages.append({"role": "assistant", "content": assistant_message})
+
         self._save_thread(thread_id, messages)
 
+        # Extract grocery sidebar if present
+        sidebar = extract_grocery_sidebar(assistant_message)
+        if thread_id:
+            td_dir = Path("./backend/thread_data")
+            td_dir.mkdir(parents=True, exist_ok=True)
+            td_file = td_dir / f"{thread_id}.json"
+            data: dict[str, Any] = {}
+            if td_file.exists():
+                try:
+                    with td_file.open("r", encoding="utf-8") as fh:
+                        data = json.load(fh)
+                except Exception:
+                    data = {}
+            data["side_bar"] = sidebar.model_dump() if sidebar else None  # full payload incl. lat/lng
+            try:
+                with td_file.open("w", encoding="utf-8") as fh:
+                    json.dump(data, fh)
+            except Exception:
+                # fail-soft on persistence
+                pass
         return {
             "response": assistant_message,
             "thread_id": thread_id,
-            # "retrieved_context": retrieved_docs,
+            "side_bar": sidebar.model_dump() if sidebar else None,
         }

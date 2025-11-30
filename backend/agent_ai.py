@@ -36,6 +36,10 @@ SYSTEM_PROMPT = (
     "For example if user wants to save money, return products with lower prices."
     "If user wants to save time, return products from nearest store."
     "At the end return the list of products with prices and stores, step by step guide where and what to buy(user may want to combine stores to save money)"
+    "Format all response to markdown. Use emoji for visually splitting the text blocs. Use as less text as possible."
+    "Use estimate the data. Only use the given relative data."
+    "Always use the weight/volume of the item. Don't split the item into smaller parts."
+    "Missing items should be marked with 'not found'"
     ""
 
 )
