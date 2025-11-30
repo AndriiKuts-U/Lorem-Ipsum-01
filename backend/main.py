@@ -4,10 +4,20 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
+from backend.settings import settings
 
 from backend.rag import RAGSystem
 from backend.rag_tools import GroceryPriceComparer
+
+HEALTH_STATUS_PROMPT = (
+    "You are a health monitoring system for a user. "
+    "Analyze the following conversation history and determine if there are any signs of health issues, "
+    "find possible nutritional deficiencies, or possible ways to improve diet."
+    "Provide a short 2 sentences summary of the user's health status based on the conversation and give advice on how to improve diet while warning of potential issues."
+    "Style your response in a friendly and supportive tone, in a way like you are talking to the user trying to motivate him to improve his diet."
+)
 
 
 # Pydantic models for request/response
@@ -44,6 +54,10 @@ class ChatRequest(BaseModel):
 class RetrievedDocument(BaseModel):
     text: str
     score: float
+
+
+class HealthStatusResponse(BaseModel):
+    status: str
 
 
 class ChatResponse(BaseModel):
@@ -154,6 +168,46 @@ async def chat_endpoint(request: ChatRequest):
             thread_id=request.thread_id,
         )
         return ChatResponse(**result)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/health-status", response_model=HealthStatusResponse, tags=["Health Status"])
+async def health_status_endpoint():
+    try:
+        thread_memory_dir = Path("./thread_memory")
+        all_assistant_content = []
+
+        if thread_memory_dir.exists():
+            for json_file in thread_memory_dir.glob("*.json"):
+                with json_file.open("r", encoding="utf-8") as fh:
+                    messages = json.load(fh)
+
+                    for msg in messages:
+                        if isinstance(msg, dict) and msg.get("role") == "assistant":
+                            content = msg.get("content", "")
+                            if content:
+                                all_assistant_content.append(content)
+
+        combined_content = "\n\n".join(all_assistant_content)
+
+        client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+
+        completion = await client.beta.chat.completions.parse(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": HEALTH_STATUS_PROMPT},
+                {"role": "user", "content": combined_content},
+            ],
+            response_format=HealthStatusResponse,
+        )
+
+        result = completion.choices[0].message.parsed
+
+        return HealthStatusResponse(
+            status=result.status,  # type: ignore
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
